@@ -1,48 +1,71 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>{{ __('Create Profile') }}</h3>
+            <div class="col-lg-8 col-xl-6">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <div class="d-flex justify-content-center mb-4">
+                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
+                            style="width: 56px; height: 56px;">
+                            <i class="fas fa-user text-white fs-2"></i>
+                        </div>
                     </div>
-                    <div class="card-body">
+                    <h1 class="h2 fw-bold text-dark mb-3">{{ __('Profile Settings') }}</h1>
+                    <p class="text-muted mb-2">
+                        Please enter your basic information to optimize your training plan
+                    </p>
+                    <p class="small text-muted">
+                        Fields marked with <span class="text-danger">*</span> are required
+                    </p>
+                </div>
+
+                <!-- Form Card -->
+                <div class="card shadow border-0 rounded-3">
+                    <div class="card-body p-4 p-sm-5">
                         <form method="POST" action="{{ route('profile.store') }}">
                             @csrf
 
-                            <h5 class="mb-3">Basic Information</h5>
-
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="full_name" class="form-label">Full Name <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control @error('full_name') is-invalid @enderror"
-                                        id="full_name" name="full_name" value="{{ old('full_name', Auth::user()->name) }}"
-                                        required>
-                                    @error('full_name')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="age" class="form-label">Age <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control @error('age') is-invalid @enderror"
-                                        id="age" name="age" value="{{ old('age') }}" min="13"
-                                        max="120" required>
-                                    @error('age')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                            <!-- Full Name -->
+                            <div class="mb-4">
+                                <label for="full_name" class="form-label fw-medium">
+                                    Full Name <span class="text-danger">*</span>
+                                </label>
+                                <input type="text"
+                                    class="form-control rounded-2 @error('full_name') is-invalid @enderror" id="full_name"
+                                    name="full_name" value="{{ old('full_name', Auth::user()->name) }}"
+                                    placeholder="John Smith" maxlength="50" required>
+                                @error('full_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="gender" class="form-label">Gender <span
-                                            class="text-danger">*</span></label>
-                                    <select class="form-select @error('gender') is-invalid @enderror" id="gender"
-                                        name="gender" required>
-                                        <option value="">Select Gender</option>
+                            <!-- Age and Gender Row -->
+                            <div class="row mb-4">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label for="age" class="form-label fw-medium">
+                                        Age <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="position-relative">
+                                        <input type="number"
+                                            class="form-control rounded-2 @error('age') is-invalid @enderror" id="age"
+                                            name="age" value="{{ old('age') }}" placeholder="25" min="13"
+                                            max="120" required>
+                                        <span
+                                            class="position-absolute top-50 end-0 translate-middle-y pe-3 text-muted small">years</span>
+                                        @error('age')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="gender" class="form-label fw-medium">
+                                        Gender <span class="text-danger">*</span>
+                                    </label>
+                                    <select class="form-select rounded-2 @error('gender') is-invalid @enderror"
+                                        id="gender" name="gender" required>
+                                        <option value="">Select gender</option>
                                         <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
                                         <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female
                                         </option>
@@ -53,64 +76,126 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="height" class="form-label">Height (cm) <span
-                                            class="text-danger">*</span></label>
-                                    <input type="number" class="form-control @error('height') is-invalid @enderror"
-                                        id="height" name="height" value="{{ old('height') }}" min="50"
-                                        max="300" step="0.1" required>
-                                    @error('height')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                            </div>
+
+                            <!-- Height and Weight Row -->
+                            <div class="row mb-4">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label for="height" class="form-label fw-medium">
+                                        Height <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="position-relative">
+                                        <input type="number"
+                                            class="form-control rounded-2 @error('height') is-invalid @enderror"
+                                            id="height" name="height" value="{{ old('height') }}" placeholder="170"
+                                            min="50" max="300" step="0.1" required>
+                                        <span
+                                            class="position-absolute top-50 end-0 translate-middle-y pe-3 text-muted small">cm</span>
+                                        @error('height')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="weight" class="form-label fw-medium">
+                                        Current Weight <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="position-relative">
+                                        <input type="number"
+                                            class="form-control rounded-2 @error('weight') is-invalid @enderror"
+                                            id="weight" name="weight" value="{{ old('weight') }}" placeholder="65.0"
+                                            min="20" max="500" step="0.1" required>
+                                        <span
+                                            class="position-absolute top-50 end-0 translate-middle-y pe-3 text-muted small">kg</span>
+                                        @error('weight')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="weight" class="form-label">Current Weight (kg) <span
-                                            class="text-danger">*</span></label>
-                                    <input type="number" class="form-control @error('weight') is-invalid @enderror"
-                                        id="weight" name="weight" value="{{ old('weight') }}" min="20"
-                                        max="500" step="0.1" required>
-                                    @error('weight')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                            <!-- Fitness Level -->
+                            <div class="mb-4">
+                                <label class="form-label fw-medium">
+                                    Fitness Level <span class="text-danger">*</span>
+                                </label>
+                                <div class="mt-3">
+                                    <div class="border rounded-2 p-3 mb-3" id="fitness-beginner">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="fitness_level"
+                                                value="beginner" id="beginner"
+                                                {{ old('fitness_level') == 'beginner' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="beginner">
+                                                <div class="fw-medium text-dark">Beginner</div>
+                                                <div class="small text-muted">No/minimal exercise experience</div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="border rounded-2 p-3 mb-3" id="fitness-intermediate">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="fitness_level"
+                                                value="intermediate" id="intermediate"
+                                                {{ old('fitness_level') == 'intermediate' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="intermediate">
+                                                <div class="fw-medium text-dark">Intermediate</div>
+                                                <div class="small text-muted">Regular exercise routine</div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="border rounded-2 p-3 mb-3" id="fitness-advanced">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="fitness_level"
+                                                value="advanced" id="advanced"
+                                                {{ old('fitness_level') == 'advanced' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="advanced">
+                                                <div class="fw-medium text-dark">Advanced</div>
+                                                <div class="small text-muted">Extensive exercise experience</div>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="fitness_level" class="form-label">Exercise Experience Level <span
-                                            class="text-danger">*</span></label>
-                                    <select class="form-select @error('fitness_level') is-invalid @enderror"
-                                        id="fitness_level" name="fitness_level" required>
-                                        <option value="">Select Level</option>
-                                        <option value="beginner"
-                                            {{ old('fitness_level') == 'beginner' ? 'selected' : '' }}>Beginner</option>
-                                        <option value="intermediate"
-                                            {{ old('fitness_level') == 'intermediate' ? 'selected' : '' }}>Intermediate
-                                        </option>
-                                        <option value="advanced"
-                                            {{ old('fitness_level') == 'advanced' ? 'selected' : '' }}>Advanced</option>
-                                    </select>
-                                    @error('fitness_level')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <h5 class="mb-3 mt-4">Additional Information</h5>
-
-                            <div class="mb-3">
-                                <label for="medical_conditions" class="form-label">Medical Conditions or Notes
-                                    (Optional)</label>
-                                <textarea class="form-control @error('medical_conditions') is-invalid @enderror" id="medical_conditions"
-                                    name="medical_conditions" rows="4" placeholder="Enter any medical conditions, injuries, or other notes...">{{ old('medical_conditions') }}</textarea>
-                                @error('medical_conditions')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @error('fitness_level')
+                                    <div class="text-danger small mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <div class="d-flex justify-content-end">
-                                <a href="{{ route('home') }}" class="btn btn-secondary me-2">Cancel</a>
-                                <button type="submit" class="btn btn-primary">Save Profile</button>
+                            <!-- Additional Information -->
+                            <div class="mb-5">
+                                <label class="form-label fw-medium">
+                                    Additional Information
+                                </label>
+                                <div class="mt-3">
+                                    <!-- Medical Conditions -->
+                                    <div class="mb-4">
+                                        <label for="medical_conditions" class="form-label">Medical Conditions or
+                                            Notes</label>
+                                        <textarea class="form-control rounded-2 @error('medical_conditions') is-invalid @enderror" id="medical_conditions"
+                                            name="medical_conditions" rows="3"
+                                            placeholder="Please describe any medical conditions, injuries, or physical limitations that might affect your exercise routine...">{{ old('medical_conditions') }}</textarea>
+                                        <div class="form-text">This information helps us create a safer workout plan for
+                                            you</div>
+                                        @error('medical_conditions')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="row pt-4">
+                                <div class="col-sm-8 mb-3 mb-sm-0">
+                                    <button type="submit" class="btn btn-primary w-100 rounded-2 fw-medium">
+                                        <i class="fas fa-save me-2"></i>
+                                        Save Profile
+                                    </button>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="{{ route('home') }}"
+                                        class="btn btn-outline-secondary w-100 rounded-2 fw-medium">
+                                        <i class="fas fa-times me-2"></i>
+                                        Cancel
+                                    </a>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -118,4 +203,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Add visual feedback for fitness level selection
+        document.addEventListener('DOMContentLoaded', function() {
+            const fitnessRadios = document.querySelectorAll('input[name="fitness_level"]');
+
+            function updateFitnessSelection() {
+                document.querySelectorAll('[id^="fitness-"]').forEach(option => {
+                    option.classList.remove('border-primary', 'bg-primary', 'bg-opacity-10');
+                    option.classList.add('border');
+                });
+
+                const checked = document.querySelector('input[name="fitness_level"]:checked');
+                if (checked) {
+                    const container = checked.closest('[id^="fitness-"]');
+                    container.classList.remove('border');
+                    container.classList.add('border-primary', 'bg-primary', 'bg-opacity-10');
+                }
+            }
+
+            fitnessRadios.forEach(radio => {
+                radio.addEventListener('change', updateFitnessSelection);
+            });
+
+            // Initial check
+            updateFitnessSelection();
+        });
+    </script>
 @endsection
