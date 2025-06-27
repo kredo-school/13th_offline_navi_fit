@@ -54,6 +54,13 @@ class GoalController extends Controller
         return redirect()->route('home')->with('success', 'Goals set successfully!');
     }
 
+    public function show(Goal $goal)
+    {
+        $this->authorize('view', $goal);
+
+        return redirect()->route('goal.edit', $goal);
+    }
+
     public function edit(Goal $goal)
     {
         $this->authorize('update', $goal);

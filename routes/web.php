@@ -22,5 +22,5 @@ Route::get('/', function () {
 
 // Goal routes
 Route::middleware('auth')->group(function () {
-    Route::resource('goal', GoalController::class);
+    Route::resource('goal', GoalController::class)->except(['show']);
 });

@@ -127,7 +127,7 @@
                             {{-- Action Buttons --}}
                             <div class="row g-3 pt-4">
                                 <div class="col-md-4">
-                                    <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary w-100 py-2">
+                                    <a href="#" class="btn btn-outline-secondary w-100 py-2">
                                         <i class="fas fa-times me-2"></i>Cancel
                                     </a>
                                 </div>
