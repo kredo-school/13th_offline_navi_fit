@@ -34,7 +34,7 @@
         </button>
     </form>
 
-    <div class="auth-links">
+    <div class="auth-links"> 
         <a href="{{ route('register') }}">→ create new account</a>
         @if (Route::has('password.request'))
             <a href="{{ route('password.request') }}">forgot your password?</a>
