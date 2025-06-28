@@ -36,3 +36,7 @@ Route::middleware('auth')->group(function () {
         return redirect()->route('dashboard');
     })->name('home');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
