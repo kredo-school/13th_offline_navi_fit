@@ -38,7 +38,7 @@ class ProfileController extends Controller
             return redirect()->route('profile.edit');
         }
 
-        return view('profile.create');
+        return view('user.profile.create');
     }
 
     /**
