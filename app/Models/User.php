@@ -48,6 +48,12 @@ class User extends Authenticatable
     }
 
     /**
+
+     * Get the goals for the user.
+     */
+    public function goals()
+    {
+
      * Get the user's profile.
      */
     public function profile(): HasOne

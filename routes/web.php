@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\GoalController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     // goal (required)
-
+    Route::resource('goal', GoalController::class)->except(['show']);
+  
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -37,6 +40,4 @@ Route::middleware('auth')->group(function () {
     })->name('home');
 });
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
