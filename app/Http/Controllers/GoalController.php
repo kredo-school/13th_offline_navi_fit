@@ -32,7 +32,7 @@ class GoalController extends Controller
             return redirect()->route('goal.edit', $activeGoal);
         }
 
-        return view('goal.create');
+        return view('user.goal.create');
     }
 
     public function store(Request $request)
@@ -58,14 +58,14 @@ class GoalController extends Controller
     {
         $this->authorize('view', $goal);
 
-        return redirect()->route('goal.edit', $goal);
+        return redirect()->route('user.goal.edit', $goal);
     }
 
     public function edit(Goal $goal)
     {
         $this->authorize('update', $goal);
 
-        return view('goal.edit', compact('goal'));
+        return view('user.goal.edit', compact('goal'));
     }
 
     public function update(Request $request, Goal $goal)

@@ -1,8 +1,7 @@
 <?php
 
-
-use App\Http\Controllers\GoalController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +29,7 @@ Route::middleware('auth')->group(function () {
 
     // goal (required)
     Route::resource('goal', GoalController::class)->except(['show']);
-  
+
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -39,5 +38,3 @@ Route::middleware('auth')->group(function () {
         return redirect()->route('dashboard');
     })->name('home');
 });
-
-
