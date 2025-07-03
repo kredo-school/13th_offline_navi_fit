@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
 
     // menu
     Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+    Route::get('/menu/show', [MenuController::class, 'show'])->name('menu.show');
 
     // home route (for compatibility)
     Route::get('/home', function () {
