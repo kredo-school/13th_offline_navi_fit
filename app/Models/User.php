@@ -62,4 +62,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+    /* Get the body records for the user.
+     */
+    public function bodyRecords(): HasMany
+    {
+        return $this->hasMany(BodyRecord::class);
+    }
 }
