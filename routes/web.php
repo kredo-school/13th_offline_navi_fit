@@ -1,9 +1,12 @@
 <?php
 
+
 use App\Http\Controllers\BodyRecordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\MenuController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -32,7 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('goal', GoalController::class)->except(['show']);
 
     // dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+
+    // menu
+    Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 
     // home route (for compatibility)
     Route::get('/home', function () {
