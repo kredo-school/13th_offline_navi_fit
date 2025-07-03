@@ -1,5 +1,8 @@
 <?php
 
+
+use App\Http\Controllers\BodyRecordController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
@@ -41,4 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', function () {
         return redirect()->route('dashboard');
     })->name('home');
+
+    // body record
+    Route::resource('body-records', BodyRecordController::class);
 });
