@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,7 @@ class ProfileController extends Controller
             return redirect()->route('profile.create');
         }
 
-        return view('profile.show', compact('profile'));
+        return view('user.profile.show', compact('profile'));
     }
 
     /**
@@ -90,7 +91,7 @@ class ProfileController extends Controller
             return redirect()->route('profile.create');
         }
 
-        return view('profile.edit', compact('profile'));
+        return view('user.profile.edit', compact('profile'));
     }
 
     /**

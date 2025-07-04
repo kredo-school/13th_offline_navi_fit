@@ -1,12 +1,10 @@
 <?php
 
-
-use App\Http\Controllers\BodyRecordController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\GoalController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\BodyRecordController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\GoalController;
 use App\Http\Controllers\User\MenuController;
+use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
