@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Https\Requests\ProfileRequest;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,39 +46,28 @@ class ProfileController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProfileRequest $request)
     {
         // Check if user already has a profile
         if (Auth::user()->profile) {
             return redirect()->route('profile.edit');
         }
 
-        $validated = $request->validate([
-            'full_name' => 'required|string|max:255',
-            'age' => 'required|integer|min:13|max:120',
-            'gender' => ['required', Rule::in(['male', 'female', 'other'])],
-            'height' => 'required|numeric|min:50|max:300',
-            'weight' => 'required|numeric|min:20|max:500',
-            'fitness_level' => ['required', Rule::in(['beginner', 'intermediate', 'advanced'])],
-            'medical_conditions' => 'nullable|string|max:1000',
-        ]);
+        // FormRequestで自動バリデーション済み
+        $validated = $request->validated();
 
-        // Update user's name
-        Auth::user()->update([
-            'name' => $validated['full_name'],
-        ]);
-
-        // Create profile
-        Auth::user()->profile()->create([
+        $profile = Profile::create([
+            'user_id' => Auth::id(),
+            'full_name' => $validated['full_name'],
             'age' => $validated['age'],
             'gender' => $validated['gender'],
             'height' => $validated['height'],
-            'weight' => $validated['weight'],
-            'fitness_level' => $validated['fitness_level'],
-            'medical_conditions' => $validated['medical_conditions'] ?? null,
+            'current_weight' => $validated['current_weight'],
+            'exercise_experience_level' => $validated['exercise_experience_level'],
+            'medical_conditions' => $validated['medical_conditions'],
         ]);
 
-        return redirect()->route('home')->with('success', 'make a profile successfully');
+        return redirect()->route('goals.create')->with('success', 'Profile created successfully!');
     }
 
     /**
