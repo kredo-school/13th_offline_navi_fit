@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Https\Requests\ProfileRequest;
+use App\Http\Requests\ProfileRequest;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,16 +58,16 @@ class ProfileController extends Controller
 
         $profile = Profile::create([
             'user_id' => Auth::id(),
-            'full_name' => $validated['full_name'],
+            // 'full_name' => $validated['full_name'],
             'age' => $validated['age'],
             'gender' => $validated['gender'],
             'height' => $validated['height'],
-            'current_weight' => $validated['current_weight'],
-            'exercise_experience_level' => $validated['exercise_experience_level'],
+            'weight' => $validated['weight'],
+            'fitness_level' => $validated['fitness_level'],
             'medical_conditions' => $validated['medical_conditions'],
         ]);
 
-        return redirect()->route('goals.create')->with('success', 'Profile created successfully!');
+        return redirect()->route('goal.create')->with('success', 'Profile created successfully!');
     }
 
     /**
@@ -96,7 +96,7 @@ class ProfileController extends Controller
         }
 
         $validated = $request->validate([
-            'full_name' => 'required|string|max:255',
+            // 'full_name' => 'required|string|max:255',
             'age' => 'required|integer|min:13|max:120',
             'gender' => ['required', Rule::in(['male', 'female', 'other'])],
             'height' => 'required|numeric|min:50|max:300',
@@ -106,9 +106,9 @@ class ProfileController extends Controller
         ]);
 
         // Update user's name
-        Auth::user()->update([
-            'name' => $validated['full_name'],
-        ]);
+        // Auth::user()->update([
+        //     'name' => $validated['full_name'],
+        // ]);
 
         // Update profile
         $profile->update([
