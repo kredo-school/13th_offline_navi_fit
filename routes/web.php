@@ -1,7 +1,6 @@
 <?php
 
-
-use App\Http\Controllers\User\BodyRecordController:
+use App\Http\Controllers\User\BodyRecordController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\GoalController;
 use App\Http\Controllers\User\MenuController;
