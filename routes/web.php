@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect()->route('dashboard');
+        return redirect()->route('profile.index');
     }
 
     return redirect()->route('login');
@@ -20,7 +20,7 @@ Route::get('/', function () {
 // Laravel certification route（login・register・reset password）
 Auth::routes();
 
-// User
+// User - Setup routes (no middleware)
 Route::middleware('auth')->group(function () {
 
     // profile (required)
@@ -33,6 +33,10 @@ Route::middleware('auth')->group(function () {
     // goal (required)
     Route::resource('goal', GoalController::class)->except(['show']);
 
+});
+
+// User - Protected routes (with setup middleware)
+Route::middleware(['auth', 'setup'])->group(function () {
     // dashboard
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 
