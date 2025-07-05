@@ -1,8 +1,6 @@
 <?php
 
-
 use App\Http\Controllers\BodyRecordController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
@@ -40,6 +38,7 @@ Route::middleware('auth')->group(function () {
     // menu
     Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
     Route::get('/menu/show', [MenuController::class, 'show'])->name('menu.show');
+    Route::get('/menu/edit', [MenuController::class, 'edit'])->name('menu.edit');
 
     // home route (for compatibility)
     Route::get('/home', function () {
