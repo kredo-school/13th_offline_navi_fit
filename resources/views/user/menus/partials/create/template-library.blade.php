@@ -1,3 +1,4 @@
+{{-- resources/views/user/menus/partials/create/template-library.blade.php --}}
 <div class="card border-0 shadow-sm h-100 d-flex flex-column">
     <div class="card-header bg-white border-bottom">
         <h6 class="card-title mb-1">テンプレートライブラリ</h6>
