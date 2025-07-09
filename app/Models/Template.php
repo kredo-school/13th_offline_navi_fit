@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Menu extends Model
+class Template extends Model
 {
     use HasFactory;
 
@@ -17,10 +17,12 @@ class Menu extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
         'name',
-        'based_on_template_id',
+        'description',
         'is_active',
+        'difficulty',
+        'created_by',
+        'thumbnail_url',
     ];
 
     /**
@@ -33,31 +35,31 @@ class Menu extends Model
     ];
 
     /**
-     * Get the user that owns the menu.
+     * Get the user that should own the template.
      */
-    public function user(): BelongsTo
+    public function creator(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     /**
-     * Get the template that this menu is based on.
+     * Get the template exercises for this template.
      */
-    public function basedOnTemplate(): BelongsTo
+    public function templateExercises(): HasMany
     {
-        return $this->belongsTo(Template::class, 'based_on_template_id');
+        return $this->hasMany(TemplateExercise::class);
     }
 
     /**
-     * Get the menu exercises for this menu.
+     * Get the menus based on this template.
      */
-    public function menuExercises(): HasMany
+    public function menus(): HasMany
     {
-        return $this->hasMany(MenuExercise::class);
+        return $this->hasMany(Menu::class, 'based_on_template_id');
     }
 
     /**
-     * Scope a query to only include active menus.
+     * Scope a query to only include active templates.
      */
     public function scopeActive($query)
     {
@@ -65,10 +67,10 @@ class Menu extends Model
     }
 
     /**
-     * Scope a query to only include menus for a specific user.
+     * Scope a query to fileter by difficulty.
      */
-    public function scopeForUser($query, $userId)
+    public function scopeDifficulty($query, $difficulty)
     {
-        return $query->where('user_id', $userId);
+        return $query->where('difficulty', $difficulty);
     }
 }
