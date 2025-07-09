@@ -39,7 +39,6 @@ class MenuController extends Controller
     public function create()
     {
         $templates = Template::active()->get();
-
         return view('user.menus.create', compact('templates'));
     }
 
