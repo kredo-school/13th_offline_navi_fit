@@ -31,7 +31,6 @@ Route::middleware('auth')->group(function () {
 
     // goal (required)
     Route::resource('goal', GoalController::class)->except(['show']);
-
 });
 
 // User - Protected routes (with setup middleware)
@@ -40,9 +39,7 @@ Route::middleware(['auth', 'setup'])->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 
     // menu
-    Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
-    Route::get('/menu/show', [MenuController::class, 'show'])->name('menu.show');
-    Route::get('/menu/edit', [MenuController::class, 'edit'])->name('menu.edit');
+    Route::resource('menus', MenuController::class);
 
     // home route (for compatibility)
     Route::get('/home', function () {
