@@ -71,4 +71,12 @@ class Menu extends Model
     {
         return $query->where('user_id', $userId);
     }
+
+    /**
+     * Get the training records for the menu.
+     */
+    public function trainingRecords(): HasMany
+    {
+        return $this->hasMany(TrainingRecord::class);
+    }
 }
