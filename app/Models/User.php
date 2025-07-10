@@ -69,4 +69,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(BodyRecord::class);
     }
+
+    /**
+     * Get the menus for the user.
+     */
+    public function menus(): HasMany
+    {
+        return $this->hasMany(Menu::class);
+    }
+
+    /**
+     * Get the training records for the user.
+     */
+    public function trainingRecords(): HasMany
+    {
+        return $this->hasMany(TrainingRecord::class);
+    }
 }

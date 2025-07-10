@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('menus', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->foreignId('based_on_template_id')->nullable()->constrained('templates')->onDelete('set null');
+            // $table->foreignId('based_on_template_id')->nullable()->constrained('templates')->onDelete('set null');
             $table->boolean('is_active')->default(true);
 
             $table->index(['user_id', 'is_active']);
