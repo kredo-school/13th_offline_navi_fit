@@ -5,6 +5,7 @@ use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\GoalController;
 use App\Http\Controllers\User\MenuController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\TrainingRecordController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,9 @@ Route::middleware(['auth', 'setup'])->group(function () {
 
     // menu
     Route::resource('menus', MenuController::class);
+
+    // training records
+    // Route::resource('training-records', TrainingRecordController::class);
 
     // home route (for compatibility)
     Route::get('/home', function () {
