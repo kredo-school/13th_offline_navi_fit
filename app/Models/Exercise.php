@@ -24,6 +24,7 @@ class Exercise extends Model
         'difficulty',
         'instructions',
         'image_url',
+        'image_path',
         'is_active',
     ];
 

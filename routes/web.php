@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\User\BodyRecordController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\GoalController;
@@ -44,6 +45,9 @@ Route::middleware(['auth', 'setup'])->group(function () {
 
     // training records
     // Route::resource('training-records', TrainingRecordController::class);
+
+    // Exercise management routes
+    Route::resource('exercises', ExerciseController::class);
 
     // home route (for compatibility)
     Route::get('/home', function () {
