@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ExerciseController;
+use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\User\BodyRecordController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\GoalController;
@@ -53,6 +54,9 @@ Route::middleware(['auth', 'setup'])->group(function () {
     Route::get('/home', function () {
         return redirect()->route('dashboard');
     })->name('home');
+
+    // Templates resource routes
+    Route::resource('templates', TemplateController::class);
 
     // body record
     Route::resource('body-records', BodyRecordController::class);
