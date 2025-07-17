@@ -6,6 +6,7 @@ use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\GoalController;
 use App\Http\Controllers\User\MenuController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\TrainingHistoryController;
 use App\Http\Controllers\User\TrainingRecordController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,9 @@ Route::middleware(['auth', 'setup'])->group(function () {
 
     // training records
     // Route::resource('training-records', TrainingRecordController::class);
+
+    // training history
+    Route::resource('training-history', TrainingHistoryController::class);
 
     // Exercise management routes
     Route::resource('exercises', ExerciseController::class);
