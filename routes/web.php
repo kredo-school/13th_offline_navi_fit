@@ -49,7 +49,8 @@ Route::middleware(['auth', 'setup'])->group(function () {
     // Route::resource('training-records', TrainingRecordController::class);
 
     // training history
-    Route::resource('training-history', TrainingHistoryController::class);
+    Route::resource('training-history', TrainingHistoryController::class)->except(['show']);
+    Route::get('/training-history/show', [TrainingHistoryController::class, 'show']);
 
     // Exercise management routes
     Route::resource('exercises', ExerciseController::class);
