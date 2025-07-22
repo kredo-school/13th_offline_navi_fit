@@ -8,7 +8,7 @@
             <div class="col-lg-6">
                 <div class="d-flex justify-content-lg-end gap-2">
                     {{-- <x-bulk-delete-button /> --}}
-                    <a href="#" class="btn btn-primary">
+                    <a href="{{ route('menus.create') }}" class="btn btn-primary">
                         <i class="fa-solid fa-plus"></i> Create a new menu
                     </a>
                 </div>

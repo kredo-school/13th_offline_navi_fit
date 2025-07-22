@@ -18,7 +18,7 @@
                     </nav>
                 </div>
             </div>
-            
+
             <div class="d-flex align-items-center gap-2">
                 <button type="button" class="btn btn-outline-secondary" onclick="history.back()">
                     キャンセル

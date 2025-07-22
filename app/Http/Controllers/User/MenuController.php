@@ -39,6 +39,7 @@ class MenuController extends Controller
     public function create()
     {
         $templates = Template::active()->get();
+
         return view('user.menus.create', compact('templates'));
     }
 
@@ -58,7 +59,7 @@ class MenuController extends Controller
         $menu = Menu::create($validated);
 
         return redirect()
-            ->route('menu.show', $menu)
+            ->route('menus.show', $menu)
             ->with('success', 'Menu created successfully.');
     }
 
@@ -128,7 +129,7 @@ class MenuController extends Controller
         $menu->delete();
 
         return redirect()
-            ->route('menu.index')
+            ->route('menus.index')
             ->with('success', 'Menu deleted successfully.');
     }
 }
