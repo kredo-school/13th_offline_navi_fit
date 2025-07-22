@@ -3,33 +3,34 @@
 @section('title', 'Menu List')
 
 @section('content')
-<body class="bg-light">
-    <div class="container py-4">
-        {{-- ヘッダーセクション --}}
-        @include('user.menus.partials.header')
 
-        {{-- 検索バー --}}
-        @include('user.menus.partials.search-bar')
+    <body class="bg-light">
+        <div class="container py-4">
+            {{-- ヘッダーセクション --}}
+            @include('user.menus.partials.header')
 
-        {{-- フィルターパネル --}}
-        @include('user.menus.partials.filter-panel')
+            {{-- 検索バー --}}
+            @include('user.menus.partials.search-bar')
 
-        {{-- メニューグリッド --}}
-        <div class="row g-4 pt-5" id="menuGrid">
-            {{-- @forelse($menus as $menu) --}}
-                @include('user.menus.partials.menu-card')
-            {{-- @empty
-                @include('user.menus.partials.empty-states')
-            @endforelse --}}
+            {{-- フィルターパネル --}}
+            @include('user.menus.partials.filter-panel')
+
+            {{-- メニューグリッド --}}
+            <div class="row g-4 pt-5" id="menuGrid">
+                @forelse($menus as $menu)
+                    @include('user.menus.partials.menu-card' ['menu' -> $menu])
+                @empty
+                    @include('user.menus.partials.empty-status')
+                @endforelse
+            </div>
         </div>
-    </div>
 
-    {{-- モーダル --}}
-    @include('user.menus.partials.modals.delete-modal')
+        {{-- モーダル --}}
+        @include('user.menus.partials.modals.delete-modal')
 
-    {{-- トースト通知 --}}
-    @include('user.menus.components.toasts')
-</body>
+        {{-- トースト通知 --}}
+        @include('user.menus.components.toasts')
+    </body>
 @endsection
 
 @push('scripts')
