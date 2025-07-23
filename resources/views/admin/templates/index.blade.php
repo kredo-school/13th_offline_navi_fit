@@ -5,36 +5,43 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <!-- Header -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2>My Workout Templates</h2>
-                    <a href="{{ route('admin.templates.create') }}" class="btn btn-primary">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-2">
+                    <h2 class="mb-0">Workout Templates</h2>
+                    <a href="{{ route('admin.templates.create') }}" class="btn btn-primary" aria-label="Create New Template"
+                        title="新しいテンプレートを作成">
                         <i class="fas fa-plus"></i> Create New Template
                     </a>
                 </div>
 
                 <!-- Search Bar -->
-                <div class="card mb-4">
+                <div class="card mb-4 shadow-sm">
                     <div class="card-body">
-                        <form method="GET" action="{{ route('admin.templates.index') }}">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="search" class="form-control"
-                                            placeholder="Search templates..." value="{{ request('search') }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <button type="submit" class="btn btn-outline-secondary">
-                                        <i class="fas fa-search"></i> Search
-                                    </button>
-                                </div>
-                                <div class="col-md-3">
-                                    <a href="{{ route('admin.templates.index') }}" class="btn btn-outline-secondary">
-                                        <i class="fas fa-times"></i> Clear
-                                    </a>
-                                </div>
+                        <form method="GET" action="{{ route('admin.templates.index') }}"
+                            class="row g-2 align-items-center">
+                            <div class="col-12 col-md-6">
+                                <input type="text" name="search" class="form-control" placeholder="Search templates..."
+                                    value="{{ request('search') }}" aria-label="Search templates">
+                            </div>
+                            <div class="col-6 col-md-3 d-grid">
+                                <button type="submit" class="btn btn-outline-secondary" aria-label="Search">
+                                    <i class="fas fa-search"></i> Search
+                                </button>
+                            </div>
+                            <div class="col-6 col-md-3 d-grid">
+                                <a href="{{ route('admin.templates.index') }}" class="btn btn-outline-secondary"
+                                    aria-label="Clear search">
+                                    <i class="fas fa-times"></i> Clear
+                                </a>
                             </div>
                         </form>
+                        @if (request('search'))
+                            <div class="mt-2 text-muted small">
+                                <i class="fas fa-filter me-1"></i>Showing results for: <span
+                                    class="fw-semibold">{{ request('search') }}</span>
+                                <a href="{{ route('admin.templates.index') }}"
+                                    class="ms-2 text-decoration-underline">Reset</a>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
@@ -58,7 +65,7 @@
                     <div class="row">
                         @foreach ($templates as $template)
                             <div class="col-md-6 mb-4">
-                                <div class="card">
+                                <div class="card template-card h-100">
                                     <div class="card-header d-flex justify-content-between align-items-center">
                                         <h5 class="card-title mb-0">{{ $template->name }}</h5>
                                         <span
@@ -70,7 +77,6 @@
                                         @if ($template->description)
                                             <p class="card-text">{{ Str::limit($template->description, 100) }}</p>
                                         @endif
-
                                         <div class="row text-center mb-3">
                                             <div class="col-4">
                                                 <small class="text-muted">Exercises</small>
@@ -85,26 +91,29 @@
                                                 <div class="fw-bold">~{{ $template->estimated_calories ?? 360 }} kcal</div>
                                             </div>
                                         </div>
-
                                         <div class="d-flex justify-content-between align-items-center">
                                             <small class="text-muted">
                                                 Created: {{ $template->created_at->format('M d, Y') }}
                                             </small>
                                             <div class="btn-group" role="group">
                                                 <a href="{{ route('admin.templates.show', $template) }}"
-                                                    class="btn btn-sm btn-outline-primary">
+                                                    class="btn btn-sm btn-outline-primary"
+                                                    aria-label="View details for {{ $template->name }}" title="詳細">
                                                     <i class="fas fa-eye"></i> Details
                                                 </a>
                                                 <a href="{{ route('admin.templates.edit', $template) }}"
-                                                    class="btn btn-sm btn-outline-secondary">
+                                                    class="btn btn-sm btn-outline-secondary"
+                                                    aria-label="Edit {{ $template->name }}" title="編集">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </a>
-                                                <form method="POST" action="{{ route('admin.templates.destroy', $template) }}"
+                                                <form method="POST"
+                                                    action="{{ route('admin.templates.destroy', $template) }}"
                                                     class="d-inline"
                                                     onsubmit="return confirm('Are you sure you want to delete this template?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                        aria-label="Delete {{ $template->name }}" title="削除">
                                                         <i class="fas fa-trash"></i> Delete
                                                     </button>
                                                 </form>
@@ -122,12 +131,13 @@
                     </div>
                 @else
                     <!-- Empty State -->
-                    <div class="card">
+                    <div class="card border-0 shadow-sm">
                         <div class="card-body text-center py-5">
                             <i class="fas fa-dumbbell fa-3x text-muted mb-3"></i>
                             <h4>No Workout Templates Yet</h4>
                             <p class="text-muted">Create your first workout template to get started</p>
-                            <a href="{{ route('admin.templates.create') }}" class="btn btn-primary">
+                            <a href="{{ route('admin.templates.create') }}" class="btn btn-primary"
+                                aria-label="Create your first template">
                                 <i class="fas fa-plus"></i> Create Your First Template
                             </a>
                         </div>
@@ -136,4 +146,17 @@
             </div>
         </div>
     </div>
+    <style>
+        /* カードのホバー効果 */
+        .template-card {
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+
+        .template-card:hover,
+        .template-card:focus-within {
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px) scale(1.01);
+            z-index: 2;
+        }
+    </style>
 @endsection
