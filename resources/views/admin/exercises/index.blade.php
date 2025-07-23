@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layout')
 
 @section('content')
     <div class="container">
@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h4>Exercise Management</h4>
-                        <a href="{{ route('exercises.create') }}" class="btn btn-primary">Add New Exercise</a>
+                        <a href="{{ route('admin.exercises.create') }}" class="btn btn-primary">Add New Exercise</a>
                     </div>
 
                     <div class="card-body">
@@ -18,7 +18,7 @@
                         @endif
 
                         <!-- Search and Filter Form -->
-                        <form method="GET" action="{{ route('exercises.index') }}" class="mb-4">
+                        <form method="GET" action="{{ route('admin.exercises.index') }}" class="mb-4">
                             <div class="row">
                                 <div class="col-md-3">
                                     <input type="text" name="search" class="form-control"
@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <button type="submit" class="btn btn-secondary">Filter</button>
-                                    <a href="{{ route('exercises.index') }}" class="btn btn-outline-secondary">Clear</a>
+                                    <a href="{{ route('admin.exercises.index') }}" class="btn btn-outline-secondary">Clear</a>
                                 </div>
                             </div>
                         </form>
@@ -126,11 +126,11 @@
                                             </div>
                                         </div>
                                         <div class="card-footer">
-                                            <a href="{{ route('exercises.show', $exercise) }}"
+                                            <a href="{{ route('admin.exercises.show', $exercise) }}"
                                                 class="btn btn-info btn-sm">View</a>
-                                            <a href="{{ route('exercises.edit', $exercise) }}"
+                                            <a href="{{ route('admin.exercises.edit', $exercise) }}"
                                                 class="btn btn-warning btn-sm">Edit</a>
-                                            <form action="{{ route('exercises.destroy', $exercise) }}" method="POST"
+                                            <form action="{{ route('admin.exercises.destroy', $exercise) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
@@ -144,7 +144,7 @@
                                 <div class="col-12">
                                     <div class="text-center">
                                         <p>No exercises found.</p>
-                                        <a href="{{ route('exercises.create') }}" class="btn btn-primary">Add First
+                                        <a href="{{ route('admin.exercises.create') }}" class="btn btn-primary">Add First
                                             Exercise</a>
                                     </div>
                                 </div>

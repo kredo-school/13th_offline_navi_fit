@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layout')
 
 @section('content')
     <div class="container">
@@ -7,13 +7,13 @@
                 <!-- Header -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Create New Template</h2>
-                    <a href="{{ route('templates.index') }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('admin.templates.index') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left"></i> Back to Templates
                     </a>
                 </div>
 
                 <!-- Form -->
-                <form method="POST" action="{{ route('templates.store') }}" id="templateForm">
+                <form method="POST" action="{{ route('admin.templates.store') }}" id="templateForm">
                     @csrf
 
                     <div class="row">
@@ -114,7 +114,7 @@
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="d-flex justify-content-end">
-                                <a href="{{ route('templates.index') }}" class="btn btn-secondary me-2">Cancel</a>
+                                <a href="{{ route('admin.templates.index') }}" class="btn btn-secondary me-2">Cancel</a>
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i> Create Template
                                 </button>

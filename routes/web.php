@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ExerciseController;
-use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminExerciseController;
+use App\Http\Controllers\Admin\AdminTemplateController;
 use App\Http\Controllers\User\BodyRecordController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\GoalController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\User\MenuController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\TrainingHistoryController;
 use App\Http\Controllers\User\TrainingRecordController;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +39,17 @@ Route::middleware('auth')->group(function () {
     Route::resource('goal', GoalController::class)->except(['show']);
 });
 
+// User - Admin routes (with admin middleware)
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    // exercises and templates
+    Route::resource('/exercises', AdminExerciseController::class);
+    Route::resource('/templates', AdminTemplateController::class);
+
+    // user management
+    Route::aliasMiddleware('admin', AdminMiddleware::class);
+});
+
 // User - Protected routes (with setup middleware)
 Route::middleware(['auth', 'setup'])->group(function () {
     // dashboard
@@ -52,16 +65,10 @@ Route::middleware(['auth', 'setup'])->group(function () {
     Route::resource('training-history', TrainingHistoryController::class)->except(['show']);
     Route::get('/training-history/show', [TrainingHistoryController::class, 'show']);
 
-    // Exercise management routes
-    Route::resource('exercises', ExerciseController::class);
-
     // home route (for compatibility)
     Route::get('/home', function () {
         return redirect()->route('dashboard');
     })->name('home');
-
-    // Templates resource routes
-    Route::resource('templates', TemplateController::class);
 
     // body record
     Route::resource('body-records', BodyRecordController::class);

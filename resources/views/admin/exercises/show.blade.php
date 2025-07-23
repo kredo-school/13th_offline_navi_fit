@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layout')
 
 @section('content')
     <div class="container">
@@ -8,8 +8,8 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h4>{{ $exercise->name }}</h4>
                         <div>
-                            <a href="{{ route('exercises.edit', $exercise) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="{{ route('exercises.index') }}" class="btn btn-secondary btn-sm">Back to List</a>
+                            <a href="{{ route('admin.exercises.edit', $exercise) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{{ route('admin.exercises.index') }}" class="btn btn-secondary btn-sm">Back to List</a>
                         </div>
                     </div>
 
@@ -102,11 +102,11 @@
                     <div class="card-footer">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <a href="{{ route('exercises.edit', $exercise) }}" class="btn btn-warning">Edit
+                                <a href="{{ route('admin.exercises.edit', $exercise) }}" class="btn btn-warning">Edit
                                     Exercise</a>
                             </div>
                             <div>
-                                <form action="{{ route('exercises.destroy', $exercise) }}" method="POST" class="d-inline">
+                                <form action="{{ route('admin.exercises.destroy', $exercise) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"
