@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layout')
 
 @section('content')
     <div class="container">
@@ -19,14 +19,14 @@
                         @endif
                     </div>
                     <div>
-                        <a href="{{ route('templates.index') }}" class="btn btn-outline-secondary me-2">
+                        <a href="{{ route('admin.templates.index') }}" class="btn btn-outline-secondary me-2">
                             <i class="fas fa-arrow-left"></i> Back to Templates
                         </a>
                         @if ($template->created_by === Auth::id())
-                            <a href="{{ route('templates.edit', $template) }}" class="btn btn-outline-primary me-2">
+                            <a href="{{ route('admin.templates.edit', $template) }}" class="btn btn-outline-primary me-2">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
-                            <form method="POST" action="{{ route('templates.destroy', $template) }}" class="d-inline">
+                            <form method="POST" action="{{ route('admin.templates.destroy', $template) }}" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-danger"
@@ -190,7 +190,7 @@
                                 <h5>No Exercises Added</h5>
                                 <p class="text-muted">This template doesn't have any exercises yet.</p>
                                 @if ($template->created_by === Auth::id())
-                                    <a href="{{ route('templates.edit', $template) }}" class="btn btn-primary">
+                                    <a href="{{ route('admin.templates.edit', $template) }}" class="btn btn-primary">
                                         <i class="fas fa-plus"></i> Add Exercises
                                     </a>
                                 @endif

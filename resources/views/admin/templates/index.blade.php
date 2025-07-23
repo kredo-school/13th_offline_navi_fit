@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layout')
 
 @section('content')
     <div class="container">
@@ -7,7 +7,7 @@
                 <!-- Header -->
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>My Workout Templates</h2>
-                    <a href="{{ route('templates.create') }}" class="btn btn-primary">
+                    <a href="{{ route('admin.templates.create') }}" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Create New Template
                     </a>
                 </div>
@@ -15,7 +15,7 @@
                 <!-- Search Bar -->
                 <div class="card mb-4">
                     <div class="card-body">
-                        <form method="GET" action="{{ route('templates.index') }}">
+                        <form method="GET" action="{{ route('admin.templates.index') }}">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -29,7 +29,7 @@
                                     </button>
                                 </div>
                                 <div class="col-md-3">
-                                    <a href="{{ route('templates.index') }}" class="btn btn-outline-secondary">
+                                    <a href="{{ route('admin.templates.index') }}" class="btn btn-outline-secondary">
                                         <i class="fas fa-times"></i> Clear
                                     </a>
                                 </div>
@@ -91,15 +91,15 @@
                                                 Created: {{ $template->created_at->format('M d, Y') }}
                                             </small>
                                             <div class="btn-group" role="group">
-                                                <a href="{{ route('templates.show', $template) }}"
+                                                <a href="{{ route('admin.templates.show', $template) }}"
                                                     class="btn btn-sm btn-outline-primary">
                                                     <i class="fas fa-eye"></i> Details
                                                 </a>
-                                                <a href="{{ route('templates.edit', $template) }}"
+                                                <a href="{{ route('admin.templates.edit', $template) }}"
                                                     class="btn btn-sm btn-outline-secondary">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </a>
-                                                <form method="POST" action="{{ route('templates.destroy', $template) }}"
+                                                <form method="POST" action="{{ route('admin.templates.destroy', $template) }}"
                                                     class="d-inline"
                                                     onsubmit="return confirm('Are you sure you want to delete this template?')">
                                                     @csrf
@@ -127,7 +127,7 @@
                             <i class="fas fa-dumbbell fa-3x text-muted mb-3"></i>
                             <h4>No Workout Templates Yet</h4>
                             <p class="text-muted">Create your first workout template to get started</p>
-                            <a href="{{ route('templates.create') }}" class="btn btn-primary">
+                            <a href="{{ route('admin.templates.create') }}" class="btn btn-primary">
                                 <i class="fas fa-plus"></i> Create Your First Template
                             </a>
                         </div>

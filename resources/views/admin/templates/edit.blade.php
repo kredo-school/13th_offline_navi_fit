@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layout')
 
 @section('content')
     <div class="container">
@@ -8,17 +8,17 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Edit Template: {{ $template->name }}</h2>
                     <div>
-                        <a href="{{ route('templates.show', $template) }}" class="btn btn-outline-secondary me-2">
+                        <a href="{{ route('admin.templates.show', $template) }}" class="btn btn-outline-secondary me-2">
                             <i class="fas fa-eye"></i> View Template
                         </a>
-                        <a href="{{ route('templates.index') }}" class="btn btn-outline-secondary">
+                        <a href="{{ route('admin.templates.index') }}" class="btn btn-outline-secondary">
                             <i class="fas fa-arrow-left"></i> Back to Templates
                         </a>
                     </div>
                 </div>
 
                 <!-- Form -->
-                <form method="POST" action="{{ route('templates.update', $template) }}" id="templateForm">
+                <form method="POST" action="{{ route('admin.templates.update', $template) }}" id="templateForm">
                     @csrf
                     @method('PUT')
 
@@ -188,7 +188,7 @@
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="d-flex justify-content-between">
-                                <a href="{{ route('templates.show', $template) }}"
+                                <a href="{{ route('admin.templates.show', $template) }}"
                                     class="btn btn-secondary me-2">Cancel</a>
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i> Update Template
@@ -200,7 +200,7 @@
                 <!-- Delete Form -->
                 <div class="row mt-3">
                     <div class="col-12">
-                        <form method="POST" action="{{ route('templates.destroy', $template) }}" class="d-inline">
+                        <form method="POST" action="{{ route('admin.templates.destroy', $template) }}" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger"

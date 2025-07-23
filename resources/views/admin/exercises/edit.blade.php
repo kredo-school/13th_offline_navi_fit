@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layout')
 
 @section('content')
     <div class="container">
@@ -10,7 +10,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('exercises.update', $exercise) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.exercises.update', $exercise) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -188,7 +188,7 @@
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Update Exercise</button>
-                                <a href="{{ route('exercises.show', $exercise) }}" class="btn btn-secondary">Cancel</a>
+                                <a href="{{ route('admin.exercises.show', $exercise) }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </form>
                     </div>
