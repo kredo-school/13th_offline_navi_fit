@@ -50,7 +50,7 @@
                     <a href="{{ route('dashboard') }}" class="btn btn-outline-light btn-sm" aria-label="User Panel" title="User Panel">User Panel</a>
                     <a href="{{ route('admin.templates.index') }}" class="btn btn-outline-light btn-sm" aria-label="Templates" title="Templates"><i class="fas fa-layer-group me-1"></i>Templates</a>
                     <a href="{{ route('admin.exercises.index') }}" class="btn btn-outline-light btn-sm" aria-label="Exercises" title="Exercises"><i class="fas fa-dumbbell me-1"></i>Exercises</a>
-                    {{-- <a href="{{ route('admin.users.index') }}" class="btn btn-outline-light btn-sm" aria-label="Users" title="Users"><i class="fas fa-users me-1"></i>Users</a> --}}
+                    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-light btn-sm" aria-label="Users" title="Users"><i class="fas fa-users me-1"></i>Users</a>
                 </nav>
             </div>
         </header>
