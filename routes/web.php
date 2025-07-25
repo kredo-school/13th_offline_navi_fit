@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminExerciseController;
 use App\Http\Controllers\Admin\AdminTemplateController;
+use App\Http\Controllers\Api\ExerciseController;
+use App\Http\Controllers\Api\TemplateController;
 use App\Http\Controllers\User\BodyRecordController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use App\Http\Controllers\User\GoalController;
@@ -72,4 +74,12 @@ Route::middleware(['auth', 'setup'])->group(function () {
 
     // body record
     Route::resource('body-records', BodyRecordController::class);
+});
+
+// API routes
+Route::middleware(['auth', 'setup'])->prefix('api')->group(function () {
+    Route::get('/exercises/search', [ExerciseController::class, 'search']);
+    Route::get('/exercises/{exercise}', [ExerciseController::class, 'show']);
+    Route::get('/templates', [TemplateController::class, 'index']);
+    Route::get('/templates/{template}', [TemplateController::class, 'show']);
 });
