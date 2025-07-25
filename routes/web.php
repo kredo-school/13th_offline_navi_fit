@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminExerciseController;
 use App\Http\Controllers\Admin\AdminTemplateController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Api\ExerciseController;
 use App\Http\Controllers\Api\TemplateController;
 use App\Http\Controllers\User\BodyRecordController;
@@ -49,6 +50,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('/templates', AdminTemplateController::class);
 
     // user management
+    Route::resource('/users', AdminUserController::class);
+    Route::patch('/users/{user}/toggle-status', [AdminUserController::class, 'toggleStatus'])->name('users.toggle-status');
+    Route::patch('/users/{user}/toggle-admin', [AdminUserController::class, 'toggleAdmin'])->name('users.toggle-admin');
+
     Route::aliasMiddleware('admin', AdminMiddleware::class);
 });
 
