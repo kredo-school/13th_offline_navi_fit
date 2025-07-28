@@ -18,7 +18,7 @@
             {{-- メニューグリッド --}}
             <div class="row g-4 pt-5" id="menuGrid">
                 @forelse($menus as $menu)
-                    @include('user.menus.partials.menu-card' ['menu' -> $menu])
+                    @include('user.menus.partials.menu-card', ['menu' => $menu])
                 @empty
                     @include('user.menus.partials.empty-status')
                 @endforelse
