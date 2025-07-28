@@ -65,6 +65,12 @@ Route::middleware(['auth', 'setup'])->group(function () {
     // menu
     Route::resource('menus', MenuController::class);
 
+    // exercises
+    Route::post('/menus/{menu}/exercises', [MenuController::class, 'addExercises'])->name('menus.exercises.add');
+    Route::put('/menus/{menu}/exercises/{exercise}', [MenuController::class, 'updateExerciseDetails'])->name('menus.exercises.update');
+    Route::post('/menus/{menu}/exercises/reorder', [MenuController::class, 'reorderExercises'])->name('menus.exercises.reorder');
+    Route::post('/menus/from-template/{template}', [MenuController::class, 'createFromTemplate'])->name('menus.from-template');
+
     // training records
     // Route::resource('training-records', TrainingRecordController::class);
 
