@@ -22,7 +22,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 
     <style>
 
@@ -42,6 +43,7 @@
         </main>
     </div>
 
+    @livewireScripts
 </body>
 
 </html>
