@@ -57,6 +57,15 @@
             @enderror
         </div>
 
+        <div class="form-group">
+            <div class="flex items-center">
+                <input id="remember" type="checkbox" name="remember" class="mr-2" {{ old('remember') ? 'checked' : '' }}>
+                <label for="remember" class="text-sm text-gray-600 cursor-pointer">
+                    Remember me
+                </label>
+            </div>
+        </div>
+
         <button type="submit" class="btn-primary">
             Login
         </button>
