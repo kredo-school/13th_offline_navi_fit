@@ -11,7 +11,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center gap-3">
                         <a href="{{ route('menus.index') }}" class="btn btn-light rounded-circle p-2" aria-label="メニュー一覧に戻る">
-                            <i class="bi bi-arrow-left"></i>
+                            <i class="fa-solid fa-arrow-left"></i>
                         </a>
                         <div>
                             <h1 class="h5 mb-0 fw-semibold">{{ $menu->name }}</h1>
@@ -23,12 +23,12 @@
                     <div class="d-none d-md-flex gap-2">
                         <a href="{{ route('menus.edit', $menu) }}" class="btn btn-primary d-flex align-items-center gap-2"
                             aria-label="メニューを編集">
-                            <i class="bi bi-pencil"></i>
+                            <i class="fa-solid fa-pencil"></i>
                             <span>編集</span>
                         </a>
                         <button type="button" class="btn btn-danger d-flex align-items-center gap-2" data-bs-toggle="modal"
                             data-bs-target="#deleteModal" aria-label="メニューを削除">
-                            <i class="bi bi-trash"></i>
+                            <i class="fa-solid fa-trash"></i>
                             <span>削除</span>
                         </button>
                     </div>
@@ -48,15 +48,15 @@
 
                             <div class="d-flex flex-wrap gap-3 small text-muted mb-3">
                                 <div class="d-flex align-items-center gap-1">
-                                    <i class="bi bi-calendar"></i>
+                                    <i class="fa-solid fa-calendar"></i>
                                     <span>作成日: {{ $menu->created_at->format('Y年m月d日') }}</span>
                                 </div>
                                 <div class="d-flex align-items-center gap-1">
-                                    <i class="bi bi-person"></i>
+                                    <i class="fa-solid fa-user"></i>
                                     <span>作成者: あなた</span>
                                 </div>
                                 <div class="d-flex align-items-center gap-1">
-                                    <i class="bi bi-globe text-success"></i>
+                                    <i class="fa-solid fa-globe text-success"></i>
                                     <span class="text-success">公開</span>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@
                                         <div class="row g-3 small text-muted">
                                             <div class="col-6 col-md-3">
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <i class="bi bi-bullseye"></i>
+                                                    <i class="fa-solid fa-bullseye"></i>
                                                     <span>3セット</span>
                                                 </div>
                                             </div>
@@ -135,7 +135,7 @@
                                             </div>
                                             <div class="col-6 col-md-3">
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <i class="bi bi-clock"></i>
+                                                    <i class="fa-solid fa-clock"></i>
                                                     <span>休憩 90秒</span>
                                                 </div>
                                             </div>
@@ -147,7 +147,7 @@
                                     </div>
 
                                     <div class="ms-3">
-                                        <i class="bi bi-chevron-right text-muted"></i>
+                                        <i class="fa-solid fa-chevron-right text-muted"></i>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +166,7 @@
                                         <div class="row g-3 small text-muted">
                                             <div class="col-6 col-md-3">
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <i class="bi bi-bullseye"></i>
+                                                    <i class="fa-solid fa-bullseye"></i>
                                                     <span>4セット</span>
                                                 </div>
                                             </div>
@@ -178,7 +178,7 @@
                                             </div>
                                             <div class="col-6 col-md-3">
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <i class="bi bi-clock"></i>
+                                                    <i class="fa-solid fa-clock"></i>
                                                     <span>休憩 120秒</span>
                                                 </div>
                                             </div>
@@ -186,7 +186,7 @@
                                     </div>
 
                                     <div class="ms-3">
-                                        <i class="bi bi-chevron-right text-muted"></i>
+                                        <i class="fa-solid fa-chevron-right text-muted"></i>
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +205,7 @@
                                         <div class="row g-3 small text-muted">
                                             <div class="col-6 col-md-3">
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <i class="bi bi-bullseye"></i>
+                                                    <i class="fa-solid fa-bullseye"></i>
                                                     <span>3セット</span>
                                                 </div>
                                             </div>
@@ -217,7 +217,7 @@
                                             </div>
                                             <div class="col-6 col-md-3">
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <i class="bi bi-clock"></i>
+                                                    <i class="fa-solid fa-clock"></i>
                                                     <span>休憩 180秒</span>
                                                 </div>
                                             </div>
@@ -225,7 +225,7 @@
                                     </div>
 
                                     <div class="ms-3">
-                                        <i class="bi bi-chevron-right text-muted"></i>
+                                        <i class="fa-solid fa-chevron-right text-muted"></i>
                                     </div>
                                 </div>
                             </div>
@@ -244,13 +244,13 @@
                                         <div class="row g-3 small text-muted">
                                             <div class="col-6 col-md-3">
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <i class="bi bi-bullseye"></i>
+                                                    <i class="fa-solid fa-bullseye"></i>
                                                     <span>3セット</span>
                                                 </div>
                                             </div>
                                             <div class="col-6 col-md-3">
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <i class="bi bi-clock"></i>
+                                                    <i class="fa-solid fa-clock"></i>
                                                     <span>60秒</span>
                                                 </div>
                                             </div>
@@ -259,7 +259,7 @@
                                             </div>
                                             <div class="col-6 col-md-3">
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <i class="bi bi-clock"></i>
+                                                    <i class="fa-solid fa-clock"></i>
                                                     <span>休憩 60秒</span>
                                                 </div>
                                             </div>
@@ -267,7 +267,7 @@
                                     </div>
 
                                     <div class="ms-3">
-                                        <i class="bi bi-chevron-right text-muted"></i>
+                                        <i class="fa-solid fa-chevron-right text-muted"></i>
                                     </div>
                                 </div>
                             </div>
@@ -286,7 +286,7 @@
                                         <div class="row g-3 small text-muted">
                                             <div class="col-6 col-md-3">
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <i class="bi bi-bullseye"></i>
+                                                    <i class="fa-solid fa-bullseye"></i>
                                                     <span>3セット</span>
                                                 </div>
                                             </div>
@@ -298,7 +298,7 @@
                                             </div>
                                             <div class="col-6 col-md-3">
                                                 <div class="d-flex align-items-center gap-1">
-                                                    <i class="bi bi-clock"></i>
+                                                    <i class="fa-solid fa-clock"></i>
                                                     <span>休憩 90秒</span>
                                                 </div>
                                             </div>
@@ -306,7 +306,7 @@
                                     </div>
 
                                     <div class="ms-3">
-                                        <i class="bi bi-chevron-right text-muted"></i>
+                                        <i class="fa-solid fa-chevron-right text-muted"></i>
                                     </div>
                                 </div>
                             </div>
@@ -322,13 +322,13 @@
                 <a href="{{ route('menus.edit', $menu) }}"
                     class="btn btn-primary flex-fill d-flex align-items-center justify-content-center gap-2"
                     aria-label="メニューを編集">
-                    <i class="bi bi-pencil"></i>
+                    <i class="fa-solid fa-pencil"></i>
                     <span>編集</span>
                 </a>
                 <button type="button"
                     class="btn btn-danger flex-fill d-flex align-items-center justify-content-center gap-2"
                     data-bs-toggle="modal" data-bs-target="#deleteModal" aria-label="メニューを削除">
-                    <i class="bi bi-trash"></i>
+                    <i class="fa-solid fa-trash"></i>
                     <span>削除</span>
                 </button>
             </div>
@@ -342,7 +342,7 @@
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <div class="d-flex align-items-center gap-3">
                                 <div class="bg-danger-subtle rounded-circle p-2">
-                                    <i class="bi bi-exclamation-triangle text-danger fs-5"></i>
+                                    <i class="fa-solid fa-triangle-exclamation text-danger fs-5"></i>
                                 </div>
                                 <h5 class="modal-title mb-0" id="deleteModalLabel">メニューを削除しますか？</h5>
                             </div>
@@ -377,7 +377,7 @@
                 aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body">
-                        <i class="bi bi-check-circle me-2"></i>
+                        <i class="fa-solid fa-check-circle me-2"></i>
                         メニューが削除されました
                     </div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"

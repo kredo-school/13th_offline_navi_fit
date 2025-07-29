@@ -3,7 +3,7 @@
     <div class="col-sm-8 col-lg-9 mb-3 mb-sm-0">
         <form action="#" method="GET" id="searchForm">
             <div class="position-relative">
-                <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                <i class="fa-solid fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
                 <input type="text" 
                        class="form-control ps-5" 
                        name="search"
@@ -20,7 +20,7 @@
                 data-bs-target="#filterPanel"
                 aria-expanded="false"
                 aria-controls="filterPanel">
-            <i class="bi bi-funnel me-2"></i>
+            <i class="fa-solid fa-filter me-2"></i>
             Filter
             <span class="badge bg-primary ms-2 d-none" id="activeFilterCount">0</span>
         </button>

@@ -25,7 +25,7 @@
                 <!-- User greeting and goal info -->
                 <div class="d-none d-lg-flex align-items-center gap-3">
                     <div class="d-flex align-items-center gap-2">
-                        <i class="bi bi-person-circle text-primary fs-5"></i>
+                        <i class="fa-solid fa-circle-user text-primary fs-5"></i>
                         <span class="fw-medium fs-5">
                             Hello, {{ Auth::user()->name ?? 'User' }}!
                         </span>
