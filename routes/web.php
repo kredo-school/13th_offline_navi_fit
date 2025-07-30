@@ -42,6 +42,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('goal', GoalController::class)->except(['show']);
 });
 
+// Account settings routes
+Route::prefix('account')->name('account.')->middleware('auth')->group(function () {
+    Route::get('/', [App\Http\Controllers\User\AccountController::class, 'index'])->name('index');
+    Route::post('/avatar', [App\Http\Controllers\User\AccountController::class, 'updateAvatar'])->name('avatar.update');
+    Route::delete('/avatar', [App\Http\Controllers\User\AccountController::class, 'deleteAvatar'])->name('avatar.delete');
+    Route::get('/password', [App\Http\Controllers\User\AccountController::class, 'showPasswordForm'])->name('password');
+    Route::post('/password', [App\Http\Controllers\User\AccountController::class, 'updatePassword'])->name('password.update');
+});
+
 // Admin Auth Routes
 Route::get('/admin/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'login']);
