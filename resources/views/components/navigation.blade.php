@@ -53,6 +53,13 @@
                             <li><a class="dropdown-item" href="#">Profile Settings</a></li>
                             <li><a class="dropdown-item" href="#">Notification Settings</a></li>
                             <li><a class="dropdown-item" href="#">Account Settings</a></li>
+                            @if (auth()->check() && auth()->user()->is_admin)
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                        <i class="fa-solid fa-user-shield"></i> Admin Dashboard
+                                    </a>
+                                </li>
+                            @endif
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

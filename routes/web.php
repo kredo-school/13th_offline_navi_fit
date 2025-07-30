@@ -42,9 +42,18 @@ Route::middleware('auth')->group(function () {
     Route::resource('goal', GoalController::class)->except(['show']);
 });
 
+// Admin Auth Routes
+Route::get('/admin/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'login']);
+Route::post('/admin/logout', [App\Http\Controllers\Admin\AdminAuthController::class, 'logout'])->name('admin.logout');
+
+// Admin Middleware Aliases
+Route::aliasMiddleware('admin', AdminMiddleware::class);
+
 // User - Admin routes (with admin middleware)
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+
     // exercises and templates
     Route::resource('/exercises', AdminExerciseController::class);
     Route::resource('/templates', AdminTemplateController::class);
@@ -53,8 +62,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('/users', AdminUserController::class);
     Route::patch('/users/{user}/toggle-status', [AdminUserController::class, 'toggleStatus'])->name('users.toggle-status');
     Route::patch('/users/{user}/toggle-admin', [AdminUserController::class, 'toggleAdmin'])->name('users.toggle-admin');
-
-    Route::aliasMiddleware('admin', AdminMiddleware::class);
 });
 
 // User - Protected routes (with setup middleware)
