@@ -28,98 +28,50 @@
                     </tr>
                 </thead>
                 <tbody id="exerciseTableBody">
-                    {{-- Sample Exercise Row --}}
-                    <tr class="exercise-row" draggable="true">
-                        <td class="text-center">
-                            <i class="fa-solid fa-grip-vertical text-muted drag-handle"></i>
-                        </td>
-                        <td>
-                            <input type="text" 
-                                   class="form-control form-control-sm" 
-                                   value="ベンチプレス"
-                                   placeholder="種目名"
-                                   style="border: 1px solid #ced4da; background-color: #f8f9fa;">
-                        </td>
-                        <td>
-                            <input type="number" 
-                                   class="form-control form-control-sm text-center" 
-                                   value="3" 
-                                   min="1" 
-                                   max="999"
-                                   style="border: 1px solid #ced4da; background-color: #f8f9fa;">
-                        </td>
-                        <td>
-                            <input type="number" 
-                                   class="form-control form-control-sm text-center" 
-                                   value="10" 
-                                   min="1" 
-                                   max="999"
-                                   style="border: 1px solid #ced4da; background-color: #f8f9fa;">
-                        </td>
-                        <td>
-                            <input type="number" 
-                                   class="form-control form-control-sm text-center" 
-                                   value="60" 
-                                   min="1" 
-                                   max="999"
-                                   step="0.5"
-                                   style="border: 1px solid #ced4da; background-color: #f8f9fa;">
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-outline-danger btn-sm">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    
-                    {{-- Another Sample Row --}}
-                    <tr class="exercise-row" draggable="true">
-                        <td class="text-center">
-                            <i class="fa-solid fa-grip-vertical text-muted drag-handle"></i>
-                        </td>
-                        <td>
-                            <input type="text" 
-                                   class="form-control form-control-sm" 
-                                   value="スクワット"
-                                   placeholder="種目名"
-                                   style="border: 1px solid #ced4da; background-color: #f8f9fa;">
-                        </td>
-                        <td>
-                            <input type="number" 
-                                   class="form-control form-control-sm text-center" 
-                                   value="4" 
-                                   min="1" 
-                                   max="999"
-                                   style="border: 1px solid #ced4da; background-color: #f8f9fa;">
-                        </td>
-                        <td>
-                            <input type="number" 
-                                   class="form-control form-control-sm text-center" 
-                                   value="12" 
-                                   min="1" 
-                                   max="999"
-                                   style="border: 1px solid #ced4da; background-color: #f8f9fa;">
-                        </td>
-                        <td>
-                            <input type="number" 
-                                   class="form-control form-control-sm text-center" 
-                                   value="80" 
-                                   min="1" 
-                                   max="999"
-                                   step="0.5"
-                                   style="border: 1px solid #ced4da; background-color: #f8f9fa;">
-                        </td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-outline-danger btn-sm">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    @if (isset($menu) && $menu->menuExercises->count() > 0)
+                        @foreach ($menu->menuExercises as $menuExercise)
+                            <tr class="exercise-row" draggable="true"
+                                data-exercise-id="{{ $menuExercise->exercise_id }}">
+                                <td class="text-center">
+                                    <i class="fa-solid fa-grip-vertical text-muted drag-handle"></i>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm"
+                                        value="{{ $menuExercise->exercise->name }}" placeholder="種目名" readonly
+                                        style="border: 1px solid #ced4da; background-color: #f8f9fa;">
+                                    <input type="hidden" name="exercise_ids[]"
+                                        value="{{ $menuExercise->exercise_id }}">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form-control-sm text-center"
+                                        name="sets[]" value="{{ $menuExercise->sets }}" min="1" max="999"
+                                        style="border: 1px solid #ced4da; background-color: #f8f9fa;">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form-control-sm text-center"
+                                        name="reps[]" value="{{ $menuExercise->reps }}" min="1" max="999"
+                                        style="border: 1px solid #ced4da; background-color: #f8f9fa;">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form-control-sm text-center"
+                                        name="weights[]" value="{{ $menuExercise->weight }}" min="0"
+                                        max="999" step="0.5"
+                                        style="border: 1px solid #ced4da; background-color: #f8f9fa;">
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-outline-danger btn-sm remove-exercise">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
 
             {{-- Empty State --}}
-            <div class="text-center py-5 text-muted d-none" id="emptyState">
+            <div class="text-center py-5 text-muted {{ isset($menu) && $menu->menuExercises->count() > 0 ? 'd-none' : '' }}"
+                id="emptyState">
                 <p class="small">左右のパネルから種目をドラッグ&ドロップで追加してください</p>
             </div>
         </div>

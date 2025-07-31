@@ -1,21 +1,20 @@
 <div class="col-md-6 col-lg-4">
-    <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden menu-card" 
-         data-menu-id="1">
+    <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden menu-card"
+        data-menu-id="{{ $menu->id }}">
         <div class="card-body p-4">
             {{-- カードヘッダー --}}
             <div class="d-flex justify-content-between align-items-start mb-3">
                 <div class="d-flex align-items-start">
-                    <input type="checkbox" 
-                           class="form-check-input me-3 mt-1 menu-checkbox" 
-                           id="menu-1"
-                           value="1">
+                    <input type="checkbox" class="form-check-input me-3 mt-1 menu-checkbox" id="menu-{{ $menu->id }}"
+                        value="{{ $menu->id }}">
                     <div>
-                        <h3 class="h5 fw-semibold mb-1">初心者向け全身トレーニング</h3>
-                        <p class="text-muted small mb-0">基本的なエクササイズで全身をバランスよく鍛えるメニュー</p>
+                        <h3 class="h5 fw-semibold mb-1">{{ $menu->name }}</h3>
+                        <p class="text-muted small mb-0">{{ $menu->description ?? 'No description.' }}</p>
                     </div>
                 </div>
                 {{-- 公開/非公開アイコン --}}
-                <i class="fa-solid fa-globe text-success" title="公開メニュー"></i>
+                <i class="fa-solid fa-globe text-success"
+                    title="{{ $menu->is_active ? 'Public Menu' : 'Private Menu' }}"></i>
             </div>
 
             {{-- メタ情報 --}}
@@ -23,19 +22,32 @@
                 <div class="col-6">
                     <div class="d-flex align-items-center text-muted small">
                         <i class="fa-solid fa-calendar me-2"></i>
-                        <span>2025年1月15日</span>
+                        <span>{{ $menu->created_at->format('Y/m/d') }}</span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="d-flex align-items-center text-muted small">
                         <i class="fa-solid fa-bullseye me-2"></i>
-                        <span>8種目</span>
+                        <span>{{ $menu->menuExercises->count() }} exercises</span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="d-flex align-items-center text-muted small">
                         <i class="fa-solid fa-clock me-2"></i>
-                        <span>45分</span>
+                        @php
+                            // 推定時間の計算
+                            $totalTime = 0;
+                            foreach ($menu->menuExercises as $menuExercise) {
+                                $setTime = ($menuExercise->sets ?? 0) * 45;
+                                $restTime = ($menuExercise->sets ?? 0) * ($menuExercise->rest_seconds ?? 60);
+                                if ($menuExercise->sets > 0) {
+                                    $restTime -= $menuExercise->rest_seconds ?? 60;
+                                }
+                                $totalTime += $setTime + $restTime;
+                            }
+                            $estimatedTime = ceil($totalTime / 60);
+                        @endphp
+                        <span>{{ $estimatedTime }} min</span>
                     </div>
                 </div>
                 <div class="col-6">
@@ -45,27 +57,41 @@
 
             {{-- タグ --}}
             <div class="d-flex flex-wrap gap-1 mb-3">
-                <span class="badge bg-secondary">全身</span>
-                <span class="badge bg-secondary">筋トレ</span>
-                <span class="badge bg-secondary">初心者</span>
+                @php
+                    // タグの抽出（muscle_groupsから）
+                    $muscleGroups = [];
+                    foreach ($menu->menuExercises as $menuExercise) {
+                        if ($menuExercise->exercise && isset($menuExercise->exercise->muscle_groups)) {
+                            $muscleGroups = array_merge(
+                                $muscleGroups,
+                                is_array($menuExercise->exercise->muscle_groups)
+                                    ? $menuExercise->exercise->muscle_groups
+                                    : [],
+                            );
+                        }
+                    }
+                    $muscleGroups = array_unique($muscleGroups);
+                @endphp
+                @foreach ($muscleGroups as $muscleGroup)
+                    <span class="badge bg-secondary">{{ $muscleGroup }}</span>
+                @endforeach
+                @if ($menu->basedOnTemplate)
+                    <span class="badge bg-secondary">Template Used</span>
+                @endif
             </div>
 
             {{-- アクションボタン --}}
             <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-                <a href="#" class="btn btn-sm btn-primary">
+                <a href="{{ route('menus.show', $menu) }}" class="btn btn-sm btn-primary">
                     <i class="fa-solid fa-eye me-1"></i>
-                    詳細
+                    Details
                 </a>
                 <div class="d-flex gap-2">
-                    <a href="#" 
-                       class="btn btn-sm btn-outline-secondary" 
-                       title="編集">
+                    <a href="{{ route('menus.edit', $menu) }}" class="btn btn-sm btn-outline-secondary" title="Edit">
                         <i class="fa-solid fa-pencil"></i>
                     </a>
-                    <button class="btn btn-sm btn-outline-danger delete-menu-btn" 
-                            title="削除"
-                            data-menu-id="1"
-                            data-menu-title="初心者向け全身トレーニング">
+                    <button class="btn btn-sm btn-outline-danger delete-menu-btn" title="Delete"
+                        data-menu-id="{{ $menu->id }}" data-menu-title="{{ $menu->name }}">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </div>
