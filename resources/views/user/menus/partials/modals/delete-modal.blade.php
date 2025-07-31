@@ -10,16 +10,17 @@
                     <h5 class="modal-title mb-0 fw-semibold" id="deleteModalLabel">
                         メニューを削除しますか？
                     </h5>
-                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                
+
                 {{-- 単一削除の場合 --}}
                 <div id="singleDeleteInfo">
                     <p class="text-muted mb-4">
                         <span class="fw-medium text-dark menu-title"></span>を削除します。この操作は取り消せません。
                     </p>
                 </div>
-                
+
                 {{-- 一括削除の場合 --}}
                 <div class="bg-light rounded p-3 mb-4 d-none" id="bulkDeleteInfo">
                     <p class="small fw-medium mb-2">削除対象: <span class="text-danger bulk-delete-count">0</span>件のメニュー</p>
@@ -27,7 +28,7 @@
                         {{-- JavaScriptで動的に生成 --}}
                     </div>
                 </div>
-                
+
                 {{-- 警告メッセージ --}}
                 <div class="alert alert-warning d-flex align-items-center mb-4" role="alert">
                     <i class="bi bi-info-circle-fill me-2"></i>
@@ -35,16 +36,20 @@
                         削除されたメニューは復元できません。関連するすべてのデータも削除されます。
                     </div>
                 </div>
-                
+
                 {{-- アクションボタン --}}
                 <div class="d-flex gap-2">
                     <button type="button" class="btn btn-outline-secondary flex-fill" data-bs-dismiss="modal">
                         キャンセル
                     </button>
-                    <button type="button" class="btn btn-danger flex-fill confirm-delete-btn" data-menu-id="">
-                        <i class="bi bi-trash3 me-2"></i>
-                        削除する
-                    </button>
+                    <form id="deleteMenuForm" method="POST" class="flex-fill">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger w-100 confirm-delete-btn" data-menu-id="">
+                            <i class="bi bi-trash3 me-2"></i>
+                            削除する
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -63,7 +68,7 @@
                 <p class="mb-3">
                     <span class="fw-bold selected-count">0</span>件のメニューが選択されています
                 </p>
-                
+
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-outline-danger bulk-delete-trigger">
                         <i class="bi bi-trash3 me-2"></i>

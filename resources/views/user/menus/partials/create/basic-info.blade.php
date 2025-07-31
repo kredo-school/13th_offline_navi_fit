@@ -2,18 +2,15 @@
 <div class="card border-0 shadow-sm mb-3">
     <div class="card-body">
         <h5 class="card-title mb-3">基本情報</h5>
-        
-        <form>
+
+        <form id="menuCreateForm" action="{{ route('menus.store') }}" method="POST">
+            @csrf
             <div class="mb-3">
                 <label for="menuName" class="form-label fw-medium">
                     メニュー名 <span class="text-danger">*</span>
                 </label>
-                <input type="text" 
-                       class="form-control form-control-sm" 
-                       id="menuName" 
-                       value=""
-                       placeholder="メニュー名を入力"
-                       maxlength="50">
+                <input type="text" class="form-control form-control-sm" id="menuName" name="name"
+                    value="{{ old('name') }}" placeholder="メニュー名を入力" maxlength="50" required>
                 <div class="invalid-feedback">
                     メニュー名は必須です
                 </div>
@@ -21,26 +18,31 @@
 
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label for="difficulty" class="form-label fw-medium">
-                        難易度
+                    <label for="based_on_template_id" class="form-label fw-medium">
+                        テンプレートの選択
                     </label>
-                    <select class="form-select form-select-sm" id="difficulty">
-                        <option value="beginner" selected>初級者</option>
-                        <option value="intermediate">中級者</option>
-                        <option value="advanced">上級者</option>
+                    <select class="form-select form-select-sm" id="based_on_template_id" name="based_on_template_id">
+                        <option value="">テンプレートを選択</option>
+                        @foreach ($templates as $template)
+                            <option value="{{ $template->id }}">{{ $template->name }}</option>
+                        @endforeach
                     </select>
                 </div>
 
                 <div class="col-md-6 d-flex align-items-end">
                     <div class="form-check">
-                        <input class="form-check-input" 
-                               type="checkbox" 
-                               id="isPublic">
-                        <label class="form-check-label" for="isPublic">
+                        <input class="form-check-input" type="checkbox" id="is_active" name="is_active" value="1"
+                            checked>
+                        <label class="form-check-label" for="is_active">
                             公開する
                         </label>
                     </div>
                 </div>
+            </div>
+
+            <!-- エクササイズデータを保存するための隠しフィールド -->
+            <div id="exerciseDataContainer">
+                <!-- JavaScriptで動的に追加される -->
             </div>
         </form>
     </div>

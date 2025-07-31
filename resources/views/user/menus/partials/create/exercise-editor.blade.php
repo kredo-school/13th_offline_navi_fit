@@ -28,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody id="exerciseTableBody">
-                    {{-- Create mode: empty table initially --}}
+                    {{-- Exercise rows will be added dynamically --}}
                 </tbody>
             </table>
 
