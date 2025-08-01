@@ -57,8 +57,8 @@
                         <i class="fa-solid fa-bell fa-lg"></i>
                     </button>
                     <div class="dropdown">
-                        <button class="btn btn-sm btn-light d-flex align-items-center gap-1 p-2"
-                            data-bs-toggle="dropdown">
+                        <button class="btn btn-sm btn-light d-flex align-items-center gap-1 p-2 dropdown-toggle"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-gear fa-lg"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
