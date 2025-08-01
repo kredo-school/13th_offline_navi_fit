@@ -19,5 +19,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // 新しく追加するシーダー
+        $this->call([
+            ExerciseSeeder::class,
+            TemplateSeeder::class,
+            TemplateExerciseSeeder::class,
+        ]);
     }
 }
