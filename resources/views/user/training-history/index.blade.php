@@ -3,6 +3,7 @@
 @section('title', 'Training History')
 
 @section('content')
+@php $hideNavigation = true; @endphp {{--ここに一行追加--}}
 <body class="bg-light">
     <div class="min-vh-100">
         {{-- Header --}}
@@ -10,7 +11,7 @@
         
         <div class="container-xxl py-4">
             {{-- Overview Panel --}}
-            @include('user.training-history.partials.overview')
+            {{-- @include('user.training-history.partials.overview') --}}
             
             {{-- Quick Filters --}}
             @include('user.training-history.partials.quick_filters')
