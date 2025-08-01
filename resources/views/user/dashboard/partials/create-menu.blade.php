@@ -16,7 +16,7 @@
                 training menu
             </p>
             
-            <a href="#" class="btn btn-success w-100 d-flex align-items-center justify-content-center gap-2">
+            <a href="{{ route('menus.create') }}" class="btn btn-success w-100 d-flex align-items-center justify-content-center gap-2">
                 <i class="bi bi-plus"></i>
                 <span>Create Original Menu</span>
             </a>
