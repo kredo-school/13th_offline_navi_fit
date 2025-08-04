@@ -4,8 +4,11 @@
     <div class="container">
         <!-- Header Section -->
         <div class="row mb-4">
-            <div class="col-12">
+            <div class="col-12 d-flex justify-content-between align-items-center">
                 <h2><i class="fas fa-weight me-2" style="color: #254D70;"></i>Record Weight & Body Fat</h2>
+                <a href="{{ route('dashboard') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                </a>
             </div>
         </div>
 
@@ -150,10 +153,16 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('body-records.edit', $record) }}"
-                                                        class="btn btn-outline-primary btn-sm me-1">
+                                                    <button type="button"
+                                                        class="btn btn-outline-primary btn-sm me-1 edit-record"
+                                                        data-bs-toggle="modal" data-bs-target="#editRecordModal"
+                                                        data-id="{{ $record->id }}"
+                                                        data-date="{{ $record->recorded_date->format('Y-m-d') }}"
+                                                        data-weight="{{ $record->weight }}"
+                                                        data-bodyfat="{{ $record->body_fat_percentage }}"
+                                                        data-memo="{{ $record->memo }}">
                                                         <i class="fas fa-edit"></i> Edit
-                                                    </a>
+                                                    </button>
                                                     <form action="{{ route('body-records.destroy', $record) }}"
                                                         method="POST" class="d-inline"
                                                         onsubmit="return confirm('Are you sure you want to delete this record?')">
@@ -187,4 +196,73 @@
         </div>
     </div>
 
+    <!-- Edit Record Modal -->
+    <div class="modal fade" id="editRecordModal" tabindex="-1" aria-labelledby="editRecordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editRecordModalLabel">Edit Body Record</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editRecordForm" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="edit_recorded_date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="edit_recorded_date" name="recorded_date"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_weight" class="form-label">Weight (kg)</label>
+                            <input type="number" step="0.1" min="1" max="999.9" class="form-control"
+                                id="edit_weight" name="weight" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_body_fat_percentage" class="form-label">Body Fat (%)</label>
+                            <input type="number" step="0.1" min="0" max="100" class="form-control"
+                                id="edit_body_fat_percentage" name="body_fat_percentage">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_memo" class="form-label">Memo</label>
+                            <textarea class="form-control" id="edit_memo" name="memo" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 編集ボタンがクリックされたときの処理
+            const editButtons = document.querySelectorAll('.edit-record');
+            const editForm = document.getElementById('editRecordForm');
+
+            editButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // データ属性からフォームに値をセット
+                    const id = this.getAttribute('data-id');
+                    const date = this.getAttribute('data-date');
+                    const weight = this.getAttribute('data-weight');
+                    const bodyfat = this.getAttribute('data-bodyfat');
+                    const memo = this.getAttribute('data-memo');
+
+                    // フォームのアクションを設定
+                    editForm.action = `/body-records/${id}`;
+
+                    // フォームの値を設定
+                    document.getElementById('edit_recorded_date').value = date;
+                    document.getElementById('edit_weight').value = weight;
+                    document.getElementById('edit_body_fat_percentage').value = bodyfat;
+                    document.getElementById('edit_memo').value = memo;
+                });
+            });
+        });
+    </script>
 @endsection

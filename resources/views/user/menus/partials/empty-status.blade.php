@@ -9,8 +9,7 @@
                 条件に一致するメニューがありません。<br>
                 検索条件やフィルターを変更してみてください。
             </p>
-            <!-- 動的化時はroute('menus.create')に置換 -->
-            <a href="#" class="btn btn-primary">
+            <a href="{{ route('menus.create') }}" class="btn btn-primary">
                 <i class="fa-solid fa-plus me-2"></i>
                 新しいメニューを作成
             </a>
