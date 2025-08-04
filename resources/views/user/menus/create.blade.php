@@ -34,6 +34,8 @@
             </div>
         </div>
     </div>
+    {{-- モーダルを追加 --}}
+    @include('user.menus.partials.modals.exercise-details-modal')
 @endsection
 
 @section('footer')
