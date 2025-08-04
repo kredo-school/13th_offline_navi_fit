@@ -92,7 +92,7 @@ Route::middleware(['auth', 'setup'])->group(function () {
 
     // training history
     Route::resource('training-history', TrainingHistoryController::class)->except(['show']);
-    Route::get('/training-history/show', [TrainingHistoryController::class, 'show']);
+    Route::get('/training-history/show/{id}', [TrainingHistoryController::class, 'show'])->name('training-history.show');
 
     // home route (for compatibility)
     Route::get('/home', function () {
