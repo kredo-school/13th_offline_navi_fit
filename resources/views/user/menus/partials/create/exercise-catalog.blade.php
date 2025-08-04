@@ -6,7 +6,7 @@
     </div>
 
     {{-- Filters --}}
-    <div class="card-body border-bottom">
+    <div class="card-body border-bottom pb-2">
         <div class="d-flex flex-column gap-2">
             {{-- Search --}}
             <div class="position-relative">
@@ -46,7 +46,7 @@
 
     {{-- Exercise Grid --}}
     <div class="flex-fill overflow-auto p-0">
-        <div class="d-flex flex-column gap-2 p-3 exercise-catalog-container">
+        <div class="d-flex flex-column gap-2 pt-2 px-3 pb-3 exercise-catalog-container">
             @forelse($exercises as $exercise)
                 <div class="card border exercise-card w-100" draggable="true" data-exercise="{{ $exercise->name }}">
                     <div class="card-body p-2">
