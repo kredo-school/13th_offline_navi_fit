@@ -48,28 +48,26 @@
     <div class="flex-fill overflow-auto p-0">
         <div class="d-flex flex-column gap-2 pt-2 px-3 pb-3 exercise-catalog-container">
             @forelse($exercises as $exercise)
-                <div class="card border exercise-card w-100" draggable="true" data-exercise="{{ $exercise->name }}">
+                <div class="card border exercise-card w-100" draggable="true" data-exercise="{{ $exercise->name }}" data-exercise-id="{{ $exercise->id }}">
                     <div class="card-body p-2">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="pe-2">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="pe-2 flex-grow-1">
                                 <h6 class="card-title mb-1" style="font-size: 0.9rem;">{{ $exercise->name }}</h6>
                                 <p class="text-muted mb-2" style="font-size: 0.8rem;">
                                     {{ isset($exercise->muscle_groups[0]) ? $exercise->muscle_groups[0] : '' }} •
                                     {{ $exercise->equipment_category }}
                                 </p>
+                                
+                                {{-- 難易度バッジ --}}
                                 <div class="d-flex align-items-center mb-2">
                                     @php
                                         $badgeClass = 'bg-success';
-                                        if ($exercise->difficulty === 'intermediate') {
-                                            $badgeClass = 'bg-warning text-dark';
-                                        } elseif ($exercise->difficulty === 'advanced') {
-                                            $badgeClass = 'bg-danger';
-                                        }
-
                                         $difficultyLabel = '初級';
                                         if ($exercise->difficulty === 'intermediate') {
+                                            $badgeClass = 'bg-warning text-dark';
                                             $difficultyLabel = '中級';
                                         } elseif ($exercise->difficulty === 'advanced') {
+                                            $badgeClass = 'bg-danger';
                                             $difficultyLabel = '上級';
                                         }
                                     @endphp
@@ -77,17 +75,42 @@
                                 </div>
 
                                 {{-- Muscle Groups --}}
-                                <div class="d-flex flex-wrap gap-1">
+                                <div class="d-flex flex-wrap gap-1 mb-2">
                                     @foreach ($exercise->muscle_groups ?? [] as $muscleGroup)
                                         <span class="badge bg-light text-dark"
                                             style="font-size: 0.7rem;">{{ $muscleGroup }}</span>
                                     @endforeach
                                 </div>
+
+                                {{-- Action Buttons --}}
+                                <div class="d-flex gap-1">
+                                    {{-- 詳細表示ボタン --}}
+                                    <button type="button" 
+                                            class="btn btn-outline-primary btn-sm flex-fill" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#exerciseDetailModal"
+                                            data-exercise-id="{{ $exercise->id }}"
+                                            style="font-size: 0.75rem;">
+                                        <i class="bi bi-eye me-1"></i>詳細
+                                    </button>
+                                    
+                                    {{-- メニューに追加ボタン --}}
+                                    <button type="button" 
+                                            class="btn btn-primary btn-sm flex-fill add-exercise-btn"
+                                            data-exercise-id="{{ $exercise->id }}"
+                                            data-exercise-name="{{ $exercise->name }}"
+                                            style="font-size: 0.75rem;">
+                                        <i class="bi bi-plus-lg me-1"></i>追加
+                                    </button>
+                                </div>
                             </div>
 
-                            <img src="{{ $exercise->image_url ?? asset('images/navifit_icon.jpg') }}"
-                                class="rounded ms-auto" alt="{{ $exercise->name }}"
-                                style="width: 70px; height: 70px; object-fit: cover;">
+                            {{-- Exercise Image --}}
+                            <div class="flex-shrink-0">
+                                <img src="{{ $exercise->image_url ?? asset('images/navifit_icon.jpg') }}"
+                                    class="rounded" alt="{{ $exercise->name }}"
+                                    style="width: 70px; height: 70px; object-fit: cover;">
+                            </div>
                         </div>
                     </div>
                 </div>
