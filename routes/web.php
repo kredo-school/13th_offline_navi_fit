@@ -88,7 +88,7 @@ Route::middleware(['auth', 'setup'])->group(function () {
     Route::post('/menus/from-template/{template}', [MenuController::class, 'createFromTemplate'])->name('menus.from-template');
 
     // training records
-    // Route::resource('training-records', TrainingRecordController::class);
+    Route::resource('training-records', TrainingRecordController::class);
 
     // training history
     Route::resource('training-history', TrainingHistoryController::class)->except(['show']);

@@ -7,68 +7,38 @@
         </div>
         
         <div class="d-flex flex-column gap-3">
-            <!-- Workout Item 1 -->
-            <div class="bg-light rounded p-3 border">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="bg-secondary rounded" style="width: 64px; height: 64px;"></div>
-                    <div class="flex-grow-1">
-                        <h6 class="mb-1">Upper Body Focus</h6>
-                        <div class="d-flex align-items-center gap-3 small text-muted">
-                            <div class="d-flex align-items-center gap-1">
-                                <i class="bi bi-clock small"></i>
-                                <span>45 min</span>
+            @forelse($recentWorkouts as $workout)
+                <div class="bg-light rounded p-3 border">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="bg-secondary rounded" style="width: 64px; height: 64px;"></div>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1">{{ $workout->menu ? $workout->menu->name : ($workout->template ? $workout->template->name : 'Custom Workout') }}</h6>
+                            <div class="d-flex align-items-center gap-3 small text-muted">
+                                <div class="d-flex align-items-center gap-1">
+                                    <i class="bi bi-clock small"></i>
+                                    <span>{{ $workout->training_date->format('M d, Y') }}</span>
+                                </div>
+                                <span>•</span>
+                                <span>{{ $workout->details->count() }} exercises</span>
                             </div>
-                            <span>•</span>
-                            <span>8 exercises</span>
-                        </div>
-                        <div class="mt-2">
-                            <span class="badge bg-warning text-dark px-2 py-1 small">Intermediate</span>
+                            <div class="mt-2">
+                                @if($workout->template)
+                                    <span class="badge bg-primary px-2 py-1 small">Template</span>
+                                @elseif($workout->menu)
+                                    <span class="badge bg-success px-2 py-1 small">Menu</span>
+                                @else
+                                    <span class="badge bg-secondary px-2 py-1 small">Custom</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Workout Item 2 -->
-            <div class="bg-light rounded p-3 border">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="bg-secondary rounded" style="width: 64px; height: 64px;"></div>
-                    <div class="flex-grow-1">
-                        <h6 class="mb-1">Lower Body Strength</h6>
-                        <div class="d-flex align-items-center gap-3 small text-muted">
-                            <div class="d-flex align-items-center gap-1">
-                                <i class="bi bi-clock small"></i>
-                                <span>30 min</span>
-                            </div>
-                            <span>•</span>
-                            <span>6 exercises</span>
-                        </div>
-                        <div class="mt-2">
-                            <span class="badge bg-success px-2 py-1 small">Beginner</span>
-                        </div>
-                    </div>
+            @empty
+                <div class="text-center py-4">
+                    <p class="text-muted mb-0">No recent workouts found.</p>
+                    <p class="small text-muted">Start training to see your activity here.</p>
                 </div>
-            </div>
-            
-            <!-- Workout Item 3 -->
-            <div class="bg-light rounded p-3 border">
-                <div class="d-flex align-items-center gap-3">
-                    <div class="bg-secondary rounded" style="width: 64px; height: 64px;"></div>
-                    <div class="flex-grow-1">
-                        <h6 class="mb-1">Full Body HIIT</h6>
-                        <div class="d-flex align-items-center gap-3 small text-muted">
-                            <div class="d-flex align-items-center gap-1">
-                                <i class="bi bi-clock small"></i>
-                                <span>20 min</span>
-                            </div>
-                            <span>•</span>
-                            <span>5 exercises</span>
-                        </div>
-                        <div class="mt-2">
-                            <span class="badge bg-danger px-2 py-1 small">Advanced</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforelse
         </div>
     </div>
 </div>
