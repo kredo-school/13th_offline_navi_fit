@@ -2,7 +2,7 @@
 <div class="card border-0 shadow-sm h-100 d-flex flex-column">
     <div class="card-header bg-white border-bottom">
         <h6 class="card-title mb-1">テンプレートライブラリ</h6>
-        <small class="text-muted">ドラッグして中央に追加</small>
+        <small class="text-muted">クリックして詳細を確認</small>
     </div>
 
     <div class="card-body flex-fill overflow-auto p-4 template-library-container">
@@ -10,8 +10,8 @@
             @forelse($templates as $template)
                 <div class="card border template-card" draggable="true">
                     <div class="position-relative">
-                        <img src="{{ $template->image_url ?? 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=200&h=80&fit=crop' }}"
-                            class="card-img-top" alt="{{ $template->name }}" style="height: 80px; object-fit: cover;">
+                        <img src="{{ $template->image_url ?? 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=200&h=120&fit=crop' }}"
+                            class="card-img-top" alt="{{ $template->name }}" style="height: 120px; object-fit: cover;">
                         @php
                             $badgeClass = 'bg-success';
                             if ($template->difficulty === 'intermediate') {
@@ -47,34 +47,10 @@
                         </div>
 
                         <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-primary btn-sm flex-fill" style="font-size: 0.8rem;"
+                            <button type="button" class="btn btn-outline-primary btn-sm flex-fill" style="font-size: 0.8rem;"
                                 data-template-id="{{ $template->id }}">
-                                <i class="fa-solid fa-plus me-1"></i>追加
+                                <i class="fa-solid fa-eye me-1"></i>詳細
                             </button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm toggle-details"
-                                style="font-size: 0.8rem;" data-bs-toggle="collapse"
-                                data-bs-target="#template{{ $template->id }}Details">
-                                <i class="fa-solid fa-chevron-down me-1" style="font-size: 0.75rem;"></i>
-                            </button>
-                        </div>
-
-                        {{-- Expanded Details --}}
-                        <div class="collapse mt-2" id="template{{ $template->id }}Details">
-                            <div class="border-top pt-2">
-                                @foreach ($template->templateExercises as $index => $templateExercise)
-                                    <div class="mb-2 p-2 bg-light rounded" style="font-size: 0.7rem;" draggable="true">
-                                        <div class="fw-medium">{{ $index + 1 }}.
-                                            {{ $templateExercise->exercise->name }}</div>
-                                        <div class="text-muted">
-                                            {{ $templateExercise->sets ?? 3 }}セット ×
-                                            {{ $templateExercise->reps ?? 10 }}回
-                                            @if ($templateExercise->weight)
-                                                @ {{ $templateExercise->weight }}kg
-                                            @endif
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
                         </div>
                     </div>
                 </div>
