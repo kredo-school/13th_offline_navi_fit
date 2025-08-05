@@ -87,4 +87,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(TrainingRecord::class);
     }
+
+    /**
+     * Get the user's active goal.
+     */
+    public function activeGoal(): ?\App\Models\Goal
+    {
+        return $this->goals()->where('is_active', true)->latest()->first();
+    }
 }
