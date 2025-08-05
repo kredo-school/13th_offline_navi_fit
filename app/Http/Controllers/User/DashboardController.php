@@ -21,7 +21,7 @@ class DashboardController extends Controller
         $recentWorkouts = TrainingRecord::with(['template', 'menu', 'details.exercise'])
             ->forUser($user->id)
             ->orderBy('training_date', 'desc')
-            ->take(5)
+            ->take(3)
             ->get();
 
         // Get active goal

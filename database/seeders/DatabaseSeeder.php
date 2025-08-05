@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             ExerciseSeeder::class,
             TemplateSeeder::class,
             TemplateExerciseSeeder::class,
+            TrainingRecordSeeder::class,
+            TrainingRecordDetailSeeder::class,
         ]);
     }
 }
