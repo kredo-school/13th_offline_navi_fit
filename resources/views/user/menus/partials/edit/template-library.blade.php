@@ -50,31 +50,16 @@
                                 data-template-id="{{ $template->id }}">
                                 <i class="fa-solid fa-plus me-1"></i>追加
                             </button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm toggle-details"
-                                style="font-size: 0.8rem;" data-bs-toggle="collapse"
-                                data-bs-target="#template{{ $template->id }}Details">
-                                <i class="fa-solid fa-chevron-down me-1" style="font-size: 0.75rem;"></i>
+                            <button type="button" class="btn btn-outline-secondary btn-sm"
+                                style="font-size: 0.8rem;" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#templateDetailsModal"
+                                data-template-id="{{ $template->id }}">
+                                <i class="fa-solid fa-eye me-1" style="font-size: 0.75rem;"></i>
                             </button>
                         </div>
 
-                        {{-- Expanded Details --}}
-                        <div class="collapse mt-2" id="template{{ $template->id }}Details">
-                            <div class="border-top pt-2">
-                                @foreach ($template->templateExercises as $index => $templateExercise)
-                                    <div class="mb-2 p-2 bg-light rounded" style="font-size: 0.7rem;" draggable="true">
-                                        <div class="fw-medium">{{ $index + 1 }}.
-                                            {{ $templateExercise->exercise->name }}</div>
-                                        <div class="text-muted">
-                                            {{ $templateExercise->sets ?? 3 }}セット ×
-                                            {{ $templateExercise->reps ?? 10 }}回
-                                            @if ($templateExercise->weight)
-                                                @ {{ $templateExercise->weight }}kg
-                                            @endif
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             @empty
