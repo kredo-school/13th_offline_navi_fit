@@ -48,6 +48,8 @@
 
                         <div class="d-flex gap-2">
                             <button type="button" class="btn btn-outline-primary btn-sm flex-fill" style="font-size: 0.8rem;"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#templateDetailsModal"
                                 data-template-id="{{ $template->id }}">
                                 <i class="fa-solid fa-eye me-1"></i>詳細
                             </button>
