@@ -24,30 +24,35 @@
             <div class="d-flex align-items-center gap-3">
                 <!-- User greeting and goal info -->
                 <div class="d-none d-lg-flex align-items-center gap-3">
-                <div class="d-flex align-items-center gap-2">
-                    @php
-                        $avatar = Auth::user()->profile->avatar ?? null;
-                    @endphp
-                    @if ($avatar)
-                        <img src="{{ asset('storage/' . $avatar) }}" alt="Profile Avatar" class="rounded-circle border" style="width: 40px; height: 40px; object-fit: cover;">
-                    @else
-                        <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                            <span style="font-size: 1.2rem;">{{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}</span>
-                        </div>
-                    @endif
-                    <span class="fw-medium fs-5">
-                        Hello, {{ Auth::user()->name ?? 'User' }}!
-                    </span>
-                </div>
+                    <div class="d-flex align-items-center gap-2">
+                        @php
+                            $avatar = Auth::user()->profile->avatar ?? null;
+                        @endphp
+                        @if ($avatar)
+                            <img src="{{ asset('storage/' . $avatar) }}" alt="Profile Avatar"
+                                class="rounded-circle border" style="width: 40px; height: 40px; object-fit: cover;">
+                        @else
+                            <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center"
+                                style="width: 40px; height: 40px;">
+                                <span
+                                    style="font-size: 1.2rem;">{{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}</span>
+                            </div>
+                        @endif
+                        <span class="fw-medium fs-5">
+                            Hello, {{ Auth::user()->name ?? 'User' }}!
+                        </span>
+                    </div>
                     <div class="vr"></div>
                     <div class="d-flex align-items-center gap-2 text-muted fs-5">
                         <span>Goal:</span>
                         @php
-                            $goal = Auth::user()->goal;
+                            $activeGoal = Auth::user()->activeGoal();
                         @endphp
-                        <span class="fw-semibold text-primary">{{ $goal->weight ?? '-' }}kg</span>
+                        <span
+                            class="fw-semibold text-primary">{{ $activeGoal ? $activeGoal->formatted_weight : '-' }}kg</span>
                         <span>/</span>
-                        <span class="fw-semibold text-success">{{ $goal->days ?? '-' }} days</span>
+                        <span class="fw-semibold text-success">{{ $activeGoal ? $activeGoal->days_remaining : '-' }}
+                            days</span>
                     </div>
                 </div>
 

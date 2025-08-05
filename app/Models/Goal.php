@@ -29,4 +29,29 @@ class Goal extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Calculate days remaining until target date.
+     *
+     * @return int
+     */
+    public function getDaysRemainingAttribute()
+    {
+        if (! $this->target_date) {
+            return 0;
+        }
+
+        // 整数に丸める（小数点以下を切り捨て）
+        return max(0, (int) now()->diffInDays($this->target_date, false));
+    }
+
+    /**
+     * Get formatted target weight.
+     *
+     * @return string
+     */
+    public function getFormattedWeightAttribute()
+    {
+        return $this->target_weight ? number_format($this->target_weight, 1) : '-';
+    }
 }
