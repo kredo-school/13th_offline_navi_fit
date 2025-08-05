@@ -86,4 +86,12 @@ class TrainingRecordDetail extends Model
             ->where('exercise_id', $exerciseId)
             ->orderBy('set_number');
     }
+
+    /**
+     * Get the volume (weight * reps) for this training record detail.
+     */
+    public function getVolumeAttribute(): float
+    {
+        return $this->weight * $this->reps;
+    }
 }

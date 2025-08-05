@@ -78,13 +78,19 @@ class TrainingHistoryController extends Controller
         return redirect()->route('training-history.index')->with('success', 'トレーニング記録を削除しました');
     }
 
-    public function show(string $id)
+    public function show($id)
     {
-        $record = TrainingRecord::with(['menu', 'template', 'details.exercise'])
-            ->where('user_id', Auth::id())
-            ->findOrFail($id);
+        $record = TrainingRecord::with(['details.exercise', 'template', 'menu'])->findOrFail($id);
 
-        return view('user.training-history.show', compact('record'));
+        // 自分の記録だけ見られるように
+        if ($record->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('user.training-history.show', [
+            'record' => $record,
+            'userId' => Auth::id(),  // ユーザーIDを渡す
+        ]);
     }
 
     public function edit(string $id)
