@@ -12,13 +12,16 @@
                 {{-- ヘッダー --}}
                 <div class="modal-header border-bottom p-4">
                     <div class="flex-grow-1">
-                        <div class="d-flex align-items-center gap-3 mb-2">
-                            <h2 class="modal-title fs-3 fw-bold text-dark mb-0" id="templateDetailsModalLabel">
-                                上半身集中トレーニング
-                            </h2>
-                            <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill fw-medium">
-                                中級者
-                            </span>
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center gap-3">
+                                <h2 class="modal-title fs-3 fw-bold text-dark mb-0" id="templateDetailsModalLabel">
+                                    上半身集中トレーニング
+                                </h2>
+                                <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill fw-medium">
+                                    中級者
+                                </span>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="モーダルを閉じる"></button>
                         </div>
                         <p class="text-muted mb-3">
                             胸、背中、肩を中心とした上半身の筋力向上プログラム。初心者から中級者まで対応できる効果的なワークアウトです。
@@ -34,8 +37,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="モーダルを閉じる"></button>
                 </div>
 
                 {{-- タブナビゲーション --}}
@@ -70,12 +71,7 @@
                         {{-- 概要タブ --}}
                         <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
                                 
-                                {{-- 画像表示 --}}
-                                <div class="bg-light rounded-3 overflow-hidden mb-4" style="aspect-ratio: 16/9;">
-                                    <img src="https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" 
-                                         alt="上半身集中トレーニング" 
-                                         class="w-100 h-100 object-fit-cover">
-                                </div>
+                                
 
                                 {{-- 統計グリッド --}}
                                 <div class="row g-3 mb-4">
@@ -132,7 +128,7 @@
                                 </div>
 
                                 {{-- 人気度メトリクス --}}
-                                <div class="bg-light rounded-3 p-4">
+                                {{-- <div class="bg-light rounded-3 p-4">
                                     <h3 class="fs-5 fw-semibold text-dark mb-4">人気度</h3>
                                     <div class="row g-3 text-center">
                                         <div class="col-4">
@@ -148,7 +144,7 @@
                                             <div class="small text-muted">ユーザー評価</div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                         </div>
 
                         {{-- エクササイズタブ --}}
@@ -192,12 +188,6 @@
                                              class="mt-3 pt-3 border-top mx-3">
                                                 <div class="row g-3 mb-3">
                                                     <div class="col-md-6">
-                                                        <img src="https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop" 
-                                                             alt="ベンチプレスのデモ画像" 
-                                                             class="w-100 rounded-3" 
-                                                             style="height: 8rem; object-fit: cover;">
-                                                    </div>
-                                                    <div class="col-md-6">
                                                         <h5 class="fw-medium text-dark mb-2">対象筋群</h5>
                                                         <div class="d-flex flex-wrap gap-1 mb-3">
                                                             <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">胸筋</span>
@@ -211,7 +201,7 @@
                                                 </div>
 
                                                 {{-- 実行手順 --}}
-                                                <div>
+                                                <div class="mb-3">
                                                     <h5 class="fw-medium text-dark mb-2">実行手順</h5>
                                                     <ol class="d-flex flex-column gap-2 ps-0">
                                                         <li class="d-flex align-items-start gap-2 small text-dark">
@@ -232,6 +222,7 @@
                                                         </li>
                                                     </ol>
                                                 </div>
+                                
                                             </div>
                                         </div>
                                     </div>
@@ -270,12 +261,6 @@
                                              class="mt-3 pt-3 border-top mx-3">
                                             <div class="row g-3 mb-3">
                                                 <div class="col-md-6">
-                                                    <img src="https://images.pexels.com/photos/4853274/pexels-photo-4853274.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop" 
-                                                         alt="プルアップのデモ画像" 
-                                                         class="w-100 rounded-3" 
-                                                         style="height: 8rem; object-fit: cover;">
-                                                </div>
-                                                <div class="col-md-6">
                                                     <h5 class="fw-medium text-dark mb-2">対象筋群</h5>
                                                     <div class="d-flex flex-wrap gap-1 mb-3">
                                                         <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">広背筋</span>
@@ -289,7 +274,7 @@
                                             </div>
 
                                             {{-- 実行手順 --}}
-                                            <div>
+                                            <div class="mb-3">
                                                 <h5 class="fw-medium text-dark mb-2">実行手順</h5>
                                                 <ol class="d-flex flex-column gap-2 ps-0">
                                                     <li class="d-flex align-items-start gap-2 small text-dark">
@@ -343,12 +328,7 @@
                                              x-transition:leave-end="opacity-0 transform -translate-y-2"
                                              class="mt-3 pt-3 border-top mx-3">
                                             <div class="row g-3 mb-3">
-                                                <div class="col-md-6">
-                                                    <img src="https://images.pexels.com/photos/7592303/pexels-photo-7592303.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop" 
-                                                         alt="ショルダープレスのデモ画像" 
-                                                         class="w-100 rounded-3" 
-                                                         style="height: 8rem; object-fit: cover;">
-                                                </div>
+                                                
                                                 <div class="col-md-6">
                                                     <h5 class="fw-medium text-dark mb-2">対象筋群</h5>
                                                     <div class="d-flex flex-wrap gap-1 mb-3">
@@ -363,7 +343,7 @@
                                             </div>
 
                                             {{-- 実行手順 --}}
-                                            <div>
+                                            <div class="mb-3">
                                                 <h5 class="fw-medium text-dark mb-2">実行手順</h5>
                                                 <ol class="d-flex flex-column gap-2 ps-0">
                                                     <li class="d-flex align-items-start gap-2 small text-dark">
@@ -416,12 +396,7 @@
                                              x-transition:leave-end="opacity-0 transform -translate-y-2"
                                              class="mt-3 pt-3 border-top mx-3">
                                             <div class="row g-3 mb-3">
-                                                <div class="col-md-6">
-                                                    <img src="https://images.pexels.com/photos/7690163/pexels-photo-7690163.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop" 
-                                                         alt="ディップスのデモ画像" 
-                                                         class="w-100 rounded-3" 
-                                                         style="height: 8rem; object-fit: cover;">
-                                                </div>
+                                                
                                                 <div class="col-md-6">
                                                     <h5 class="fw-medium text-dark mb-2">対象筋群</h5>
                                                     <div class="d-flex flex-wrap gap-1 mb-3">
@@ -436,7 +411,7 @@
                                             </div>
 
                                             {{-- 実行手順 --}}
-                                            <div>
+                                            <div class="mb-3">
                                                 <h5 class="fw-medium text-dark mb-2">実行手順</h5>
                                                 <ol class="d-flex flex-column gap-2 ps-0">
                                                     <li class="d-flex align-items-start gap-2 small text-dark">
@@ -469,24 +444,6 @@
                             </div>
                         </div>
 
-                    </div>
-                </div>
-
-                {{-- フッター --}}
-                <div class="modal-footer bg-light border-top p-4">
-                    <div class="d-flex align-items-center justify-content-between w-100">
-                        <div class="small text-muted">
-                            最終使用: 2024年3月20日
-                        </div>
-                        <div class="d-flex gap-3">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                キャンセル
-                            </button>
-                            <button type="button" class="btn btn-primary d-flex align-items-center gap-2">
-                                <i class="fas fa-plus"></i>
-                                <span>メニューに追加</span>
-                            </button>
-                        </div>
                     </div>
                 </div>
 
