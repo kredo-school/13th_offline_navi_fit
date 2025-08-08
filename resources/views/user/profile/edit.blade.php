@@ -1,11 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    @php($hideNavigation = true)
-
     <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-lg-8 col-xl-6">
+            <div class="col-lg-8">
                 <!-- Header -->
                 <div class="text-center mb-5">
                     <div class="d-flex justify-content-center mb-4">
@@ -32,15 +30,16 @@
 
                 <!-- Form Card -->
                 <div class="card shadow border-0 rounded-3">
-                    <div class="card-body p-4 p-sm-5">
+                    <div class="card-body p-4 p-md-5">
                         <form method="POST" action="{{ route('profile.update') }}">
                             @csrf
                             @method('PUT')
 
                             <!-- Full Name -->
                             <div class="mb-4">
-                                <label for="full_name" class="form-label fw-medium">
-                                    Full Name <span class="text-danger">*</span>
+                                <label for="full_name" class="form-label d-flex align-items-center">
+                                    <i class="fas fa-user text-primary me-2"></i>
+                                    Full Name <span class="text-danger ms-1">*</span>
                                 </label>
                                 <input type="text"
                                     class="form-control rounded-2 @error('full_name') is-invalid @enderror" id="full_name"
@@ -54,8 +53,9 @@
                             <!-- Age and Gender Row -->
                             <div class="row mb-4">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <label for="age" class="form-label fw-medium">
-                                        Age <span class="text-danger">*</span>
+                                    <label for="age" class="form-label d-flex align-items-center">
+                                        <i class="fas fa-birthday-cake text-primary me-2"></i>
+                                        Age <span class="text-danger ms-1">*</span>
                                     </label>
                                     <div class="position-relative">
                                         <input type="number"
@@ -70,8 +70,9 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="gender" class="form-label fw-medium">
-                                        Gender <span class="text-danger">*</span>
+                                    <label for="gender" class="form-label d-flex align-items-center">
+                                        <i class="fas fa-venus-mars text-primary me-2"></i>
+                                        Gender <span class="text-danger ms-1">*</span>
                                     </label>
                                     <select class="form-select rounded-2 @error('gender') is-invalid @enderror"
                                         id="gender" name="gender" required>
@@ -94,8 +95,9 @@
                             <!-- Height and Weight Row -->
                             <div class="row mb-4">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <label for="height" class="form-label fw-medium">
-                                        Height <span class="text-danger">*</span>
+                                    <label for="height" class="form-label d-flex align-items-center">
+                                        <i class="fas fa-ruler-vertical text-primary me-2"></i>
+                                        Height <span class="text-danger ms-1">*</span>
                                     </label>
                                     <div class="position-relative">
                                         <input type="number"
@@ -110,8 +112,9 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <label for="weight" class="form-label fw-medium">
-                                        Current Weight <span class="text-danger">*</span>
+                                    <label for="weight" class="form-label d-flex align-items-center">
+                                        <i class="fas fa-weight text-primary me-2"></i>
+                                        Current Weight <span class="text-danger ms-1">*</span>
                                     </label>
                                     <div class="position-relative">
                                         <input type="number"
@@ -129,11 +132,12 @@
 
                             <!-- Fitness Level -->
                             <div class="mb-4">
-                                <label class="form-label fw-medium">
-                                    Fitness Level <span class="text-danger">*</span>
+                                <label class="form-label d-flex align-items-center">
+                                    <i class="fas fa-running text-primary me-2"></i>
+                                    Fitness Level <span class="text-danger ms-1">*</span>
                                 </label>
                                 <div class="mt-3">
-                                    <div class="border rounded-2 p-3 mb-3" id="fitness-beginner">
+                                    <div class="border rounded-2 p-3 mb-3">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="fitness_level"
                                                 value="beginner" id="beginner"
@@ -144,7 +148,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="border rounded-2 p-3 mb-3" id="fitness-intermediate">
+                                    <div class="border rounded-2 p-3 mb-3">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="fitness_level"
                                                 value="intermediate" id="intermediate"
@@ -155,7 +159,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="border rounded-2 p-3 mb-3" id="fitness-advanced">
+                                    <div class="border rounded-2 p-3 mb-3">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="fitness_level"
                                                 value="advanced" id="advanced"
@@ -174,7 +178,8 @@
 
                             <!-- Additional Information -->
                             <div class="mb-5">
-                                <label class="form-label fw-medium">
+                                <label class="form-label d-flex align-items-center">
+                                    <i class="fas fa-info-circle text-primary me-2"></i>
                                     Additional Information
                                 </label>
                                 <div class="mt-3">
@@ -197,14 +202,14 @@
                             <!-- Action Buttons -->
                             <div class="row pt-4">
                                 <div class="col-sm-8 mb-3 mb-sm-0">
-                                    <button type="submit" class="btn btn-primary w-100 rounded-2 fw-medium">
+                                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-2 fw-medium">
                                         <i class="fas fa-save me-2"></i>
                                         Update Profile
                                     </button>
                                 </div>
                                 <div class="col-sm-4">
-                                    <a href="{{ route('dashboard') }}"
-                                        class="btn btn-outline-secondary w-100 rounded-2 fw-medium">
+                                    <a href="{{ route('profile.index') }}"
+                                        class="btn btn-outline-secondary w-100 py-2 rounded-2 fw-medium">
                                         <i class="fas fa-times me-2"></i>
                                         Cancel
                                     </a>
@@ -216,32 +221,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Add visual feedback for fitness level selection
-        document.addEventListener('DOMContentLoaded', function() {
-            const fitnessRadios = document.querySelectorAll('input[name="fitness_level"]');
-
-            function updateFitnessSelection() {
-                document.querySelectorAll('[id^="fitness-"]').forEach(option => {
-                    option.classList.remove('border-primary', 'bg-primary', 'bg-opacity-10');
-                    option.classList.add('border');
-                });
-
-                const checked = document.querySelector('input[name="fitness_level"]:checked');
-                if (checked) {
-                    const container = checked.closest('[id^="fitness-"]');
-                    container.classList.remove('border');
-                    container.classList.add('border-primary', 'bg-primary', 'bg-opacity-10');
-                }
-            }
-
-            fitnessRadios.forEach(radio => {
-                radio.addEventListener('change', updateFitnessSelection);
-            });
-
-            // Initial check
-            updateFitnessSelection();
-        });
-    </script>
 @endsection

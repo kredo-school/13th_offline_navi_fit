@@ -105,6 +105,8 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="form-text">Optional: Set this if you want to track body composition changes
+                                </div>
                             </div>
 
                             {{-- Progress Info --}}
@@ -127,12 +129,13 @@
                             {{-- Action Buttons --}}
                             <div class="row g-3 pt-4">
                                 <div class="col-md-4">
-                                    <a href="#" class="btn btn-outline-secondary w-100 py-2">
+                                    <a href="{{ route('dashboard') }}"
+                                        class="btn btn-outline-secondary w-100 py-2 rounded-2 fw-medium">
                                         <i class="fas fa-times me-2"></i>Cancel
                                     </a>
                                 </div>
                                 <div class="col-md-8">
-                                    <button type="submit" class="btn btn-primary w-100 py-2">
+                                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-2 fw-medium">
                                         <i class="fas fa-save me-2"></i>Update Goals
                                     </button>
                                 </div>

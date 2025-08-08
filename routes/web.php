@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect()->route('profile.index');
+        return redirect()->route('dashboard');
     }
 
     return redirect()->route('login');

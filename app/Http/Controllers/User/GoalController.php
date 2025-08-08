@@ -50,9 +50,12 @@ class GoalController extends Controller
         // 既存のアクティブな目標を非アクティブにする
         Auth::user()->goals()->where('is_active', true)->update(['is_active' => false]);
 
-        $goal = Goal::create($validated);
+        $goal = Goal::create(array_merge(
+            $validated,
+            ['is_active' => true]
+        ));
 
-        return redirect()->route('home')->with('success', 'Goals set successfully!');
+        return redirect()->route('dashboard')->with('success', 'Goals set successfully! Welcome to your fitness journey.');
     }
 
     public function show(Goal $goal)
