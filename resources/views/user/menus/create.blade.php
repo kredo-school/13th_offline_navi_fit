@@ -29,7 +29,8 @@
 
                 {{-- Right Column - Exercise Catalog (3/12) --}}
                 <div class="col-3">
-                    @include('user.menus.partials.create.exercise-catalog')
+                    {{-- @include('user.menus.partials.create.exercise-catalog') --}}
+                    <livewire:exercise-catalog />
                 </div>
             </div>
         </div>
