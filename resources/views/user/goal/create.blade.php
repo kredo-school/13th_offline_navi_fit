@@ -1,58 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
+    @php($hideNavigation = true)
+
     <div class="container py-5">
         {{-- Header --}}
         <div class="text-center mb-5">
             <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle mb-4"
                 style="width: 56px; height: 56px;">
-                <i class="fas fa-bullseye text-white fs-4"></i>
+                <i class="fas fa-bullseye text-white fs-2"></i>
             </div>
-            <h1 class="h2 fw-bold mb-3">Goal Setting</h1>
+            <h1 class="h2 fw-bold mb-1">Goal Setting</h1>
+            <p class="text-primary mb-3">Step 2 of 2</p>
             <p class="text-muted mx-auto" style="max-width: 42rem;">
                 Set your fitness goals to establish your personalized journey. These metrics will guide your progress
                 tracking.
             </p>
-        </div>
-
-        {{-- Progress Indicator --}}
-        <div class="mx-auto mb-5" style="max-width: 42rem;">
-            <div class="position-relative">
-                {{-- Progress Line Background --}}
-                <div class="position-absolute start-0 w-100 bg-secondary bg-opacity-25" style="height: 2px; top: 20px;">
-                </div>
-                {{-- Progress Line Active (50% for step 2) --}}
-                <div class="position-absolute start-0 w-50 bg-primary" style="height: 2px; top: 20px;"></div>
-
-                <div class="d-flex justify-content-between position-relative">
-                    {{-- Step 1: Profile (Completed) --}}
-                    <div class="text-center">
-                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto border border-2 border-success"
-                            style="width: 40px; height: 40px;">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <span class="d-block mt-2 small fw-medium text-dark">Profile</span>
-                    </div>
-
-                    {{-- Step 2: Goals (Current) --}}
-                    <div class="text-center">
-                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto border border-2 border-primary"
-                            style="width: 40px; height: 40px;">
-                            <i class="fas fa-bullseye"></i>
-                        </div>
-                        <span class="d-block mt-2 small fw-medium text-primary">Goals</span>
-                    </div>
-
-                    {{-- Step 3: Dashboard (Future) --}}
-                    <div class="text-center">
-                        <div class="bg-white text-muted rounded-circle d-flex align-items-center justify-content-center mx-auto border border-2"
-                            style="width: 40px; height: 40px;">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <span class="d-block mt-2 small fw-medium text-muted">Dashboard</span>
-                    </div>
-                </div>
-            </div>
+            <p class="small text-muted">
+                Setting realistic goals is key to your fitness success
+            </p>
         </div>
 
         {{-- Main Form --}}
@@ -60,6 +26,56 @@
             <div class="col-lg-8">
                 <div class="card shadow border-0 rounded-3">
                     <div class="card-body p-4 p-md-5">
+                        {{-- Progress Indicator --}}
+                        <div class="mb-5">
+                            <div class="position-relative">
+                                {{-- Progress Line Background --}}
+                                <div class="position-absolute start-0 w-100 bg-secondary bg-opacity-25"
+                                    style="height: 2px; top: 20px;">
+                                </div>
+                                {{-- Progress Line Active (50% for step 2) --}}
+                                <div class="position-absolute start-0 w-50 bg-primary" style="height: 2px; top: 20px;">
+                                </div>
+
+                                <div class="d-flex justify-content-between position-relative">
+                                    {{-- Step 1: Profile (Completed) --}}
+                                    <div class="text-center">
+                                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto border border-2 border-success"
+                                            style="width: 40px; height: 40px;">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <span class="d-block mt-2 small fw-medium text-dark">Profile</span>
+                                    </div>
+
+                                    {{-- Step 2: Goals (Current) --}}
+                                    <div class="text-center">
+                                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto border border-2 border-primary"
+                                            style="width: 40px; height: 40px;">
+                                            <i class="fas fa-bullseye"></i>
+                                        </div>
+                                        <span class="d-block mt-2 small fw-medium text-primary">Goals</span>
+                                    </div>
+
+                                    {{-- Step 3: Dashboard (Future) --}}
+                                    <div class="text-center">
+                                        <div class="bg-white text-muted rounded-circle d-flex align-items-center justify-content-center mx-auto border border-2"
+                                            style="width: 40px; height: 40px;">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                        <span class="d-block mt-2 small fw-medium text-muted">Dashboard</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (session('success'))
+                            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
+
                         <form method="POST" action="{{ route('goal.store') }}">
                             @csrf
 
@@ -132,18 +148,22 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="form-text">Optional: Set this if you want to track body composition changes
+                                </div>
                             </div>
 
                             {{-- Action Buttons --}}
-                            <div class="row g-3 pt-4">
-                                <div class="col-md-4">
-                                    <a href="#" class="btn btn-outline-secondary w-100 py-2">
-                                        <i class="fas fa-arrow-left me-2"></i>Back
+                            <div class="row pt-4">
+                                <div class="col-md-4 mb-3 mb-md-0">
+                                    <a href="{{ session('is_setup') ? route('profile.create') : route('profile.index') }}"
+                                        class="btn btn-outline-secondary w-100 py-2 rounded-2 fw-medium">
+                                        <i class="fas fa-arrow-left me-2"></i>Back to Profile
                                     </a>
                                 </div>
                                 <div class="col-md-8">
-                                    <button type="submit" class="btn btn-primary w-100 py-2">
-                                        <i class="fas fa-check me-2"></i>Set Goals
+                                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-2 fw-medium">
+                                        <i class="fas fa-check me-2"></i>Set Goals and Continue to Dashboard
+                                        <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
                             </div>

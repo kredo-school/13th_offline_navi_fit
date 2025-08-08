@@ -15,6 +15,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        session()->forget('is_setup'); // Clear the first-time setup flag
+
         $user = Auth::user();
 
         // Get recent training records (latest 5)

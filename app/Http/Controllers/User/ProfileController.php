@@ -36,11 +36,15 @@ class ProfileController extends Controller
     public function create()
     {
         // Check if user already has a profile
-        if (Auth::user()->profile) {
+        if (Auth::user()->profile && ! session('is_setup')) {
             return redirect()->route('profile.edit');
         }
 
-        return view('user.profile.create');
+        session(['is_setup' => true]); // first-time setup flag
+
+        $profile = Auth::user()->profile;
+
+        return view('user.profile.create', compact('profile'));
     }
 
     /**
@@ -48,26 +52,21 @@ class ProfileController extends Controller
      */
     public function store(ProfileRequest $request)
     {
-        // Check if user already has a profile
-        if (Auth::user()->profile) {
+        if (Auth::user()->profile && ! session('is_setup')) {
             return redirect()->route('profile.edit');
         }
 
-        // FormRequestで自動バリデーション済み
         $validated = $request->validated();
 
-        $profile = Profile::create([
-            'user_id' => Auth::id(),
-            // 'full_name' => $validated['full_name'],
-            'age' => $validated['age'],
-            'gender' => $validated['gender'],
-            'height' => $validated['height'],
-            'weight' => $validated['weight'],
-            'fitness_level' => $validated['fitness_level'],
-            'medical_conditions' => $validated['medical_conditions'],
-        ]);
+        $profile = Auth::user()->profile;
 
-        return redirect()->route('goal.create')->with('success', 'Profile created successfully!');
+        if ($profile) {
+            $profile->update($validated); // セットアップ中の再保存も対応
+        } else {
+            Profile::create(array_merge($validated, ['user_id' => Auth::id()]));
+        }
+
+        return redirect()->route('goal.create')->with('success', 'Profile saved!');
     }
 
     /**
@@ -105,11 +104,6 @@ class ProfileController extends Controller
             'medical_conditions' => 'nullable|string|max:1000',
         ]);
 
-        // Update user's name
-        // Auth::user()->update([
-        //     'name' => $validated['full_name'],
-        // ]);
-
         // Update profile
         $profile->update([
             'age' => $validated['age'],
@@ -120,6 +114,13 @@ class ProfileController extends Controller
             'medical_conditions' => $validated['medical_conditions'] ?? null,
         ]);
 
-        return back()->with('success', 'update a profile successfully');
+        // 初回セットアップかどうかをチェック
+        if (! Auth::user()->goals()->exists()) {
+            // 初回セットアップの場合は目標設定ページへ
+            return redirect()->route('goal.create')->with('success', 'Profile updated successfully! Now let\'s set your goals.');
+        }
+
+        // 通常の更新の場合は元のページに戻る
+        return back()->with('success', 'Profile updated successfully');
     }
 }

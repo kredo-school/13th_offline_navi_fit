@@ -67,9 +67,14 @@
                             <i class="fa-solid fa-gear fa-lg"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Profile Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Notification Settings</a></li>
-                            <li><a class="dropdown-item" href="{{ route('account.index') }}">Account Settings</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile.index') }}"><i
+                                        class="fa-solid fa-user"></i> Profile Settings</a></li>
+                            <li><a class="dropdown-item" href="{{ route('goal.index') }}"><i
+                                        class="fa-solid fa-bullseye"></i> Goal Settings</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bell"></i> Notification
+                                    Settings</a></li>
+                            <li><a class="dropdown-item" href="{{ route('account.index') }}"><i
+                                        class="fa-solid fa-gear"></i> Account Settings</a></li>
                             @if (auth()->check() && auth()->user()->is_admin)
                                 <li>
                                     <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
