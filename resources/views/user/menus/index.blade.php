@@ -11,7 +11,7 @@
                 <div class="col-lg-3 col-xl-2 mb-4">
                     @include('user.menus.partials.filter-panel')
                 </div>
-                
+
                 <!-- メインコンテンツ -->
                 <div class="col-lg-9 col-xl-10">
                     {{-- ヘッダーセクション --}}
@@ -22,14 +22,11 @@
 
                     {{-- メニューグリッド --}}
                     <div class="row g-4 pt-4" id="menuGrid">
-                        {{-- <!-- 動的化時は@forelse($menus as $menu)に置換 --> --}}
-                        @include('user.menus.partials.menu-card')
-                        @include('user.menus.partials.menu-card')
-                        @include('user.menus.partials.menu-card')
-                        @include('user.menus.partials.menu-card')
-                        @include('user.menus.partials.menu-card')
-                        @include('user.menus.partials.menu-card')
-                        {{-- <!-- 動的化時は@emptyに@include('user.menus.partials.empty-status')を追加 --> --}}
+                        @forelse($menus as $menu)
+                            @include('user.menus.partials.menu-card', ['menu' => $menu])
+                        @empty
+                            @include('user.menus.partials.empty-status')
+                        @endforelse
                     </div>
                 </div>
             </div>
