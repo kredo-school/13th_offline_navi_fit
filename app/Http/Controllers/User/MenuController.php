@@ -109,6 +109,28 @@ class MenuController extends Controller
         // Execute query
         $menus = $query->get();
 
+        // Calculate difficulty counts
+        $difficultyCounts = [
+            'beginner' => Menu::forUser(auth()->user()->id)
+                ->whereHas('basedOnTemplate', function ($q) {
+                    $q->where('difficulty', 'beginner');
+                })->count(),
+            'intermediate' => Menu::forUser(auth()->user()->id)
+                ->whereHas('basedOnTemplate', function ($q) {
+                    $q->where('difficulty', 'intermediate');
+                })->count(),
+            'advanced' => Menu::forUser(auth()->user()->id)
+                ->whereHas('basedOnTemplate', function ($q) {
+                    $q->where('difficulty', 'advanced');
+                })->count(),
+        ];
+
+        // Calculate visibility counts
+        $visibilityCounts = [
+            'public' => Menu::forUser(auth()->user()->id)->where('is_active', true)->count(),
+            'private' => Menu::forUser(auth()->user()->id)->where('is_active', false)->count(),
+        ];
+
         // Get data for filter options
         $exercises = Exercise::active()->get();
         $templates = Template::active()->get();
@@ -117,6 +139,15 @@ class MenuController extends Controller
         $muscleGroups = $exercises->flatMap(function ($exercise) {
             return $exercise->muscle_groups ?? [];
         })->unique()->values()->toArray();
+
+        // Calculate tag counts
+        $tagCounts = [];
+        foreach ($muscleGroups as $muscleGroup) {
+            $tagCounts[$muscleGroup] = Menu::forUser(auth()->user()->id)
+                ->whereHas('menuExercises.exercise', function ($q) use ($muscleGroup) {
+                    $q->whereJsonContains('muscle_groups', $muscleGroup);
+                })->count();
+        }
 
         // Extract unique equipment categories for filtering
         $equipmentCategories = $exercises->pluck('equipment_category')
@@ -142,7 +173,10 @@ class MenuController extends Controller
             'templates',
             'muscleGroups',
             'equipmentCategories',
-            'filters'
+            'filters',
+            'difficultyCounts',
+            'visibilityCounts',
+            'tagCounts'
         ));
     }
 

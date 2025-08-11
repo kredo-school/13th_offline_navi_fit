@@ -7,7 +7,6 @@
             </div>
             <div class="col-md-4">
                 <div class="d-flex justify-content-md-end">
-                    <!-- 動的化時はroute('menus.create')に置換 -->
                     <a href="{{ route('menus.create') }}" class="btn btn-primary btn-sm">
                         <i class="fa-solid fa-plus me-1"></i> Create a new menu
                     </a>

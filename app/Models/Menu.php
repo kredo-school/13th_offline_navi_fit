@@ -79,4 +79,48 @@ class Menu extends Model
     {
         return $this->hasMany(TrainingRecord::class);
     }
+
+    /**
+     * Get the estimated duration for this menu in minutes.
+     */
+    public function getEstimatedDurationAttribute(): int
+    {
+        $totalTime = 0;
+
+        foreach ($this->menuExercises as $menuExercise) {
+            // Add time for each set (average 45 seconds per set)
+            $setTime = ($menuExercise->sets ?? 0) * 45;
+
+            // Add rest time between sets
+            $restTime = ($menuExercise->sets ?? 0) * ($menuExercise->rest_seconds ?? 60);
+
+            // For first set, no rest before
+            if ($menuExercise->sets > 0) {
+                $restTime -= ($menuExercise->rest_seconds ?? 60);
+            }
+
+            $totalTime += $setTime + $restTime;
+        }
+
+        // Convert to minutes and round up
+        return ceil($totalTime / 60);
+    }
+
+    /**
+     * Get unique muscle groups from all exercises in this menu.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getUniqueMuscleGroupsAttribute()
+    {
+        $muscleGroups = collect();
+
+        foreach ($this->menuExercises as $menuExercise) {
+            if ($menuExercise->exercise && $menuExercise->exercise->muscle_groups) {
+                $muscleGroups = $muscleGroups->merge($menuExercise->exercise->muscle_groups);
+            }
+        }
+
+        return $muscleGroups->unique();
+    }
 }
