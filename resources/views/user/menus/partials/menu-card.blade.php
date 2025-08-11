@@ -1,3 +1,4 @@
+{{-- 修正案: resources/views/user/menus/partials/menu-card.blade.php --}}
 <div class="col-md-6 col-xl-4">
     <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden menu-card"
         data-menu-id="{{ $menu->id }}">
@@ -14,9 +15,9 @@
                 </div>
                 {{-- 公開/非公開アイコン --}}
                 @if ($menu->is_active)
-                    <i class="fa-solid fa-globe text-success" title="Public Menu"></i>
+                    <i class="fa-solid fa-globe text-success" title="Public"></i>
                 @else
-                    <i class="fa-solid fa-lock text-muted" title="Private Menu"></i>
+                    <i class="fa-solid fa-lock text-muted" title="Private"></i>
                 @endif
             </div>
 
@@ -31,42 +32,32 @@
                 <div class="col-6">
                     <div class="d-flex align-items-center text-muted small">
                         <i class="fa-solid fa-bullseye me-2"></i>
-                        <span>{{ $menu->menuExercises->count() }} exercises</span>
+                        <span>{{ $menu->menuExercises->count() }} {{ $menu->menuExercises->count() == 1 ? 'exercise' : 'exercises' }}</span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="d-flex align-items-center text-muted small">
                         <i class="fa-solid fa-clock me-2"></i>
-                        <span>{{ $menu->estimated_duration ?? '45' }} min</span>
+                        <span>{{ $menu->estimated_duration }} min</span>
                     </div>
                 </div>
                 <div class="col-6">
                     @if ($menu->basedOnTemplate)
-                        <span class="badge bg-success">{{ $menu->basedOnTemplate->difficulty ?? '初級者' }}</span>
+                        <span class="badge bg-success">{{ $menu->basedOnTemplate->difficulty }}</span>
                     @else
-                        <span class="badge bg-secondary">カスタム</span>
+                        <span class="badge bg-secondary">Custom</span>
                     @endif
                 </div>
             </div>
 
             {{-- タグ --}}
             <div class="d-flex flex-wrap gap-1 mb-3">
-                @php
-                    $muscleGroups = collect();
-                    foreach ($menu->menuExercises as $menuExercise) {
-                        if ($menuExercise->exercise && $menuExercise->exercise->muscle_groups) {
-                            $muscleGroups = $muscleGroups->merge($menuExercise->exercise->muscle_groups);
-                        }
-                    }
-                    $muscleGroups = $muscleGroups->unique();
-                @endphp
-
-                @foreach ($muscleGroups as $muscleGroup)
+                @foreach ($menu->unique_muscle_groups as $muscleGroup)
                     <span class="badge bg-secondary">{{ $muscleGroup }}</span>
                 @endforeach
 
                 @if ($menu->basedOnTemplate)
-                    <span class="badge bg-secondary">Template Used</span>
+                    <span class="badge bg-secondary">{{ $menu->basedOnTemplate->name }}</span>
                 @endif
             </div>
 
@@ -74,7 +65,7 @@
             <div class="d-flex justify-content-between align-items-center pt-3 border-top">
                 <a href="{{ route('menus.show', $menu) }}" class="btn btn-sm btn-primary">
                     <i class="fa-solid fa-eye me-1"></i>
-                    Details
+                    View
                 </a>
                 <div class="d-flex gap-2">
                     <a href="{{ route('menus.edit', $menu) }}" class="btn btn-sm btn-outline-secondary" title="Edit">

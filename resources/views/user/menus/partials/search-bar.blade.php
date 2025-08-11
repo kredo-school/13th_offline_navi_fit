@@ -1,11 +1,41 @@
 {{-- 検索バー --}}
 <div class="mb-4">
-    <!-- 動的化時はactionを実際のルートに置換 -->
-    <form action="#" method="GET" id="searchForm">
+    <form action="{{ route('menus.index') }}" method="GET" id="searchForm">
         <div class="position-relative">
             <i class="fa-solid fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-            <!-- 動的化時はvalueを動的に設定 -->
-            <input type="text" class="form-control ps-5" name="search" id="searchInput" placeholder="メニューを検索..." value="">
+            <input type="text" class="form-control ps-5" name="search" id="searchInput" placeholder="メニューを検索..."
+                value="{{ $filters['search'] ?? '' }}">
+
+            {{-- 現在のフィルター値を維持するための隠しフィールド --}}
+            @if (isset($filters['sort']))
+                <input type="hidden" name="sort" value="{{ $filters['sort'] }}">
+            @endif
+
+            @if (!empty($filters['difficulty']))
+                @foreach ($filters['difficulty'] as $difficulty)
+                    <input type="hidden" name="difficulty[]" value="{{ $difficulty }}">
+                @endforeach
+            @endif
+
+            @if (!empty($filters['visibility']))
+                @foreach ($filters['visibility'] as $visibility)
+                    <input type="hidden" name="visibility[]" value="{{ $visibility }}">
+                @endforeach
+            @endif
+
+            @if (!empty($filters['tags']))
+                @foreach ($filters['tags'] as $tag)
+                    <input type="hidden" name="tags[]" value="{{ $tag }}">
+                @endforeach
+            @endif
+
+            @if (isset($filters['duration_min']))
+                <input type="hidden" name="duration_min" value="{{ $filters['duration_min'] }}">
+            @endif
+
+            @if (isset($filters['duration_max']))
+                <input type="hidden" name="duration_max" value="{{ $filters['duration_max'] }}">
+            @endif
         </div>
     </form>
 </div>

@@ -6,129 +6,222 @@
 --}}
 
 {{-- モーダルバックドロップ --}}
-<div class="modal fade" id="templateDetailsModal" tabindex="-1" aria-labelledby="templateDetailsModalLabel" aria-hidden="true">
+<div class="modal fade" id="templateDetailsModal" tabindex="-1" aria-labelledby="templateDetailsModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content rounded-4 shadow-lg">
-                {{-- ヘッダー --}}
-                <div class="modal-header border-bottom p-4">
-                    <div class="flex-grow-1">
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="d-flex align-items-center gap-3">
-                                <h2 class="modal-title fs-3 fw-bold text-dark mb-0" id="templateDetailsModalLabel">
-                                    上半身集中トレーニング
-                                </h2>
-                                <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill fw-medium">
-                                    中級者
-                                </span>
-                            </div>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="モーダルを閉じる"></button>
+            {{-- ヘッダー --}}
+            <div class="modal-header border-bottom p-4">
+                <div class="flex-grow-1">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <div class="d-flex align-items-center gap-3">
+                            <h2 class="modal-title fs-3 fw-bold text-dark mb-0" id="templateDetailsModalLabel">
+                                @if (isset($template))
+                                    {{ $template->name }}
+                                @else
+                                    Template Details
+                                @endif
+                            </h2>
+                            <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill fw-medium">
+                                @if (isset($template))
+                                    {{ $template->difficulty }}
+                                @else
+                                    Intermediate
+                                @endif
+                            </span>
                         </div>
-                        <p class="text-muted mb-3">
-                            胸、背中、肩を中心とした上半身の筋力向上プログラム。初心者から中級者まで対応できる効果的なワークアウトです。
-                        </p>
-                        <div class="d-flex align-items-center gap-4 small text-muted">
-                            <div class="d-flex align-items-center gap-1">
-                                <i class="fas fa-calendar"></i>
-                                <span>作成: 2024年3月1日</span>
-                            </div>
-                            <div class="d-flex align-items-center gap-1">
-                                <i class="fas fa-globe text-success"></i>
-                                <span class="text-success">公開</span>
-                            </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <p class="text-muted mb-3">
+                        @if (isset($template))
+                            {{ $template->description }}
+                        @else
+                            Template description will be displayed here.
+                        @endif
+                    </p>
+                    <div class="d-flex align-items-center gap-4 small text-muted">
+                        <div class="d-flex align-items-center gap-1">
+                            <i class="fas fa-calendar"></i>
+                            <span>
+                                @if (isset($template) && isset($template->created_at))
+                                    Created: {{ $template->created_at->format('F j, Y') }}
+                                @else
+                                    Created: {{ date('F j, Y') }}
+                                @endif
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <i class="fas fa-globe text-success"></i>
+                            <span class="text-success">
+                                @if (isset($template))
+                                    {{ $template->is_active ? 'Public' : 'Private' }}
+                                @else
+                                    Public
+                                @endif
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <i class="fa-solid fa-dumbbell"></i>
+                            <span>
+                                @if (isset($template) && isset($template->templateExercises))
+                                    {{ $template->templateExercises->count() }}
+                                @else
+                                    0
+                                @endif
+                                {{ isset($template) && isset($template->templateExercises) && $template->templateExercises->count() == 1 ? 'exercise' : 'exercises' }}
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center gap-1">
+                            <i class="fa-solid fa-clock"></i>
+                            <span id="templateEstimatedTime">
+                                @if (isset($template) && isset($template->estimated_duration))
+                                    {{ $template->estimated_duration }}
+                                @else
+                                    0
+                                @endif
+                                min
+                            </span>
                         </div>
                     </div>
                 </div>
+            </div>
 
+            {{-- タブナビゲーション --}}
+            <div class="px-4 pt-4 mb-3">
+                <!-- 動的化時はJavaScriptでタブ切り替え制御が必要 -->
                 {{-- タブナビゲーション --}}
-                <div class="px-4 pt-4 mb-3">
-                    <!-- 動的化時はJavaScriptでタブ切り替え制御が必要 -->
-                    <ul class="nav nav-pills nav-fill gap-1" id="templateTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active d-flex align-items-center gap-2" id="overview-tab" data-bs-toggle="pill" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">
-                                <i class="fas fa-bullseye"></i>
-                                <span>概要</span>
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link d-flex align-items-center gap-2" id="exercises-tab" data-bs-toggle="pill" data-bs-target="#exercises" type="button" role="tab" aria-controls="exercises" aria-selected="false">
-                                <i class="fas fa-dumbbell"></i>
-                                <span>エクササイズ</span>
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link d-flex align-items-center gap-2" id="nutrition-tab" data-bs-toggle="pill" data-bs-target="#nutrition" type="button" role="tab" aria-controls="nutrition" aria-selected="false">
-                                <i class="fas fa-heart"></i>
-                                <span>栄養情報</span>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="nav nav-tabs nav-fill border-0" id="templateDetailsTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active px-4 py-3" id="overview-tab" data-bs-toggle="tab"
+                            data-bs-target="#overview" type="button" role="tab" aria-controls="overview"
+                            aria-selected="true">
+                            Overview
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link px-4 py-3" id="exercises-tab" data-bs-toggle="tab"
+                            data-bs-target="#exercises" type="button" role="tab" aria-controls="exercises"
+                            aria-selected="false">
+                            Exercises
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link px-4 py-3" id="reviews-tab" data-bs-toggle="tab"
+                            data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews"
+                            aria-selected="false">
+                            Reviews
+                        </button>
+                    </li>
+                </ul>
+            </div>
 
-                {{-- タブコンテンツ --}}
-                <div class="modal-body">
-                    <div class="tab-content" id="templateTabContent">
-                        
-                        {{-- 概要タブ --}}
-                        <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-                                
-                                
+            {{-- タブコンテンツ --}}
+            <div class="modal-body">
+                <div class="tab-content" id="templateTabContent">
 
-                                {{-- 統計グリッド --}}
-                                <div class="row g-3 mb-4">
-                                    <div class="col-6 col-md-3">
-                                        <div class="bg-primary bg-opacity-10 rounded-3 p-3 text-center">
-                                            <i class="fas fa-clock text-primary fs-4 mb-2"></i>
-                                            <div class="fs-3 fw-bold text-primary">60</div>
-                                            <div class="small text-muted">分</div>
-                                        </div>
+                    {{-- 概要タブ --}}
+                    <div class="tab-pane fade show active" id="overview" role="tabpanel"
+                        aria-labelledby="overview-tab">
+
+
+
+                        {{-- 統計グリッド --}}
+                        <div class="row g-3 mb-4">
+                            <div class="col-6 col-md-3">
+                                <div class="bg-primary bg-opacity-10 rounded-3 p-3 text-center">
+                                    <i class="fas fa-clock text-primary fs-4 mb-2"></i>
+                                    <div class="fs-3 fw-bold text-primary">
+                                        @if (isset($template) && isset($template->estimated_duration))
+                                            {{ $template->estimated_duration }}
+                                        @else
+                                            0
+                                        @endif
                                     </div>
-                                    <div class="col-6 col-md-3">
-                                        <div class="bg-success bg-opacity-10 rounded-3 p-3 text-center">
-                                            <i class="fas fa-bullseye text-success fs-4 mb-2"></i>
-                                            <div class="fs-3 fw-bold text-success">4</div>
-                                            <div class="small text-muted">種目</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3">
-                                        <div class="bg-warning bg-opacity-10 rounded-3 p-3 text-center">
-                                            <i class="fas fa-bolt text-warning fs-4 mb-2"></i>
-                                            <div class="fs-3 fw-bold text-warning">420</div>
-                                            <div class="small text-muted">kcal</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 col-md-3">
-                                        <div class="bg-info bg-opacity-10 rounded-3 p-3 text-center">
-                                            <i class="fas fa-star text-info fs-4 mb-2"></i>
-                                            <div class="fs-3 fw-bold text-info">4.3</div>
-                                            <div class="small text-muted">評価</div>
-                                        </div>
-                                    </div>
+                                    <div class="small text-muted">min</div>
                                 </div>
-
-                                {{-- テンプレート情報 --}}
-                                <div class="row g-4 mb-4">
-                                    <div class="col-md-6">
-                                        <h3 class="fs-5 fw-semibold text-dark mb-3">対象筋群</h3>
-                                        <div class="d-flex flex-wrap gap-2">
-                                            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">胸筋</span>
-                                            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">広背筋</span>
-                                            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">三角筋</span>
-                                            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">上腕三頭筋</span>
-                                        </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="bg-success bg-opacity-10 rounded-3 p-3 text-center">
+                                    <i class="fas fa-bullseye text-success fs-4 mb-2"></i>
+                                    <div class="fs-3 fw-bold text-success">
+                                        @if (isset($template) && isset($template->templateExercises))
+                                            {{ $template->templateExercises->count() }}
+                                        @else
+                                            0
+                                        @endif
                                     </div>
-                                    
-                                    <div class="col-md-6">
-                                        <h3 class="fs-5 fw-semibold text-dark mb-3">必要器具</h3>
-                                        <div class="d-flex flex-wrap gap-2">
-                                            <span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill">バーベル</span>
-                                            <span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill">ダンベル</span>
-                                            <span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill">プルアップバー</span>
-                                        </div>
-                                    </div>
+                                    <div class="small text-muted">exercises</div>
                                 </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="bg-warning bg-opacity-10 rounded-3 p-3 text-center">
+                                    <i class="fas fa-bolt text-warning fs-4 mb-2"></i>
+                                    <div class="fs-3 fw-bold text-warning">
+                                        @if (isset($template) && isset($template->estimated_calories))
+                                            {{ $template->estimated_calories }}
+                                        @else
+                                            0
+                                        @endif
+                                    </div>
+                                    <div class="small text-muted">kcal</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="bg-info bg-opacity-10 rounded-3 p-3 text-center">
+                                    <i class="fas fa-star text-info fs-4 mb-2"></i>
+                                    <div class="fs-3 fw-bold text-info">
+                                        @if (isset($template) && isset($template->rating))
+                                            {{ $template->rating }}
+                                        @else
+                                            0
+                                        @endif
+                                    </div>
+                                    <div class="small text-muted">rating</div>
+                                </div>
+                            </div>
+                        </div>
 
-                                {{-- 人気度メトリクス --}}
-                                {{-- <div class="bg-light rounded-3 p-4">
+                        {{-- テンプレート情報 --}}
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <h3 class="fs-5 fw-semibold text-dark mb-3">Target Muscle Groups</h3>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @if (isset($template) &&
+                                            isset($template->muscle_groups) &&
+                                            is_array($template->muscle_groups) &&
+                                            count($template->muscle_groups) > 0)
+                                        @foreach ($template->muscle_groups as $muscleGroup)
+                                            <span
+                                                class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">{{ $muscleGroup }}</span>
+                                        @endforeach
+                                    @else
+                                        <span class="badge bg-light text-muted px-3 py-2 rounded-pill">None
+                                            selected</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h3 class="fs-5 fw-semibold text-dark mb-3">Equipment Needed</h3>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @if (isset($template) &&
+                                            isset($template->equipment_needed) &&
+                                            is_array($template->equipment_needed) &&
+                                            count($template->equipment_needed) > 0)
+                                        @foreach ($template->equipment_needed as $equipment)
+                                            <span
+                                                class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill">{{ $equipment }}</span>
+                                        @endforeach
+                                    @else
+                                        <span class="badge bg-light text-muted px-3 py-2 rounded-pill">None
+                                            selected</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- 人気度メトリクス --}}
+                        {{-- <div class="bg-light rounded-3 p-4">
                                     <h3 class="fs-5 fw-semibold text-dark mb-4">人気度</h3>
                                     <div class="row g-3 text-center">
                                         <div class="col-4">
@@ -145,308 +238,126 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                        </div>
+                    </div>
 
-                        {{-- エクササイズタブ --}}
-                        <div class="tab-pane fade" id="exercises" role="tabpanel" aria-labelledby="exercises-tab">
-                            <div class="p-4">
-                                <div class="d-flex flex-column gap-3">
-                                    
-                                    {{-- エクササイズ1 --}}
-                                    <div class="border rounded-3 hover-shadow mb-3" x-data="{ expanded: false }">
-                                        <div class="p-3" @click="expanded = !expanded" style="cursor: pointer;">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="badge bg-primary text-white px-3 py-2 rounded-pill fw-medium">1</div>
+                    {{-- エクササイズタブ --}}
+                    <div class="tab-pane fade" id="exercises" role="tabpanel" aria-labelledby="exercises-tab">
+                        <div class="p-4">
+                            <div class="d-flex flex-column gap-3">
+                                @if (isset($template) && isset($template->templateExercises) && $template->templateExercises->count() > 0)
+                                    @foreach ($template->templateExercises as $index => $templateExercise)
+                                        {{-- エクササイズアイテム --}}
+                                        <div class="border rounded-3 hover-shadow mb-3" x-data="{ expanded: false }">
+                                            <div class="p-3" @click="expanded = !expanded"
+                                                style="cursor: pointer;">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <div
+                                                            class="badge bg-primary text-white px-3 py-2 rounded-pill fw-medium">
+                                                            {{ $index + 1 }}
+                                                        </div>
 
-                                                    <div>
-                                                        <h4 class="fw-semibold text-dark mb-1">ベンチプレス</h4>
-                                                        <div class="d-flex align-items-center gap-3 small text-muted">
-                                                            <span>4セット</span>
-                                                            <span>8回</span>
-                                                            <span>80kg</span>
-                                                            <span>休憩120秒</span>
+                                                        <div>
+                                                            <h4 class="fw-semibold text-dark mb-1">
+                                                                {{ $templateExercise->exercise->name ?? 'Exercise Name' }}
+                                                            </h4>
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 small text-muted">
+                                                                <span>{{ $templateExercise->sets ?? 0 }} sets</span>
+                                                                <span>{{ $templateExercise->reps ?? 0 }} reps</span>
+                                                                @if (isset($templateExercise->weight) && $templateExercise->weight > 0)
+                                                                    <span>{{ $templateExercise->weight }}kg</span>
+                                                                @endif
+                                                                <span>{{ $templateExercise->rest_seconds ?? 0 }}s
+                                                                    rest</span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <span class="badge bg-warning bg-opacity-10 text-warning px-2 py-1 rounded-pill small fw-medium">中級者</span>
-                                                    <span class="small text-muted">120kcal</span>
-                                                    <i class="fas fa-chevron-down text-muted transition-transform duration-200" :class="{ 'rotate-180': expanded }"></i>
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <span
+                                                            class="badge bg-warning bg-opacity-10 text-warning px-2 py-1 rounded-pill small fw-medium">
+                                                            {{ $templateExercise->exercise->difficulty ?? 'Intermediate' }}
+                                                        </span>
+                                                        <span class="small text-muted">
+                                                            {{ $templateExercise->exercise->estimated_calories ?? 0 }}
+                                                            kcal
+                                                        </span>
+                                                        <i class="fas fa-chevron-down text-muted transition-transform duration-200"
+                                                            :class="{ 'rotate-180': expanded }"></i>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        {{-- エクササイズ詳細（折りたたみ） --}}
-                                        <div x-show="expanded" 
-                                             x-transition:enter="transition-all duration-300 ease-out"
-                                             x-transition:enter-start="opacity-0 transform -translate-y-2"
-                                             x-transition:enter-end="opacity-100 transform translate-y-0"
-                                             x-transition:leave="transition-all duration-200 ease-in"
-                                             x-transition:leave-start="opacity-100 transform translate-y-0"
-                                             x-transition:leave-end="opacity-0 transform -translate-y-2"
-                                             class="mt-3 pt-3 border-top mx-3">
+                                            {{-- エクササイズ詳細（折りたたみ） --}}
+                                            <div x-show="expanded"
+                                                x-transition:enter="transition-all duration-300 ease-out"
+                                                x-transition:enter-start="opacity-0 transform -translate-y-2"
+                                                x-transition:enter-end="opacity-100 transform translate-y-0"
+                                                x-transition:leave="transition-all duration-200 ease-in"
+                                                x-transition:leave-start="opacity-100 transform translate-y-0"
+                                                x-transition:leave-end="opacity-0 transform -translate-y-2"
+                                                class="mt-3 pt-3 border-top mx-3">
                                                 <div class="row g-3 mb-3">
                                                     <div class="col-md-6">
-                                                        <h5 class="fw-medium text-dark mb-2">対象筋群</h5>
+                                                        <h5 class="fw-medium text-dark mb-2">Target Muscle Groups</h5>
                                                         <div class="d-flex flex-wrap gap-1 mb-3">
-                                                            <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">胸筋</span>
-                                                            <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">三角筋</span>
-                                                            <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">上腕三頭筋</span>
+                                                            @if (isset($templateExercise->exercise->muscle_groups) &&
+                                                                    is_array($templateExercise->exercise->muscle_groups) &&
+                                                                    count($templateExercise->exercise->muscle_groups) > 0)
+                                                                @foreach ($templateExercise->exercise->muscle_groups as $muscleGroup)
+                                                                    <span
+                                                                        class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">{{ $muscleGroup }}</span>
+                                                                @endforeach
+                                                            @else
+                                                                <span
+                                                                    class="badge bg-light text-muted px-2 py-1 rounded-pill small">None
+                                                                    specified</span>
+                                                            @endif
                                                         </div>
                                                         <div class="small text-muted">
-                                                            <span class="fw-medium">器具:</span> バーベル
+                                                            <span class="fw-medium">Equipment:</span>
+                                                            {{ $templateExercise->exercise->equipment_needed ?? 'None' }}
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 {{-- 実行手順 --}}
                                                 <div class="mb-3">
-                                                    <h5 class="fw-medium text-dark mb-2">実行手順</h5>
-                                                    <ol class="d-flex flex-column gap-2 ps-0">
-                                                        <li class="d-flex align-items-start gap-2 small text-dark">
-                                                            <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">1</span>
-                                                            <span>ベンチに仰向けになり、肩甲骨を寄せて胸を張る</span>
-                                                        </li>
-                                                        <li class="d-flex align-items-start gap-2 small text-dark">
-                                                            <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">2</span>
-                                                            <span>バーベルを肩幅より少し広めの手幅で握る</span>
-                                                        </li>
-                                                        <li class="d-flex align-items-start gap-2 small text-dark">
-                                                            <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">3</span>
-                                                            <span>バーベルを胸の上まで下ろし、一瞬停止する</span>
-                                                        </li>
-                                                        <li class="d-flex align-items-start gap-2 small text-dark">
-                                                            <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">4</span>
-                                                            <span>胸筋を意識しながらバーベルを押し上げる</span>
-                                                        </li>
-                                                    </ol>
+                                                    <h5 class="fw-medium text-dark mb-2">Instructions</h5>
+                                                    @if (isset($templateExercise->exercise->instructions) && !empty($templateExercise->exercise->instructions))
+                                                        <p class="small text-dark">
+                                                            {{ $templateExercise->exercise->instructions }}</p>
+                                                    @else
+                                                        <p class="text-muted small">No instructions provided.</p>
+                                                    @endif
                                                 </div>
-                                
                                             </div>
                                         </div>
+                                    @endforeach
+                                @else
+                                    <div class="text-center py-5">
+                                        <i class="fas fa-dumbbell text-muted mb-4" style="font-size: 4rem;"></i>
+                                        <h3 class="fs-5 fw-semibold text-dark mb-2">No Exercises Found</h3>
+                                        <p class="text-muted">This template does not contain any exercises yet.</p>
                                     </div>
-
-                                    {{-- エクササイズ2 --}}
-                                    <div class="border rounded-3 hover-shadow mb-3" x-data="{ expanded: false }">
-                                        <div class="p-3" @click="expanded = !expanded" style="cursor: pointer;">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="badge bg-primary text-white px-3 py-2 rounded-pill fw-medium">2</div>
-                                                    <div>
-                                                        <h4 class="fw-semibold text-dark mb-1">プルアップ</h4>
-                                                        <div class="d-flex align-items-center gap-3 small text-muted">
-                                                            <span>3セット</span>
-                                                            <span>10回</span>
-                                                            <span>休憩90秒</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <span class="badge bg-warning bg-opacity-10 text-warning px-2 py-1 rounded-pill small fw-medium">中級者</span>
-                                                    <span class="small text-muted">80kcal</span>
-                                                    <i class="fas fa-chevron-down text-muted transition-transform duration-200" :class="{ 'rotate-180': expanded }"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {{-- エクササイズ詳細（折りたたみ） --}}
-                                        <div x-show="expanded" 
-                                             x-transition:enter="transition-all duration-300 ease-out"
-                                             x-transition:enter-start="opacity-0 transform -translate-y-2"
-                                             x-transition:enter-end="opacity-100 transform translate-y-0"
-                                             x-transition:leave="transition-all duration-200 ease-in"
-                                             x-transition:leave-start="opacity-100 transform translate-y-0"
-                                             x-transition:leave-end="opacity-0 transform -translate-y-2"
-                                             class="mt-3 pt-3 border-top mx-3">
-                                            <div class="row g-3 mb-3">
-                                                <div class="col-md-6">
-                                                    <h5 class="fw-medium text-dark mb-2">対象筋群</h5>
-                                                    <div class="d-flex flex-wrap gap-1 mb-3">
-                                                        <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">広背筋</span>
-                                                        <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">上腕二頭筋</span>
-                                                        <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">後三角筋</span>
-                                                    </div>
-                                                    <div class="small text-muted">
-                                                        <span class="fw-medium">器具:</span> プルアップバー
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {{-- 実行手順 --}}
-                                            <div class="mb-3">
-                                                <h5 class="fw-medium text-dark mb-2">実行手順</h5>
-                                                <ol class="d-flex flex-column gap-2 ps-0">
-                                                    <li class="d-flex align-items-start gap-2 small text-dark">
-                                                        <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">1</span>
-                                                        <span>プルアップバーを肩幅より少し広めの手幅で握る</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-start gap-2 small text-dark">
-                                                        <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">2</span>
-                                                        <span>肩甲骨を寄せながら、顎がバーに届くまで体を引き上げる</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-start gap-2 small text-dark">
-                                                        <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">3</span>
-                                                        <span>ゆっくりと開始位置まで体を下ろす</span>
-                                                    </li>
-                                                </ol>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {{-- エクササイズ3 --}}
-                                    <div class="border rounded-3 hover-shadow mb-3" x-data="{ expanded: false }">
-                                        <div class="p-3" @click="expanded = !expanded" style="cursor: pointer;">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="badge bg-primary text-white px-3 py-2 rounded-pill fw-medium">3</div>
-                                                    <div>
-                                                        <h4 class="fw-semibold text-dark mb-1">ショルダープレス</h4>
-                                                        <div class="d-flex align-items-center gap-3 small text-muted">
-                                                            <span>3セット</span>
-                                                            <span>12回</span>
-                                                            <span>25kg</span>
-                                                            <span>休憩60秒</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <span class="badge bg-success bg-opacity-10 text-success px-2 py-1 rounded-pill small fw-medium">初級者</span>
-                                                    <span class="small text-muted">60kcal</span>
-                                                    <i class="fas fa-chevron-down text-muted transition-transform duration-200" :class="{ 'rotate-180': expanded }"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {{-- エクササイズ詳細（折りたたみ） --}}
-                                        <div x-show="expanded" 
-                                             x-transition:enter="transition-all duration-300 ease-out"
-                                             x-transition:enter-start="opacity-0 transform -translate-y-2"
-                                             x-transition:enter-end="opacity-100 transform translate-y-0"
-                                             x-transition:leave="transition-all duration-200 ease-in"
-                                             x-transition:leave-start="opacity-100 transform translate-y-0"
-                                             x-transition:leave-end="opacity-0 transform -translate-y-2"
-                                             class="mt-3 pt-3 border-top mx-3">
-                                            <div class="row g-3 mb-3">
-                                                
-                                                <div class="col-md-6">
-                                                    <h5 class="fw-medium text-dark mb-2">対象筋群</h5>
-                                                    <div class="d-flex flex-wrap gap-1 mb-3">
-                                                        <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">三角筋</span>
-                                                        <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">上腕三頭筋</span>
-                                                        <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">僧帽筋</span>
-                                                    </div>
-                                                    <div class="small text-muted">
-                                                        <span class="fw-medium">器具:</span> ダンベル
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {{-- 実行手順 --}}
-                                            <div class="mb-3">
-                                                <h5 class="fw-medium text-dark mb-2">実行手順</h5>
-                                                <ol class="d-flex flex-column gap-2 ps-0">
-                                                    <li class="d-flex align-items-start gap-2 small text-dark">
-                                                        <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">1</span>
-                                                        <span>ダンベルを両手に持ち、肩幅で立つ</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-start gap-2 small text-dark">
-                                                        <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">2</span>
-                                                        <span>肩の高さからダンベルを頭上に向かって押し上げる</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-start gap-2 small text-dark">
-                                                        <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">3</span>
-                                                        <span>ゆっくりと肩の高さまで下ろす</span>
-                                                    </li>
-                                                </ol>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {{-- エクササイズ4 --}}
-                                    <div class="border rounded-3 hover-shadow" x-data="{ expanded: false }">
-                                        <div class="p-3" @click="expanded = !expanded" style="cursor: pointer;">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="badge bg-primary text-white px-3 py-2 rounded-pill fw-medium">4</div>
-                                                    <div>
-                                                        <h4 class="fw-semibold text-dark mb-1">ディップス</h4>
-                                                        <div class="d-flex align-items-center gap-3 small text-muted">
-                                                            <span>3セット</span>
-                                                            <span>15回</span>
-                                                            <span>休憩60秒</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <span class="badge bg-warning bg-opacity-10 text-warning px-2 py-1 rounded-pill small fw-medium">中級者</span>
-                                                    <span class="small text-muted">90kcal</span>
-                                                    <i class="fas fa-chevron-down text-muted transition-transform duration-200" :class="{ 'rotate-180': expanded }"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {{-- エクササイズ詳細（折りたたみ） --}}
-                                        <div x-show="expanded" 
-                                             x-transition:enter="transition-all duration-300 ease-out"
-                                             x-transition:enter-start="opacity-0 transform -translate-y-2"
-                                             x-transition:enter-end="opacity-100 transform translate-y-0"
-                                             x-transition:leave="transition-all duration-200 ease-in"
-                                             x-transition:leave-start="opacity-100 transform translate-y-0"
-                                             x-transition:leave-end="opacity-0 transform -translate-y-2"
-                                             class="mt-3 pt-3 border-top mx-3">
-                                            <div class="row g-3 mb-3">
-                                                
-                                                <div class="col-md-6">
-                                                    <h5 class="fw-medium text-dark mb-2">対象筋群</h5>
-                                                    <div class="d-flex flex-wrap gap-1 mb-3">
-                                                        <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">胸筋</span>
-                                                        <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">上腕三頭筋</span>
-                                                        <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">前三角筋</span>
-                                                    </div>
-                                                    <div class="small text-muted">
-                                                        <span class="fw-medium">器具:</span> ディップスバー
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {{-- 実行手順 --}}
-                                            <div class="mb-3">
-                                                <h5 class="fw-medium text-dark mb-2">実行手順</h5>
-                                                <ol class="d-flex flex-column gap-2 ps-0">
-                                                    <li class="d-flex align-items-start gap-2 small text-dark">
-                                                        <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">1</span>
-                                                        <span>ディップスバーを両手で掴み、腕を伸ばして体を支える</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-start gap-2 small text-dark">
-                                                        <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">2</span>
-                                                        <span>ゆっくりと肘を曲げて体を下ろす</span>
-                                                    </li>
-                                                    <li class="d-flex align-items-start gap-2 small text-dark">
-                                                        <span class="badge bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 1.25rem; height: 1.25rem; font-size: 0.75rem;">3</span>
-                                                        <span>胸筋を意識しながら元の位置まで押し上げる</span>
-                                                    </li>
-                                                </ol>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                @endif
                             </div>
                         </div>
-
-                        {{-- 栄養情報タブ --}}
-                        <div class="tab-pane fade" id="nutrition" role="tabpanel" aria-labelledby="nutrition-tab">
-                            <div class="text-center py-5">
-                                <i class="fas fa-heart text-muted mb-4" style="font-size: 4rem;"></i>
-                                <h3 class="fs-5 fw-semibold text-dark mb-2">栄養情報</h3>
-                                <p class="text-muted">栄養情報機能は今後のアップデートで追加予定です</p>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
 
+                {{-- レビュータブ --}}
+                <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                    <div class="text-center py-5">
+                        <i class="fas fa-star text-muted mb-4" style="font-size: 4rem;"></i>
+                        <h3 class="fs-5 fw-semibold text-dark mb-2">Reviews</h3>
+                        <p class="text-muted">Review feature will be added in a future update.</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
     </div>
+</div>
 </div>
