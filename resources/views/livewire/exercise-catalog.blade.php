@@ -69,6 +69,7 @@
             <div class="d-flex flex-column gap-2 pt-2 px-3 pb-3 exercise-catalog-container">
                 @forelse($exercises as $exercise)
                     <div class="card border exercise-card w-100" 
+                         wire:key="exercise-{{ $exercise->id }}"
                          draggable="true" 
                          data-exercise="{{ $exercise->name }}" 
                          data-exercise-id="{{ $exercise->id }}">
@@ -111,12 +112,12 @@
                                                 class="btn btn-outline-primary btn-sm flex-fill" 
                                                 wire:click="showExerciseDetails({{ $exercise->id }})"
                                                 wire:loading.attr="disabled"
-                                                wire:target="showExerciseDetails({{ $exercise->id }})"
+                                                wire:target="showExerciseDetails"
                                                 style="font-size: 0.75rem;">
-                                            <span wire:loading.remove wire:target="showExerciseDetails({{ $exercise->id }})">
+                                            <span wire:loading.remove wire:target="showExerciseDetails">
                                                 <i class="fas fa-eye me-1"></i>Details
                                             </span>
-                                            <span wire:loading wire:target="showExerciseDetails({{ $exercise->id }})">
+                                            <span wire:loading wire:target="showExerciseDetails">
                                                 <i class="fas fa-spinner fa-spin me-1"></i>Loading...
                                             </span>
                                         </button>
@@ -126,12 +127,12 @@
                                                 class="btn btn-primary btn-sm flex-fill add-exercise-btn"
                                                 wire:click="addToMenu({{ $exercise->id }})"
                                                 wire:loading.attr="disabled"
-                                                wire:target="addToMenu({{ $exercise->id }})"
+                                                wire:target="addToMenu"
                                                 style="font-size: 0.75rem;">
-                                            <span wire:loading.remove wire:target="addToMenu({{ $exercise->id }})">
+                                            <span wire:loading.remove wire:target="addToMenu">
                                                 <i class="fas fa-plus me-1"></i>Add
                                             </span>
-                                            <span wire:loading wire:target="addToMenu({{ $exercise->id }})">
+                                            <span wire:loading wire:target="addToMenu">
                                                 <i class="fas fa-spinner fa-spin me-1"></i>Adding...
                                             </span>
                                         </button>
@@ -182,7 +183,7 @@
                                 <span class="badge {{ $this->getDifficultyBadgeClass($selectedExercise->difficulty) }} px-3 py-2 rounded-pill">
                                     {{ $this->getDifficultyLabel($selectedExercise->difficulty) }}
                                 </span>
-                                <span class="text-muted small">
+                                {{-- <span class="text-muted small">
                                     {{ $selectedExercise->equipment_category ?? 'No Category' }}
                                 </span>
                                 @if($selectedExercise->equipment_needed)
@@ -190,7 +191,7 @@
                                     <span class="text-muted small">
                                         {{ $selectedExercise->equipment_needed }}
                                     </span>
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
                         <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
@@ -199,7 +200,7 @@
                     {{-- Modal Body --}}
                     <div class="modal-body">
                         {{-- Media Section --}}
-                        <div class="ratio ratio-16x9 bg-light rounded mb-4">
+                        {{-- <div class="ratio ratio-16x9 bg-light rounded mb-4">
                             @if ($selectedExercise->image_url)
                                 <img src="{{ $selectedExercise->image_url }}" 
                                      alt="{{ $selectedExercise->name }}"
@@ -212,7 +213,7 @@
                                     </div>
                                 </div>
                             @endif
-                        </div>
+                        </div> --}}
 
                         {{-- Stats Grid --}}
                         <div class="row g-3 mb-4">
@@ -239,7 +240,7 @@
                                     <i class="fas fa-layer-group text-warning fs-4 mb-2"></i>
                                     <div class="small text-muted">Category</div>
                                     <div class="fw-medium text-dark" style="font-size: 0.85rem;">
-                                        {{ ucfirst($selectedExercise->equipment_category ?? 'General') }}
+                                        {{ isset($selectedExercise->muscle_groups[0]) ? $selectedExercise->muscle_groups[0] : 'General' }}
                                     </div>
                                 </div>
                             </div>
@@ -288,7 +289,7 @@
                             </div>
                         @endif
 
-                        {{-- Equipment Details --}}
+                        {{-- Equipment Details
                         @if($selectedExercise->equipment_needed)
                             <div class="mb-4">
                                 <h5 class="fw-semibold text-dark mb-3">Equipment Needed</h5>
@@ -297,7 +298,7 @@
                                     {{ $selectedExercise->equipment_needed }}
                                 </div>
                             </div>
-                        @endif
+                        @endif --}}
                     </div>
 
                     {{-- Modal Footer --}}
