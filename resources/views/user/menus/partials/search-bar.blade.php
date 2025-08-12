@@ -1,9 +1,9 @@
-{{-- 検索バー --}}
+{{-- 検索バー（英語版） --}}
 <div class="mb-4">
     <form action="{{ route('menus.index') }}" method="GET" id="searchForm">
         <div class="position-relative">
             <i class="fa-solid fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-            <input type="text" class="form-control ps-5" name="search" id="searchInput" placeholder="メニューを検索..."
+            <input type="text" class="form-control ps-5" name="search" id="searchInput" placeholder="Search menus..."
                 value="{{ $filters['search'] ?? '' }}">
 
             {{-- 現在のフィルター値を維持するための隠しフィールド --}}
