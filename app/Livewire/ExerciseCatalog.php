@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Exercise;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class ExerciseCatalog extends Component
@@ -20,6 +21,14 @@ class ExerciseCatalog extends Component
 
     // エクササイズデータ
     public $exercises = [];
+
+    // モーダル関連のプロパティ
+    public $showModal = false;
+
+    public $selectedExercise = null;
+
+    // ローディング状態
+    public $loading = false;
 
     public function mount()
     {
@@ -58,6 +67,95 @@ class ExerciseCatalog extends Component
         $this->dispatch('clearSearchInput');
         // UI上のセレクトも初期表示に戻す
         $this->dispatch('resetFilterSelects');
+    }
+
+    /**
+     * エクササイズ詳細モーダルを開く
+     */
+    public function showExerciseDetails($exerciseId)
+    {
+        $this->loading = true;
+
+        try {
+            $this->selectedExercise = Exercise::find($exerciseId);
+
+            if ($this->selectedExercise) {
+                $this->showModal = true;
+            } else {
+                session()->flash('error', 'Exercise not found.');
+            }
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error loading exercise details.');
+            Log::error('Exercise details loading error: '.$e->getMessage());
+        } finally {
+            $this->loading = false;
+        }
+    }
+
+    /**
+     * モーダルを閉じる
+     */
+    public function closeModal()
+    {
+        $this->showModal = false;
+        $this->selectedExercise = null;
+    }
+
+    /**
+     * エクササイズをメニューに追加
+     */
+    // public function addToMenu($exerciseId)
+    // {
+    //     try {
+    //         $exercise = Exercise::find($exerciseId);
+
+    //         if (!$exercise) {
+    //             session()->flash('error', 'Exercise not found.');
+    //             return;
+    //         }
+
+    //         // 親コンポーネントにイベントを送信（メニュー作成ページで使用）
+    //         $this->dispatch('exerciseAdded', [
+    //             'exerciseId' => $exerciseId,
+    //             'exerciseName' => $exercise->name
+    //         ]);
+
+    //         // モーダルを閉じる
+    //         $this->closeModal();
+
+    //         // 成功メッセージを表示
+    //         session()->flash('message', "'{$exercise->name}' がメニューに追加されました！");
+
+    //     } catch (\Exception $e) {
+    //         session()->flash('error', 'エクササイズの追加に失敗しました。');
+    //         \Log::error('Add exercise to menu error: ' . $e->getMessage());
+    //     }
+    // }
+
+    /**
+     * 難易度バッジのCSSクラスを取得
+     */
+    public function getDifficultyBadgeClass($difficulty)
+    {
+        return match ($difficulty) {
+            'beginner' => 'bg-success',
+            'intermediate' => 'bg-warning text-dark',
+            'advanced' => 'bg-danger',
+            default => 'bg-secondary'
+        };
+    }
+
+    /**
+     * 難易度ラベルを取得
+     */
+    public function getDifficultyLabel($difficulty)
+    {
+        return match ($difficulty) {
+            'beginner' => 'Beginner',
+            'intermediate' => 'Intermediate',
+            'advanced' => 'Advanced',
+            default => 'Unknown'
+        };
     }
 
     private function updateExercises()
