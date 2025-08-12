@@ -1,8 +1,8 @@
 {{-- resources/views/user/menus/partials/edit/exercise-catalog.blade.php --}}
 <div class="card border-0 shadow-sm h-100 d-flex flex-column">
     <div class="card-header bg-white border-bottom">
-        <h6 class="card-title mb-1">エクササイズカタログ</h6>
-        <small class="text-muted">クリックまたはドラッグして追加</small>
+        <h6 class="card-title mb-1">Exercise Catalog</h6>
+        <small class="text-muted">Click or drag to add</small>
     </div>
 
     {{-- Filters --}}
@@ -11,13 +11,13 @@
             {{-- Search --}}
             <div class="position-relative">
                 <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-                <input type="text" class="form-control form-control-sm ps-5" placeholder="種目を検索..."
+                <input type="text" class="form-control form-control-sm ps-5" placeholder="Search exercises..."
                     id="exerciseSearch">
             </div>
 
             {{-- Category Filter --}}
             <select class="form-select form-select-sm" id="categoryFilter">
-                <option value="all">全カテゴリ</option>
+                <option value="all">All Categories</option>
                 @if (isset($exercisesByCategory))
                     @foreach ($exercisesByCategory->keys() as $category)
                         <option value="{{ $category }}">{{ $category }}</option>
@@ -27,17 +27,17 @@
 
             {{-- Difficulty Filter --}}
             <select class="form-select form-select-sm" id="difficultyFilter">
-                <option value="all">全レベル</option>
-                <option value="beginner">初級</option>
-                <option value="intermediate">中級</option>
-                <option value="advanced">上級</option>
+                <option value="all">All Levels</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
             </select>
 
             {{-- Sort --}}
             <select class="form-select form-select-sm" id="sortBy">
-                <option value="name">名前順</option>
-                <option value="category">カテゴリ順</option>
-                <option value="difficulty">難易度順</option>
+                <option value="name">By Name</option>
+                <option value="category">By Category</option>
+                <option value="difficulty">By Difficulty</option>
             </select>
         </div>
     </div>
@@ -65,11 +65,11 @@
                                             $badgeClass = 'bg-danger';
                                         }
 
-                                        $difficultyLabel = '初級';
+                                        $difficultyLabel = 'Beginner';
                                         if ($exercise->difficulty === 'intermediate') {
-                                            $difficultyLabel = '中級';
+                                            $difficultyLabel = 'Intermediate';
                                         } elseif ($exercise->difficulty === 'advanced') {
-                                            $difficultyLabel = '上級';
+                                            $difficultyLabel = 'Advanced';
                                         }
                                     @endphp
                                     <span class="badge {{ $badgeClass }}">{{ $difficultyLabel }}</span>
@@ -93,7 +93,7 @@
             @empty
                 <div class="text-center py-4 text-muted">
                     <i class="bi bi-clipboard-x display-6 text-muted mb-2"></i>
-                    <p>エクササイズが見つかりません</p>
+                    <p>No exercises found</p>
                 </div>
             @endforelse
         </div>
@@ -101,7 +101,7 @@
         {{-- Empty State --}}
         <div class="text-center py-4 text-muted d-none" id="emptyExerciseState">
             <i class="bi bi-funnel display-6 text-muted mb-2"></i>
-            <p class="small">該当する種目が見つかりません</p>
+            <p class="small">No matching exercises found</p>
         </div>
     </div>
 </div>

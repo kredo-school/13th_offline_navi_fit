@@ -1,7 +1,7 @@
 <div class="card border-0 shadow-sm h-100 d-flex flex-column">
     <div class="card-header bg-white border-bottom">
-        <h6 class="card-title mb-1">テンプレートライブラリ</h6>
-        <small class="text-muted">ドラッグして中央に追加</small>
+        <h6 class="card-title mb-1">Template Library</h6>
+        <small class="text-muted">Drag to add to the center</small>
     </div>
 
     <div class="card-body flex-fill overflow-auto p-4 template-library-container">
@@ -19,11 +19,11 @@
                                 $badgeClass = 'bg-danger';
                             }
 
-                            $difficultyLabel = '初級';
+                            $difficultyLabel = 'Beginner';
                             if ($template->difficulty === 'intermediate') {
-                                $difficultyLabel = '中級';
+                                $difficultyLabel = 'Intermediate';
                             } elseif ($template->difficulty === 'advanced') {
-                                $difficultyLabel = '上級';
+                                $difficultyLabel = 'Advanced';
                             }
                         @endphp
                         <span class="badge {{ $badgeClass }} position-absolute top-0 end-0 m-1"
@@ -37,35 +37,32 @@
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <div class="d-flex align-items-center">
                                 <i class="fa-regular fa-clock me-1" style="font-size: 0.8rem;"></i>
-                                <span style="font-size: 0.8rem;">{{ $template->estimated_time ?? '30' }}分</span>
+                                <span style="font-size: 0.8rem;">{{ $template->estimated_time ?? '30' }} min</span>
                             </div>
                             <div class="d-flex align-items-center">
                                 <i class="fa-solid fa-bullseye me-1" style="font-size: 0.8rem;"></i>
-                                <span style="font-size: 0.8rem;">{{ $template->templateExercises->count() }}種目</span>
+                                <span style="font-size: 0.8rem;">{{ $template->templateExercises->count() }}
+                                    exercises</span>
                             </div>
                         </div>
 
                         <div class="d-flex gap-2">
                             <button type="button" class="btn btn-primary btn-sm flex-fill" style="font-size: 0.8rem;"
                                 data-template-id="{{ $template->id }}">
-                                <i class="fa-solid fa-plus me-1"></i>追加
+                                <i class="fa-solid fa-plus me-1"></i>Add
                             </button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm"
-                                style="font-size: 0.8rem;" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#templateDetailsModal"
+                            <button type="button" class="btn btn-outline-secondary btn-sm" style="font-size: 0.8rem;"
+                                data-bs-toggle="modal" data-bs-target="#templateDetailsModal"
                                 data-template-id="{{ $template->id }}">
                                 <i class="fa-solid fa-eye me-1" style="font-size: 0.75rem;"></i>
                             </button>
                         </div>
-
-
                     </div>
                 </div>
             @empty
                 <div class="text-center py-4 text-muted">
                     <i class="bi bi-clipboard-x display-6 text-muted mb-2"></i>
-                    <p>テンプレートが見つかりません</p>
+                    <p>No templates found</p>
                 </div>
             @endforelse
         </div>

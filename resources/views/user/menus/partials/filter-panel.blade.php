@@ -1,55 +1,55 @@
-{{-- フィルターパネル（サイドバー固定表示） --}}
+{{-- フィルターパネル（サイドバー固定表示）英語版 --}}
 <div class="card shadow-sm border-0 h-100">
     <div class="card-body p-3">
         <form action="{{ route('menus.index') }}" method="GET" id="filterForm">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3 class="h6 fw-semibold mb-0">フィルター・並び替え</h3>
+                <h3 class="h6 fw-semibold mb-0">Filters & Sorting</h3>
                 <button type="reset" class="btn btn-link text-primary text-decoration-none small fw-medium p-0"
                     id="clearFilters">
-                    クリア
+                    Clear
                 </button>
             </div>
 
             {{-- 並び替えオプション --}}
             <div class="mb-4">
-                <label class="form-label small fw-medium text-muted">並び替え</label>
-                <div class="btn-group-vertical w-100" role="group" aria-label="並び替えオプション">
+                <label class="form-label small fw-medium text-muted">Sort By</label>
+                <div class="btn-group-vertical w-100" role="group" aria-label="Sorting options">
                     <input type="radio" class="btn-check" name="sort" id="sortDate" value="date"
                         {{ $filters['sort'] == 'date' ? 'checked' : '' }}>
                     <label class="btn btn-outline-primary text-start small" for="sortDate">
-                        作成日
+                        Created Date
                         <span class="float-end">↓</span>
                     </label>
 
                     <input type="radio" class="btn-check" name="sort" id="sortName" value="name"
                         {{ $filters['sort'] == 'name' ? 'checked' : '' }}>
                     <label class="btn btn-outline-secondary text-start small" for="sortName">
-                        名前
+                        Name
                     </label>
 
                     <input type="radio" class="btn-check" name="sort" id="sortExercises" value="exercises"
                         {{ $filters['sort'] == 'exercises' ? 'checked' : '' }}>
                     <label class="btn btn-outline-secondary text-start small" for="sortExercises">
-                        種目数
+                        Exercise Count
                     </label>
 
                     <input type="radio" class="btn-check" name="sort" id="sortDuration" value="duration"
                         {{ $filters['sort'] == 'duration' ? 'checked' : '' }}>
                     <label class="btn btn-outline-secondary text-start small" for="sortDuration">
-                        時間
+                        Duration
                     </label>
                 </div>
             </div>
 
             {{-- 難易度フィルター --}}
             <div class="mb-4">
-                <label class="form-label small fw-medium text-muted">難易度</label>
+                <label class="form-label small fw-medium text-muted">Difficulty</label>
                 <div class="d-grid gap-2">
                     @php
                         $difficultyLabels = [
-                            'beginner' => ['label' => '初級者', 'class' => 'bg-success'],
-                            'intermediate' => ['label' => '中級者', 'class' => 'bg-warning text-dark'],
-                            'advanced' => ['label' => '上級者', 'class' => 'bg-danger'],
+                            'beginner' => ['label' => 'Beginner', 'class' => 'bg-success'],
+                            'intermediate' => ['label' => 'Intermediate', 'class' => 'bg-warning text-dark'],
+                            'advanced' => ['label' => 'Advanced', 'class' => 'bg-danger'],
                         ];
                     @endphp
 
@@ -72,14 +72,14 @@
 
             {{-- 公開状態フィルター --}}
             <div class="mb-4">
-                <label class="form-label small fw-medium text-muted">公開状態</label>
+                <label class="form-label small fw-medium text-muted">Visibility</label>
                 <div class="d-grid gap-2">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="visibility[]" value="public"
                             id="visibilityPublic" {{ in_array('public', $filters['visibility']) ? 'checked' : '' }}>
                         <label class="form-check-label d-flex align-items-center small" for="visibilityPublic">
                             <i class="fa-solid fa-globe text-success me-2"></i>
-                            公開
+                            Public
                             <span class="text-muted ms-1">({{ $visibilityCounts['public'] ?? 0 }})</span>
                         </label>
                     </div>
@@ -88,7 +88,7 @@
                             id="visibilityPrivate" {{ in_array('private', $filters['visibility']) ? 'checked' : '' }}>
                         <label class="form-check-label d-flex align-items-center small" for="visibilityPrivate">
                             <i class="fa-solid fa-lock text-muted me-2"></i>
-                            非公開
+                            Private
                             <span class="text-muted ms-1">({{ $visibilityCounts['private'] ?? 0 }})</span>
                         </label>
                     </div>
@@ -97,7 +97,7 @@
 
             {{-- タグフィルター --}}
             <div class="mb-4">
-                <label class="form-label small fw-medium text-muted">タグ</label>
+                <label class="form-label small fw-medium text-muted">Tags</label>
                 <div class="d-grid gap-2">
                     @foreach ($muscleGroups as $muscleGroup)
                         <div class="form-check">
@@ -116,20 +116,20 @@
 
             {{-- 時間範囲フィルター --}}
             <div class="mb-4">
-                <label class="form-label small fw-medium text-muted">トレーニング時間</label>
+                <label class="form-label small fw-medium text-muted">Training Duration</label>
                 <div class="row g-2">
                     <div class="col-6">
                         <div class="input-group input-group-sm">
-                            <input type="number" class="form-control" name="duration_min" placeholder="最小"
+                            <input type="number" class="form-control" name="duration_min" placeholder="Min"
                                 min="0" max="300" value="{{ $filters['duration_min'] ?? '' }}">
-                            <span class="input-group-text">分</span>
+                            <span class="input-group-text">min</span>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="input-group input-group-sm">
-                            <input type="number" class="form-control" name="duration_max" placeholder="最大"
+                            <input type="number" class="form-control" name="duration_max" placeholder="Max"
                                 min="0" max="300" value="{{ $filters['duration_max'] ?? '' }}">
-                            <span class="input-group-text">分</span>
+                            <span class="input-group-text">min</span>
                         </div>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary btn-sm">
                     <i class="fa-solid fa-filter me-1"></i>
-                    フィルターを適用
+                    Apply Filters
                 </button>
             </div>
         </form>
