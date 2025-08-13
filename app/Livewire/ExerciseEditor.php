@@ -80,6 +80,7 @@ class ExerciseEditor extends Component
 
     /**
      * Template Libraryからテンプレートを読み込み
+     * 既存のエクササイズに追加する形で実装
      */
     public function loadFromTemplate($data)
     {
@@ -90,31 +91,40 @@ class ExerciseEditor extends Component
             $template = Template::with('templateExercises.exercise')->find($templateId);
 
             if ($template && $template->templateExercises) {
-                // メニュー名を自動設定
-                $this->menuName = $templateName.' - My Workout';
+                // メニュー名が空の場合のみテンプレート名を設定
+                if (empty($this->menuName)) {
+                    $this->menuName = $templateName;
+                }
+
+                // テンプレートIDを記録
                 $this->basedOnTemplateId = $templateId;
 
-                // テンプレートのエクササイズを追加
-                $this->exercises = [];
+                // 現在のエクササイズ数を取得（order_indexの開始位置）
+                $currentExerciseCount = count($this->exercises);
+
+                // テンプレートのエクササイズを既存のエクササイズに追加
                 foreach ($template->templateExercises as $index => $templateExercise) {
                     if ($templateExercise->exercise) {
                         $this->exercises[] = [
                             'exercise_id' => $templateExercise->exercise_id,
                             'exercise_name' => $templateExercise->exercise->name,
-                            'order_index' => $index + 1,
-                            'sets' => $templateExercise->sets ?? 3,
-                            'reps' => $templateExercise->reps ?? 10,
+                            'order_index' => $currentExerciseCount + $index + 1,
+                            'sets' => $templateExercise->sets,
+                            'reps' => $templateExercise->reps,
                             'weight' => $templateExercise->weight,
-                            'rest_seconds' => $templateExercise->rest_seconds ?? 60,
-                            'duration_seconds' => null,
+                            'rest_seconds' => $templateExercise->rest_seconds,
+                            'duration_seconds' => $templateExercise->duration_seconds,
                         ];
                     }
                 }
 
                 // エラーをクリア
-                $this->errors = [];
+                if (isset($this->errors['exercises'])) {
+                    unset($this->errors['exercises']);
+                }
 
-                session()->flash('message', "Template '{$templateName}' has been loaded!");
+                $addedCount = count($template->templateExercises);
+                session()->flash('message', "Template '{$templateName}' has been loaded! {$addedCount} exercises added to your menu.");
             }
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to load template.');
@@ -229,7 +239,7 @@ class ExerciseEditor extends Component
                 $this->errors["exercise_{$index}_reps"] = $exerciseLabel.': Enter at least 1 rep';
             }
 
-            // Weight validation (kg)
+            // Weight validation (kg) - 0以上を許可
             $weight = $exercise['weight'] ?? null;
             if ($weight === null || ! is_numeric($weight) || (float) $weight < 0) {
                 $this->errors["exercise_{$index}_weight"] = $exerciseLabel.': Enter a weight (kg) of 0 or more';
@@ -285,7 +295,7 @@ class ExerciseEditor extends Component
                         'reps' => $exerciseData['reps'],
                         'weight' => $exerciseData['weight'],
                         'rest_seconds' => $exerciseData['rest_seconds'],
-                        'duration_seconds' => $exerciseData['duration_seconds'],
+                        'duration_seconds' => $exerciseData['duration_seconds'] ?? null,
                     ]);
                 }
 
