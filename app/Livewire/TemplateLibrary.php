@@ -64,11 +64,12 @@ class TemplateLibrary extends Component
 
     /**
      * テンプレートからメニューを作成
+     * ExerciseEditorに templateSelected イベントを送信
      */
     public function createFromTemplate($templateId)
     {
         try {
-            $template = Template::find($templateId);
+            $template = Template::with('templateExercises')->find($templateId);
 
             if (! $template) {
                 session()->flash('error', 'Template not found.');
@@ -76,7 +77,8 @@ class TemplateLibrary extends Component
                 return;
             }
 
-            // 親コンポーネントにイベントを送信（メニュー作成ページで使用）
+            // 親コンポーネント（ExerciseEditor）にイベントを送信
+            // テンプレートの全情報を送信
             $this->dispatch('templateSelected', [
                 'templateId' => $templateId,
                 'templateName' => $template->name,
@@ -87,7 +89,7 @@ class TemplateLibrary extends Component
             $this->closeModal();
 
             // 成功メッセージを表示
-            session()->flash('message', "Template '{$template->name}' has been selected for your menu!");
+            session()->flash('message', "Template '{$template->name}' has been added to your menu!");
 
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to select template.');
