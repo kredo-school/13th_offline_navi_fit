@@ -316,8 +316,8 @@
                                                     </div>
                                                     <div class="d-flex align-items-center gap-2">
                                                         @if($templateExercise->exercise)
-                                                            <span class="badge {{ $this->getDifficultyBadgeClass($templateExercise->exercise->difficulty ?? 'intermediate') }} bg-opacity-10 px-2 py-1 rounded-pill small fw-medium">
-                                                                {{ $this->getDifficultyLabel($templateExercise->exercise->difficulty ?? 'intermediate') }}
+                                                            <span class="badge {{ $this->getDifficultyBadgeClass($templateExercise->exercise->difficulty) }} bg-opacity-10 px-2 py-1 rounded-pill small fw-medium">
+                                                                {{ $this->getDifficultyLabel($templateExercise->exercise->difficulty) }}
                                                             </span>
                                                         @endif
                                                     </div>
