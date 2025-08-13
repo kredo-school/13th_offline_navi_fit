@@ -35,7 +35,7 @@
                 @endif
 
                 <form method="POST" action="{{ route('admin.templates.update', $template) }}" id="templateForm"
-                    autocomplete="on" enctype="multipart/form-data">
+                    autocomplete="on">
                     @csrf
                     @method('PUT')
 
@@ -94,29 +94,16 @@
                                         @enderror
                                     </div>
 
-                                    <!-- Current Thumbnail -->
+                                    <!-- Thumbnail URL -->
                                     <div class="mb-3">
-                                        <label class="form-label">Current Thumbnail</label>
-                                        <div>
-                                            @if ($template->thumbnail_path)
-                                                <img src="{{ asset('storage/' . $template->thumbnail_path) }}"
-                                                    alt="{{ $template->name }}" class="img-thumbnail"
-                                                    style="height: 200px; width: 100%; object-fit: contain;">
-                                            @else
-                                                <p class="text-muted">No thumbnail uploaded</p>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <!-- Thumbnail Upload -->
-                                    <div class="mb-3">
-                                        <label for="thumbnail" class="form-label">Update Thumbnail</label>
-                                        <input type="file" class="form-control @error('thumbnail') is-invalid @enderror"
-                                            id="thumbnail" name="thumbnail" accept="image/*"
-                                            aria-label="Template Thumbnail">
-                                        <div class="form-text">Optional. Max file size: 2MB. Supported formats: JPEG, PNG,
-                                            JPG, GIF</div>
-                                        @error('thumbnail')
+                                        <label for="thumbnail_url" class="form-label">Thumbnail URL</label>
+                                        <input type="url"
+                                            class="form-control @error('thumbnail_url') is-invalid @enderror"
+                                            id="thumbnail_url" name="thumbnail_url"
+                                            value="{{ old('thumbnail_url', $template->thumbnail_url) }}"
+                                            placeholder="https://example.com/image.jpg" aria-label="Thumbnail URL">
+                                        <div class="form-text">Optional. Enter a valid image URL (jpg, png, etc.).</div>
+                                        @error('thumbnail_url')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>

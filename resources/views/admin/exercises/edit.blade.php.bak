@@ -10,8 +10,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.exercises.update', $exercise) }}"
-                            enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.exercises.update', $exercise) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -157,19 +156,6 @@
                             </div>
 
                             <div class="form-group mb-3">
-                                <label>Current Image</label>
-                                <div>
-                                    @if ($exercise->image_path)
-                                        <img src="{{ asset('storage/' . $exercise->image_path) }}"
-                                            alt="{{ $exercise->name }}" class="img-thumbnail"
-                                            style="height: 200px; width: 100%; object-fit: contain;">
-                                    @else
-                                        <p class="text-muted">No image uploaded</p>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group mb-3">
                                 <label for="image">Image Upload</label>
                                 <input type="file" class="form-control @error('image') is-invalid @enderror"
                                     id="image" name="image" accept="image/*">
@@ -181,21 +167,29 @@
                             </div>
 
                             <div class="form-group mb-3">
-                                <div class="form-group mb-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="is_active" value="1"
-                                            id="is_active" {{ old('is_active', $exercise->is_active) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="is_active">
-                                            Active (visible in exercise lists)
-                                        </label>
-                                    </div>
-                                </div>
+                                <label for="image_url">Image URL</label>
+                                <input type="url" class="form-control @error('image_url') is-invalid @enderror"
+                                    id="image_url" name="image_url" value="{{ old('image_url', $exercise->image_url) }}"
+                                    placeholder="https://example.com/exercise-image.jpg">
+                                @error('image_url')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Update Exercise</button>
-                                    <a href="{{ route('admin.exercises.index', $exercise) }}"
-                                        class="btn btn-secondary">Cancel</a>
+                            <div class="form-group mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="is_active" value="1"
+                                        id="is_active" {{ old('is_active', $exercise->is_active) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="is_active">
+                                        Active (visible in exercise lists)
+                                    </label>
                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Update Exercise</button>
+                                <a href="{{ route('admin.exercises.show', $exercise) }}" class="btn btn-secondary">Cancel</a>
+                            </div>
                         </form>
                     </div>
                 </div>

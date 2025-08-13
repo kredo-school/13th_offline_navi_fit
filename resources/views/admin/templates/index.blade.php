@@ -73,6 +73,26 @@
                                             {{ ucfirst($template->difficulty) }}
                                         </span>
                                     </div>
+
+                                    <!-- Template Thumbnail -->
+                                    <div class="template-thumbnail bg-light">
+                                        @if ($template->thumbnail_path)
+                                            <img src="{{ asset('storage/' . $template->thumbnail_path) }}" class="card-img"
+                                                alt="{{ $template->name }}"
+                                                style="height: 160px; width: 100%; object-fit: contain;">
+                                        @elseif ($template->thumbnail_url)
+                                            <img src="{{ $template->thumbnail_url }}" class="card-img"
+                                                alt="{{ $template->name }}"
+                                                style="height: 160px; width: 100%; object-fit: contain;">
+                                        @else
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                style="height: 160px;">
+                                                <i class="fas fa-image fa-3x text-muted"></i>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <!-- Template Details -->
                                     <div class="card-body">
                                         @if ($template->description)
                                             <p class="card-text">{{ Str::limit($template->description, 100) }}</p>
