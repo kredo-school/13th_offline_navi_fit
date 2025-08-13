@@ -103,10 +103,15 @@
                                 <h5 class="mb-0">Thumbnail</h5>
                             </div>
                             <div class="card-body text-center">
-                                @if ($template->thumbnail_url)
+                                @if ($template->thumbnail_path)
+                                    <img src="{{ asset('storage/' . $template->thumbnail_path) }}"
+                                        alt="{{ $template->name }} thumbnail" class="img-fluid rounded"
+                                        style="height: 200px; width: 100%; object-fit: contain;"
+                                        aria-label="Template thumbnail" title="Template thumbnail">
+                                @elseif ($template->thumbnail_url)
                                     <img src="{{ $template->thumbnail_url }}" alt="{{ $template->name }} thumbnail"
-                                        class="img-fluid rounded" style="max-height: 200px;" aria-label="Template thumbnail"
-                                        title="Template thumbnail">
+                                        class="img-fluid rounded" style="height: 200px; width: 100%; object-fit: contain;"
+                                        aria-label="Template thumbnail" title="Template thumbnail">
                                 @else
                                     <div class="bg-light rounded p-4">
                                         <i class="fas fa-image fa-3x text-muted mb-3" aria-hidden="true"></i>
@@ -172,16 +177,16 @@
                                                     @if ($templateExercise->exercise->image_path || $templateExercise->exercise->image_url)
                                                         <div class="exercise-image">
                                                             @if ($templateExercise->exercise->image_path)
-                                                                <img src="{{ asset('storage/exercises/' . $templateExercise->exercise->image_path) }}"
+                                                                <img src="{{ asset('storage/' . $templateExercise->exercise->image_path) }}"
                                                                     alt="{{ $templateExercise->exercise->name }} image"
                                                                     class="img-thumbnail"
-                                                                    style="width: 80px; height: 80px; object-fit: cover;"
+                                                                    style="width: 80px; height: 80px; object-fit: contain;"
                                                                     aria-label="Exercise image" title="Exercise image">
                                                             @elseif($templateExercise->exercise->image_url)
                                                                 <img src="{{ $templateExercise->exercise->image_url }}"
                                                                     alt="{{ $templateExercise->exercise->name }} image"
                                                                     class="img-thumbnail"
-                                                                    style="width: 80px; height: 80px; object-fit: cover;"
+                                                                    style="width: 80px; height: 80px; object-fit: contain;"
                                                                     aria-label="Exercise image" title="Exercise image">
                                                             @endif
                                                         </div>

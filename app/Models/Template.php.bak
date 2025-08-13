@@ -23,7 +23,6 @@ class Template extends Model
         'difficulty',
         'created_by',
         'thumbnail_url',
-        'thumbnail_path',
     ];
 
     /**

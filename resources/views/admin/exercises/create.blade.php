@@ -158,16 +158,6 @@
                             </div>
                             
                             <div class="form-group mb-3">
-                                <label for="image_url">Image URL</label>
-                                <input type="url" class="form-control @error('image_url') is-invalid @enderror"
-                                    id="image_url" name="image_url" value="{{ old('image_url') }}"
-                                    placeholder="https://example.com/exercise-image.jpg">
-                                @error('image_url')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group mb-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="is_active" value="1"
                                         id="is_active" {{ old('is_active', true) ? 'checked' : '' }}>

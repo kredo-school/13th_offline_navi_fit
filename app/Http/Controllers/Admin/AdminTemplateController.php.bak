@@ -53,26 +53,17 @@ class AdminTemplateController extends Controller
      */
     public function store(TemplateRequest $request)
     {
-        // Debug request data
-        // dd($request->all(), $request->hasFile('thumbnail'), $request->file('thumbnail'));
-
         try {
             DB::beginTransaction();
 
-            $data = [
+            $template = Template::create([
                 'name' => $request->name,
                 'description' => $request->description,
                 'difficulty' => $request->difficulty ?? 'normal',
+                'thumbnail_url' => $request->thumbnail_url,
                 'created_by' => Auth::id(),
                 'is_active' => $request->boolean('is_active', true),
-            ];
-
-            // Handle thumbnail upload
-            if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
-                $data['thumbnail_path'] = $request->file('thumbnail')->store('thumbnails', 'public');
-            }
-
-            $template = Template::create($data);
+            ]);
 
             // Add exercises to the template
             if ($request->filled('exercises')) {
@@ -146,7 +137,6 @@ class AdminTemplateController extends Controller
      */
     public function update(TemplateRequest $request, Template $template)
     {
-
         // Check ownership
         if ($template->created_by !== Auth::id()) {
             abort(403, 'You do not have permission to edit this template.');
@@ -155,19 +145,13 @@ class AdminTemplateController extends Controller
         try {
             DB::beginTransaction();
 
-            $data = [
+            $template->update([
                 'name' => $request->name,
                 'description' => $request->description,
                 'difficulty' => $request->difficulty ?? 'normal',
+                'thumbnail_url' => $request->thumbnail_url,
                 'is_active' => $request->boolean('is_active', true),
-            ];
-
-            // Handle thumbnail upload
-            if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
-                $data['thumbnail_path'] = $request->file('thumbnail')->store('thumbnails', 'public');
-            }
-
-            $template->update($data);
+            ]);
 
             // Delete existing template exercises
             $template->templateExercises()->delete();
