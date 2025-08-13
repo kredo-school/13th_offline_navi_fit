@@ -160,20 +160,19 @@ class ExerciseCatalog extends Component
 
     private function updateExercises()
     {
-        // アクティブなエクササイズのみを取得するクエリを開始
         $query = Exercise::active();
 
-        // 検索条件の適用（Exerciseモデルのスコープを使用）
+        // 検索条件の適用
         if (! empty($this->searchExercise)) {
             $query->searchByName($this->searchExercise);
         }
 
-        // カテゴリフィルターの適用（Exerciseモデルのスコープを使用）
+        // カテゴリフィルターの適用
         if ($this->categoryFilter !== 'all') {
             $query->byMuscleGroup($this->categoryFilter);
         }
 
-        // 難易度フィルターの適用（Exerciseモデルのスコープを使用）
+        // 難易度フィルターの適用
         if ($this->difficultyFilter !== 'all') {
             $query->byDifficulty($this->difficultyFilter);
         }
