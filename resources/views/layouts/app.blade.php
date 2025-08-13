@@ -40,7 +40,7 @@
             <x-navigation />
         @endunless
 
-        <main class="py-4">
+        <main class="py-4" style="background-color: #f8f9fa;">
             @yield('content')
         </main>
     </div>

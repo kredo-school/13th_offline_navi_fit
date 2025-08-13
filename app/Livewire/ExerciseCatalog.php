@@ -104,6 +104,34 @@ class ExerciseCatalog extends Component
     /**
      * エクササイズをメニューに追加
      */
+    public function addToMenu($exerciseId)
+    {
+        try {
+            $exercise = Exercise::find($exerciseId);
+
+            if (! $exercise) {
+                session()->flash('error', 'Exercise not found.');
+
+                return;
+            }
+
+            // 親コンポーネント（ExerciseEditor など）にイベント送信
+            $this->dispatch('exerciseAdded', [
+                'exerciseId' => $exerciseId,
+                'exerciseName' => $exercise->name,
+            ]);
+
+            // 詳細モーダルを閉じる（表示中なら）
+            $this->closeModal();
+        } catch (\Exception $e) {
+            session()->flash('error', 'Failed to add exercise to menu.');
+            Log::error('Add exercise to menu error: '.$e->getMessage());
+        }
+    }
+
+    /**
+     * エクササイズをメニューに追加
+     */
     // public function addToMenu($exerciseId)
     // {
     //     try {

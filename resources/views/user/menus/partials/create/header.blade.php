@@ -14,12 +14,12 @@
                         <span class="mx-2">›</span>
                         <a href="{{ route('menus.index') }}" class="text-muted text-decoration-none">Menu List</a>
                         <span class="mx-2">›</span>
-                        <span class="text-primary">New</span>
+                        <span class="text-primary">Create a new menu</span>
                     </nav>
                 </div>
             </div>
 
-            <div class="d-flex align-items-center gap-2">
+            {{-- <div class="d-flex align-items-center gap-2">
                 <a href="{{ route('menus.index') }}" class="btn btn-outline-secondary">
                     Cancel
                 </a>
@@ -28,7 +28,7 @@
                     <i class="bi bi-check-circle me-1"></i>
                     Save
                 </button>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
