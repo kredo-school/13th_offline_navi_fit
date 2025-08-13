@@ -6,7 +6,7 @@
 @section('content')
     @php $hideNavigation = true; @endphp {{-- ナビゲーションを非表示 --}}
 
-    <div class="min-vh-100" style="background-color: #f8f9fa;">
+    <div>
         {{-- Header --}}
         @include('user.menus.partials.create.header')
 
@@ -21,11 +21,13 @@
 
                 {{-- Center Column - Menu Editor (6/12) --}}
                 <div class="col-6 d-flex flex-column">
+                    {{-- Exercise Editor Card (Livewire) --}}
+                    <livewire:exercise-editor />
                     {{-- Basic Information Card --}}
-                    @include('user.menus.partials.create.basic-info')
+                    {{-- @include('user.menus.partials.create.basic-info') --}}
 
                     {{-- Exercise Editor Card --}}
-                    @include('user.menus.partials.create.exercise-editor')
+                    {{-- @include('user.menus.partials.create.exercise-editor') --}}
                 </div>
 
                 {{-- Right Column - Exercise Catalog (3/12) --}}
