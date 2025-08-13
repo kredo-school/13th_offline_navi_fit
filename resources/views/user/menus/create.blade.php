@@ -15,7 +15,8 @@
             <div class="row g-3" style="height: calc(100vh - 200px);">
                 {{-- Left Column - Template Library (3/12) --}}
                 <div class="col-3">
-                    @include('user.menus.partials.create.template-library')
+                    <livewire:template-library />
+                    {{-- @include('user.menus.partials.create.template-library') --}}
                 </div>
 
                 {{-- Center Column - Menu Editor (6/12) --}}
