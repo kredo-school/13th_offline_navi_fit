@@ -23,7 +23,6 @@ class ExerciseRequest extends FormRequest
             'difficulty' => 'required|string|in:beginner,intermediate,advanced',
             'instructions' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'image_url' => 'nullable|url',
             'is_active' => 'boolean',
         ];
     }
@@ -40,7 +39,6 @@ class ExerciseRequest extends FormRequest
             'equipment_category.in' => 'Invalid equipment category selected',
             'difficulty.required' => 'Please select difficulty level',
             'difficulty.in' => 'Invalid difficulty level selected',
-            'image_url.url' => 'Please enter a valid URL',
         ];
     }
 

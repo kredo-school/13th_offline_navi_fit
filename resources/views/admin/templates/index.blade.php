@@ -76,12 +76,8 @@
 
                                     <!-- Template Thumbnail -->
                                     <div class="template-thumbnail bg-light">
-                                        @if ($template->thumbnail_path)
-                                            <img src="{{ asset('storage/' . $template->thumbnail_path) }}" class="card-img"
-                                                alt="{{ $template->name }}"
-                                                style="height: 160px; width: 100%; object-fit: contain;">
-                                        @elseif ($template->thumbnail_url)
-                                            <img src="{{ $template->thumbnail_url }}" class="card-img"
+                                        @if ($template->image_path)
+                                            <img src="{{ asset('storage/' . $template->image_path) }}" class="card-img"
                                                 alt="{{ $template->name }}"
                                                 style="height: 160px; width: 100%; object-fit: contain;">
                                         @else
@@ -125,7 +121,7 @@
                                                         <span class="text-muted">Not set</span>
                                                     @endif
 
-                                                    
+
                                                 </div>
                                             </div>
                                             <div class="col-4">

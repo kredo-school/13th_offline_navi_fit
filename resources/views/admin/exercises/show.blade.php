@@ -19,9 +19,6 @@
                                 @if ($exercise->image_path)
                                     <img src="{{ asset('storage/' . $exercise->image_path) }}"
                                         class="img-fluid rounded mb-3" alt="{{ $exercise->name }}">
-                                @elseif($exercise->image_url)
-                                    <img src="{{ $exercise->image_url }}" class="img-fluid rounded mb-3"
-                                        alt="{{ $exercise->name }}">
                                 @else
                                     <div class="bg-light rounded d-flex align-items-center justify-content-center mb-3"
                                         style="height: 300px;">
@@ -106,7 +103,8 @@
                                     Exercise</a>
                             </div>
                             <div>
-                                <form action="{{ route('admin.exercises.destroy', $exercise) }}" method="POST" class="d-inline">
+                                <form action="{{ route('admin.exercises.destroy', $exercise) }}" method="POST"
+                                    class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"

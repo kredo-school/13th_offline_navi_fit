@@ -36,7 +36,7 @@
                             </div>
                         </div>
 
-                        <h3 class="h6 mb-3">{{ $record->template->title ?? 'メニュー未設定' }}</h3>
+                        <h3 class="h6 mb-3">{{ $record->menu->name ?? 'メニュー未設定' }}</h3>
 
                         <div class="row text-center mb-3">
                             <div class="col-3">
@@ -97,7 +97,7 @@
                                     </a>
                                 </td>
                                 <td>{{ $record->menu->name ?? '-' }}</td>
-                                <td>{{ $record->template->title ?? '-' }}</td>
+                                <td>{{ $record->menu->basedOnTemplate->name ?? '-' }}</td>
                                 <td class="text-center">{{ $record->details->count() }}</td>
                                 <td class="text-center">{{ $record->details->sum('reps') }}</td>
                                 <td class="text-center">{{ number_format($record->details->sum('volume')) }} kg</td>

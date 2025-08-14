@@ -81,7 +81,7 @@ class AdminTemplateController extends Controller
 
             // Handle thumbnail upload
             if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
-                $data['thumbnail_path'] = $request->file('thumbnail')->store('thumbnails', 'public');
+                $data['image_path'] = $request->file('thumbnail')->store('images/templates', 'public');
             }
 
             $template = Template::create($data);
@@ -125,7 +125,7 @@ class AdminTemplateController extends Controller
         }
 
         $template->load(['templateExercises.exercise' => function ($query) {
-            $query->select('id', 'name', 'muscle_groups', 'equipment_category', 'difficulty', 'image_path', 'image_url');
+            $query->select('id', 'name', 'muscle_groups', 'equipment_category', 'difficulty', 'image_path');
         }]);
 
         // モデルのアクセサメソッドを使用して基本時間を計算
@@ -185,7 +185,7 @@ class AdminTemplateController extends Controller
 
             // Handle thumbnail upload
             if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
-                $data['thumbnail_path'] = $request->file('thumbnail')->store('thumbnails', 'public');
+                $data['image_path'] = $request->file('thumbnail')->store('images/templates', 'public');
             }
 
             $template->update($data);

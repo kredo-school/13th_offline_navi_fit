@@ -254,7 +254,7 @@ class TemplateLibrary extends Component
      */
     public function getThumbnailUrl($template)
     {
-        return $template->thumbnail_url ?? 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=200&h=120&fit=crop';
+        return $template->image_path ?? 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=200&h=120&fit=crop';
     }
 
     private function loadTemplates()

@@ -37,11 +37,6 @@ class TemplateRequest extends FormRequest
                 'string',
                 'in:easy,normal,hard',
             ],
-            'thumbnail_url' => [
-                'nullable',
-                'url',
-                'max:500',
-            ],
             'is_active' => [
                 'nullable',
                 'boolean',
@@ -93,8 +88,6 @@ class TemplateRequest extends FormRequest
             'name.max' => 'Template name cannot exceed 255 characters.',
             'description.max' => 'Description cannot exceed 1000 characters.',
             'difficulty.in' => 'Difficulty must be easy, normal, or hard.',
-            'thumbnail_url.url' => 'Thumbnail URL must be a valid URL.',
-            'thumbnail_url.max' => 'Thumbnail URL cannot exceed 500 characters.',
             'exercises.*.exercise_id.required_with' => 'Exercise selection is required.',
             'exercises.*.exercise_id.exists' => 'Selected exercise does not exist.',
             'exercises.*.sets.required_with' => 'Sets is required for each exercise.',
@@ -117,7 +110,6 @@ class TemplateRequest extends FormRequest
             'name' => 'template name',
             'description' => 'description',
             'difficulty' => 'difficulty',
-            'thumbnail_url' => 'thumbnail URL',
             'exercises.*.exercise_id' => 'exercise',
             'exercises.*.sets' => 'sets',
             'exercises.*.reps' => 'reps',

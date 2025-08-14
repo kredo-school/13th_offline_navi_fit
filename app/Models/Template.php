@@ -22,8 +22,7 @@ class Template extends Model
         'is_active',
         'difficulty',
         'created_by',
-        'thumbnail_url',
-        'thumbnail_path',
+        'image_path',
     ];
 
     /**

@@ -59,7 +59,7 @@ class TemplateController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'difficulty' => $request->difficulty ?? 'normal',
-                'thumbnail_url' => $request->thumbnail_url,
+                'image_path' => $request->image_path,
                 'created_by' => Auth::id(),
                 'is_active' => $request->boolean('is_active', true),
             ]);
@@ -102,7 +102,7 @@ class TemplateController extends Controller
         }
 
         $template->load(['templateExercises.exercise' => function ($query) {
-            $query->select('id', 'name', 'muscle_groups', 'equipment_category', 'difficulty', 'image_path', 'image_url');
+            $query->select('id', 'name', 'muscle_groups', 'equipment_category', 'difficulty', 'image_path');
         }]);
 
         // Calculate estimated duration and calories
@@ -148,7 +148,7 @@ class TemplateController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'difficulty' => $request->difficulty ?? 'normal',
-                'thumbnail_url' => $request->thumbnail_url,
+                'image_path' => $request->image_path,
                 'is_active' => $request->boolean('is_active', true),
             ]);
 
