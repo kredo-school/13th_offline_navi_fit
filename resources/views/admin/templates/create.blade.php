@@ -87,7 +87,7 @@
 
                                     <!-- Thumbnail -->
                                     <div class="mb-3">
-                                        <label for="thumbnail" class="form-label">Template Thumbnail</label>
+                                        <label for="thumbnail" class="form-label">Template Image</label>
                                         <input type="file" class="form-control @error('thumbnail') is-invalid @enderror"
                                             id="thumbnail" name="thumbnail" accept="image/*"
                                             aria-label="Template Thumbnail">

@@ -23,7 +23,7 @@ class Exercise extends Model
         'equipment_needed',
         'difficulty',
         'instructions',
-        'image_url',
+
         'image_path',
         'is_active',
     ];

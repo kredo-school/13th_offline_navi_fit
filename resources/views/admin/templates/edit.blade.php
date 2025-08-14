@@ -94,26 +94,25 @@
                                         @enderror
                                     </div>
 
-                                    <!-- Current Thumbnail -->
+                                    <!-- Current Image -->
                                     <div class="mb-3">
-                                        <label class="form-label">Current Thumbnail</label>
+                                        <label class="form-label">Current Image</label>
                                         <div>
-                                            @if ($template->thumbnail_path)
-                                                <img src="{{ asset('storage/' . $template->thumbnail_path) }}"
+                                            @if ($template->image_path)
+                                                <img src="{{ asset('storage/' . $template->image_path) }}"
                                                     alt="{{ $template->name }}" class="img-thumbnail"
                                                     style="height: 200px; width: 100%; object-fit: contain;">
                                             @else
-                                                <p class="text-muted">No thumbnail uploaded</p>
+                                                <p class="text-muted">No image uploaded</p>
                                             @endif
                                         </div>
                                     </div>
 
                                     <!-- Thumbnail Upload -->
                                     <div class="mb-3">
-                                        <label for="thumbnail" class="form-label">Update Thumbnail</label>
+                                        <label for="thumbnail" class="form-label">Update Image</label>
                                         <input type="file" class="form-control @error('thumbnail') is-invalid @enderror"
-                                            id="thumbnail" name="thumbnail" accept="image/*"
-                                            aria-label="Template Thumbnail">
+                                            id="thumbnail" name="thumbnail" accept="image/*" aria-label="Template Image">
                                         <div class="form-text">Optional. Max file size: 2MB. Supported formats: JPEG, PNG,
                                             JPG, GIF</div>
                                         @error('thumbnail')

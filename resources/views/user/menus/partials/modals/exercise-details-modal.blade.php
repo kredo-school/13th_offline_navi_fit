@@ -28,14 +28,17 @@
             <div class="modal-body">
                 {{-- Media Section --}}
                 <div class="ratio ratio-16x9 bg-light rounded mb-4">
-                    @if (isset($exercise) && $exercise->image_url)
-                        <img src="{{ $exercise->image_url }}" alt="{{ $exercise->name }}"
-                            class="object-fit-cover rounded" id="exerciseImage">
-                    @else
-                        <div class="d-flex align-items-center justify-content-center bg-light rounded">
-                            <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
-                        </div>
-                    @endif
+                    <div class="col-md-6">
+                        @if ($exercise->image_path)
+                            <img src="{{ asset('storage/' . $exercise->image_path) }}" class="img-fluid rounded mb-3"
+                                alt="{{ $exercise->name }}">
+                        @else
+                            <div class="bg-light rounded d-flex align-items-center justify-content-center mb-3"
+                                style="height: 300px;">
+                                <i class="fas fa-dumbbell fa-4x text-muted"></i>
+                            </div>
+                        @endif
+                    </div>
                 </div>
 
                 {{-- Stats Grid --}}
