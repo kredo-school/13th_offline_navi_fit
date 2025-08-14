@@ -104,11 +104,33 @@
                                             </div>
                                             <div class="col-4">
                                                 <small class="text-muted">Duration</small>
-                                                <div class="fw-bold">~{{ $template->estimated_duration ?? 45 }} min</div>
+                                                <div class="fw-bold">
+                                                    @if ($template->total_duration > 0)
+                                                        @if ($template->total_duration < 15)
+                                                            About 15 min
+                                                        @elseif($template->total_duration < 30)
+                                                            About 30 min
+                                                        @elseif($template->total_duration < 45)
+                                                            About 45 min
+                                                        @elseif($template->total_duration < 60)
+                                                            About 1 hour
+                                                        @elseif($template->total_duration < 90)
+                                                            About 1.5 hours
+                                                        @elseif($template->total_duration < 120)
+                                                            About 2 hours
+                                                        @else
+                                                            About {{ ceil($template->total_duration / 60) }} hours
+                                                        @endif
+                                                    @else
+                                                        <span class="text-muted">Not set</span>
+                                                    @endif
+
+                                                    
+                                                </div>
                                             </div>
                                             <div class="col-4">
-                                                <small class="text-muted">Calories</small>
-                                                <div class="fw-bold">~{{ $template->estimated_calories ?? 360 }} kcal</div>
+                                                <small class="text-muted">Volume</small>
+                                                <div class="fw-bold">{{ $template->total_volume ?? 0 }} kg</div>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center">
