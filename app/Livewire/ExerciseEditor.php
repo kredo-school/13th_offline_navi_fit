@@ -50,13 +50,13 @@ class ExerciseEditor extends Component
         $exerciseName = $data['exerciseName'] ?? '';
 
         // 既に追加されているかチェック（一意制約対応）
-        foreach ($this->exercises as $exercise) {
-            if ($exercise['exercise_id'] == $exerciseId) {
-                session()->flash('warning', "'{$exerciseName}' is already added to the menu.");
+        // foreach ($this->exercises as $exercise) {
+        //     if ($exercise['exercise_id'] == $exerciseId) {
+        //         session()->flash('warning', "'{$exerciseName}' is already added to the menu.");
 
-                return;
-            }
-        }
+        //         return;
+        //     }
+        // }
 
         // 新しいエクササイズを追加
         $this->exercises[] = [
@@ -156,34 +156,34 @@ class ExerciseEditor extends Component
     /**
      * エクササイズの順序を変更（上に移動）
      */
-    public function moveUp($index)
-    {
-        if ($index > 0) {
-            $temp = $this->exercises[$index];
-            $this->exercises[$index] = $this->exercises[$index - 1];
-            $this->exercises[$index - 1] = $temp;
+    // public function moveUp($index)
+    // {
+    //     if ($index > 0) {
+    //         $temp = $this->exercises[$index];
+    //         $this->exercises[$index] = $this->exercises[$index - 1];
+    //         $this->exercises[$index - 1] = $temp;
 
-            // order_indexを更新
-            $this->exercises[$index]['order_index'] = $index + 1;
-            $this->exercises[$index - 1]['order_index'] = $index;
-        }
-    }
+    //         // order_indexを更新
+    //         $this->exercises[$index]['order_index'] = $index + 1;
+    //         $this->exercises[$index - 1]['order_index'] = $index;
+    //     }
+    // }
 
     /**
      * エクササイズの順序を変更（下に移動）
      */
-    public function moveDown($index)
-    {
-        if ($index < count($this->exercises) - 1) {
-            $temp = $this->exercises[$index];
-            $this->exercises[$index] = $this->exercises[$index + 1];
-            $this->exercises[$index + 1] = $temp;
+    // public function moveDown($index)
+    // {
+    //     if ($index < count($this->exercises) - 1) {
+    //         $temp = $this->exercises[$index];
+    //         $this->exercises[$index] = $this->exercises[$index + 1];
+    //         $this->exercises[$index + 1] = $temp;
 
-            // order_indexを更新
-            $this->exercises[$index]['order_index'] = $index + 1;
-            $this->exercises[$index + 1]['order_index'] = $index + 2;
-        }
-    }
+    //         // order_indexを更新
+    //         $this->exercises[$index]['order_index'] = $index + 1;
+    //         $this->exercises[$index + 1]['order_index'] = $index + 2;
+    //     }
+    // }
 
     /**
      * エクササイズの値を更新
@@ -228,22 +228,22 @@ class ExerciseEditor extends Component
             $exerciseLabel = ! empty($exercise['exercise_name']) ? $exercise['exercise_name'] : 'Exercise #'.($index + 1);
 
             // Sets validation
-            $sets = $exercise['sets'] ?? null;
-            if ($sets === null || ! is_numeric($sets) || (int) $sets < 1) {
-                $this->errors["exercise_{$index}_sets"] = $exerciseLabel.': Enter at least 1 set';
-            }
+            // $sets = $exercise['sets'] ?? null;
+            // if ($sets === null || ! is_numeric($sets) || (int) $sets < 1) {
+            //     $this->errors["exercise_{$index}_sets"] = $exerciseLabel.': Enter at least 1 set';
+            // }
 
             // Reps validation
-            $reps = $exercise['reps'] ?? null;
-            if ($reps === null || ! is_numeric($reps) || (int) $reps < 1) {
-                $this->errors["exercise_{$index}_reps"] = $exerciseLabel.': Enter at least 1 rep';
-            }
+            // $reps = $exercise['reps'] ?? null;
+            // if ($reps === null || ! is_numeric($reps) || (int) $reps < 1) {
+            //     $this->errors["exercise_{$index}_reps"] = $exerciseLabel.': Enter at least 1 rep';
+            // }
 
             // Weight validation (kg) - 0以上を許可
-            $weight = $exercise['weight'] ?? null;
-            if ($weight === null || ! is_numeric($weight) || (float) $weight < 0) {
-                $this->errors["exercise_{$index}_weight"] = $exerciseLabel.': Enter a weight (kg) of 0 or more';
-            }
+            // $weight = $exercise['weight'] ?? null;
+            // if ($weight === null || ! is_numeric($weight) || (float) $weight < 0) {
+            //     $this->errors["exercise_{$index}_weight"] = $exerciseLabel.': Enter a weight (kg) of 0 or more';
+            // }
         }
 
         return empty($this->errors);
