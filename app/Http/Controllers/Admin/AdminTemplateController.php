@@ -33,6 +33,18 @@ class AdminTemplateController extends Controller
 
         $templates = $query->orderBy('created_at', 'desc')->paginate(12);
 
+        // 各テンプレートに準備時間を含めた合計時間を計算
+        foreach ($templates as $template) {
+            // モデルのアクセサで基本時間を取得
+            $baseTime = $template->estimated_duration;
+
+            // 準備時間を追加（エクササイズごとに30秒）
+            $preparationTime = ceil($template->templateExercises_count * 0.5);
+
+            // 合計時間を設定
+            $template->total_duration = $baseTime + $preparationTime;
+        }
+
         return view('admin.templates.index', compact('templates'));
     }
 
@@ -82,6 +94,7 @@ class AdminTemplateController extends Controller
                         'order_index' => $index + 1,
                         'sets' => $exerciseData['sets'] ?? 3,
                         'reps' => $exerciseData['reps'] ?? 10,
+                        'weight' => $exerciseData['weight'] ?? 0,
                         'rest_seconds' => $exerciseData['rest_seconds'] ?? 60,
                         'duration_seconds' => $exerciseData['duration_seconds'] ?? null,
                     ]);
@@ -115,11 +128,19 @@ class AdminTemplateController extends Controller
             $query->select('id', 'name', 'muscle_groups', 'equipment_category', 'difficulty', 'image_path', 'image_url');
         }]);
 
-        // Calculate estimated duration and calories
-        $estimatedDuration = $this->calculateEstimatedDuration($template);
-        $estimatedCalories = $this->calculateEstimatedCalories($template);
+        // モデルのアクセサメソッドを使用して基本時間を計算
+        $baseTime = $template->estimated_duration;
 
-        return view('admin.templates.show', compact('template', 'estimatedDuration', 'estimatedCalories'));
+        // エクササイズの数に応じて準備時間を追加（例：エクササイズごとに30秒）
+        $preparationTime = ceil($template->templateExercises->count() * 0.5); // 0.5分 = 30秒
+
+        // 合計時間
+        $estimatedDuration = $baseTime + $preparationTime;
+
+        // カロリー計算も同様に修正が必要かもしれません
+        // $estimatedCalories = $this->calculateEstimatedCalories($template);
+
+        return view('admin.templates.show', compact('template', 'estimatedDuration'));
     }
 
     /**
@@ -180,6 +201,7 @@ class AdminTemplateController extends Controller
                         'order_index' => $index + 1,
                         'sets' => $exerciseData['sets'] ?? 3,
                         'reps' => $exerciseData['reps'] ?? 10,
+                        'weight' => $exerciseData['weight'] ?? 0,
                         'rest_seconds' => $exerciseData['rest_seconds'] ?? 60,
                         'duration_seconds' => $exerciseData['duration_seconds'] ?? null,
                     ]);

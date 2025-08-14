@@ -74,4 +74,48 @@ class Template extends Model
     {
         return $query->where('difficulty', $difficulty);
     }
+
+    /**
+     * Get the estimated duration of the template.
+     */
+    public function getEstimatedDurationAttribute()
+    {
+        // 1回あたりの時間（秒）を種目の特性に応じて調整できるように
+        $defaultTimePerRep = 3;
+
+        // 全体の秒数をまず計算
+        $totalSeconds = $this->templateExercises->sum(function ($templateExercise) use ($defaultTimePerRep) {
+            $sets = $templateExercise->sets ?? 1;
+            $reps = $templateExercise->reps ?? 1;
+            $restTime = $templateExercise->rest_seconds ?? 0;
+
+            // 稼働時間
+            $exerciseTime = $sets * ($defaultTimePerRep * $reps);
+
+            // 休憩時間（最後のセット後は休憩しない想定）
+            $totalRestTime = max(0, $sets - 1) * $restTime;
+
+            return $exerciseTime + $totalRestTime;
+        });
+
+        // 分単位で返す（切り上げ）
+        return ceil($totalSeconds / 60);
+    }
+
+    /**
+     * Get the total training volume of the template.
+     *
+     * 計算式: セット数 × 回数 × 重量 の合計
+     */
+    public function getTotalVolumeAttribute()
+    {
+        return $this->templateExercises->sum(function ($templateExercise) {
+            $sets = $templateExercise->sets ?? 1;   // セット数（未設定なら1）
+            $reps = $templateExercise->reps ?? 1;   // 回数（未設定なら1）
+            $weight = $templateExercise->weight ?? 0; // 重量（未設定なら0）
+
+            // 各エクササイズのボリューム計算
+            return $sets * $reps * $weight;
+        });
+    }
 }

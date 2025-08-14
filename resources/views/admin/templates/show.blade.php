@@ -50,7 +50,6 @@
                     </div>
                 @endif
 
-                <!-- Template Overview -->
                 <div class="row mb-4">
                     <div class="col-md-8">
                         <div class="card">
@@ -61,7 +60,6 @@
                                 @if ($template->description)
                                     <p class="mb-3">{{ $template->description }}</p>
                                 @endif
-
                                 <div class="row text-center">
                                     <div class="col-md-3">
                                         <div class="p-3 bg-light rounded">
@@ -73,15 +71,15 @@
                                     <div class="col-md-3">
                                         <div class="p-3 bg-light rounded">
                                             <i class="fas fa-clock fa-2x text-info mb-2"></i>
-                                            <div class="h4 mb-0">{{ $estimatedDuration }}</div>
+                                            <div class="h4 mb-0">{{ $estimatedDuration ?? 0 }}</div>
                                             <small class="text-muted">Minutes</small>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="p-3 bg-light rounded">
-                                            <i class="fas fa-fire fa-2x text-danger mb-2"></i>
-                                            <div class="h4 mb-0">{{ $estimatedCalories }}</div>
-                                            <small class="text-muted">Calories</small>
+                                            <i class="fas fa-weight fa-2x text-danger mb-2"></i>
+                                            <div class="h4 mb-0">{{ $template->total_volume ?? 0 }}</div>
+                                            <small class="text-muted">Volume (kg)</small>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -165,6 +163,13 @@
                                                                         {{ $templateExercise->reps }}</div>
                                                                     <small class="text-muted">Reps</small>
                                                                 </div>
+                                                                <div class="text-success fw-bold">
+                                                                    @if (round($templateExercise->weight) == $templateExercise->weight)
+                                                                        {{ intval($templateExercise->weight) }}kg
+                                                                    @else
+                                                                        {{ number_format($templateExercise->weight, 1) }}kg
+                                                                    @endif
+                                                                </div>
                                                                 <div class="col-4">
                                                                     <div class="text-warning fw-bold">
                                                                         {{ $templateExercise->rest_seconds }}s</div>
@@ -211,43 +216,6 @@
                         @endif
                     </div>
                 </div>
-
-                <!-- Quick Actions -->
-                @if ($template->templateExercises->count() > 0)
-                    <div class="card mt-4">
-                        <div class="card-header">
-                            <h5 class="mb-0">Quick Actions</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <a href="#" class="btn btn-success btn-lg w-100" aria-label="Start Workout"
-                                        title="Start Workout" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        data-bs-title="Begin this workout now">
-                                        <i class="fas fa-play"></i> Start Workout
-                                    </a>
-                                    <small class="text-muted d-block mt-1">Begin this workout now</small>
-                                </div>
-                                <div class="col-md-4">
-                                    <a href="#" class="btn btn-info btn-lg w-100" aria-label="Duplicate Template"
-                                        title="Duplicate Template" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        data-bs-title="Create a copy of this template">
-                                        <i class="fas fa-copy"></i> Duplicate Template
-                                    </a>
-                                    <small class="text-muted d-block mt-1">Create a copy of this template</small>
-                                </div>
-                                <div class="col-md-4">
-                                    <a href="#" class="btn btn-warning btn-lg w-100" aria-label="Share Template"
-                                        title="Share Template" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        data-bs-title="Share with other users">
-                                        <i class="fas fa-share"></i> Share Template
-                                    </a>
-                                    <small class="text-muted d-block mt-1">Share with other users</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
 
                 <!-- Template Details -->
                 <div class="card mt-4">

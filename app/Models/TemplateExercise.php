@@ -21,6 +21,7 @@ class TemplateExercise extends Model
         'order_index',
         'sets',
         'reps',
+        'weight',
         'rest_seconds',
         'duration_seconds',
     ];
@@ -34,6 +35,7 @@ class TemplateExercise extends Model
         'order_index' => 'integer',
         'sets' => 'integer',
         'reps' => 'integer',
+        'weight' => 'decimal:2',
         'rest_seconds' => 'integer',
         'duration_seconds' => 'integer',
     ];
@@ -83,10 +85,12 @@ class TemplateExercise extends Model
      */
     public function getDisplayFormat(): string
     {
+        $weightInfo = $this->weight ? " ({$this->weight} kg)" : '';
+
         if ($this->isTimeBased()) {
-            return "{$this->sets} sets × {$this->duration_seconds} seconds";
+            return "{$this->sets} sets × {$this->duration_seconds} seconds{$weightInfo}";
         }
 
-        return "{$this->sets} sets × {$this->reps} reps";
+        return "{$this->sets} sets × {$this->reps} reps{$weightInfo}";
     }
 }
