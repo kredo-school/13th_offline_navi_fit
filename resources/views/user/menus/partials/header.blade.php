@@ -1,7 +1,7 @@
 <div class="card border-0 shadow-sm rounded-4 mb-4">
     <div class="card-body py-3">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
-            {{-- 左：タイトル＋補助説明（アイコンは装飾のみ） --}}
+
             <div class="d-flex align-items-center gap-2 w-100 w-md-auto">
                 <span class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary"
                       style="width:40px;height:40px;">
@@ -13,7 +13,6 @@
                 </div>
             </div>
 
-            {{-- 右：既存の作成ボタンのみ（機能追加なし） --}}
             <div class="ms-md-auto">
                 <a href="{{ route('menus.create') }}" class="btn btn-primary rounded-3 px-4 py-2 shadow-sm create-menu-btn">
                     <i class="fa-solid fa-plus-circle me-2"></i>
