@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Utilities\FileUtility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -37,13 +38,12 @@ class AccountController extends Controller
         $user = Auth::user();
         $profile = $user->profile;
 
-        // Delete previous avatar if exists
-        if ($profile->avatar) {
-            Storage::disk('public')->delete($profile->avatar);
-        }
-
-        // Store the new avatar
-        $avatarPath = $request->file('avatar')->store('avatars', 'public');
+        // Replace avatar using utility
+        $avatarPath = FileUtility::replaceFile(
+            $request->file('avatar'),
+            $profile->avatar,
+            'avatars'
+        );
 
         // Update profile with new avatar path
         $profile->update([
