@@ -25,7 +25,7 @@
                     Name
                 </label>
 
-                <input type="radio" class="btn-check" wire:model.live="sort" id="sortExercises" value="exercises">
+                {{-- <input type="radio" class="btn-check" wire:model.live="sort" id="sortExercises" value="exercises">
                 <label class="btn btn-outline-secondary text-start small" for="sortExercises">
                     Exercise Count
                 </label>
@@ -33,39 +33,9 @@
                 <input type="radio" class="btn-check" wire:model.live="sort" id="sortDuration" value="duration">
                 <label class="btn btn-outline-secondary text-start small" for="sortDuration">
                     Duration
-                </label>
+                </label> --}}
             </div>
         </div>
-
-        {{-- 難易度フィルター --}}
-        {{-- <div class="mb-4">
-            <label class="form-label small fw-medium text-muted">Difficulty</label>
-            <div class="d-grid gap-2">
-                @php
-                    $difficultyLabels = [
-                        'beginner' => ['label' => 'Beginner', 'class' => 'bg-success'],
-                        'intermediate' => ['label' => 'Intermediate', 'class' => 'bg-warning'],
-                        'advanced' => ['label' => 'Advanced', 'class' => 'bg-danger'],
-                    ];
-                @endphp
-                @foreach ($difficultyLabels as $value => $config)
-                    <div class="form-check">
-                        <input class="form-check-input" 
-                               type="checkbox" 
-                               wire:model.live="difficulty"
-                               value="{{ $value }}" 
-                               id="difficulty{{ ucfirst($value) }}">
-                        <label class="form-check-label small d-flex justify-content-between align-items-center"
-                               for="difficulty{{ ucfirst($value) }}">
-                            <span>
-                                <span class="badge {{ $config['class'] }} me-2">{{ $config['label'] }}</span>
-                            </span>
-                            <span class="text-muted">({{ $difficultyCounts[$value] ?? 0 }})</span>
-                        </label>
-                    </div>
-                @endforeach
-            </div>
-        </div> --}}
 
         {{-- 公開設定フィルター --}}
         <div class="mb-4">
@@ -73,9 +43,10 @@
             <div class="d-grid gap-2">
                 <div class="form-check">
                     <input class="form-check-input" 
-                           type="checkbox" 
+                           type="radio" 
                            wire:model.live="visibility"
                            value="public" 
+                           name="visibility"
                            id="visibilityPublic">
                     <label class="form-check-label small d-flex justify-content-between align-items-center"
                            for="visibilityPublic">
@@ -87,15 +58,31 @@
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" 
-                           type="checkbox" 
+                           type="radio" 
                            wire:model.live="visibility"
                            value="private" 
+                           name="visibility"
                            id="visibilityPrivate">
                     <label class="form-check-label small d-flex justify-content-between align-items-center"
                            for="visibilityPrivate">
                         <span>
                             <i class="fa-solid fa-lock text-muted me-2"></i>Private
                             <span class="text-muted">({{ $visibilityCounts['private'] ?? 0 }})</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" 
+                           type="radio" 
+                           wire:model.live="visibility"
+                           value="" 
+                           name="visibility"
+                           id="visibilityAll">
+                    <label class="form-check-label small d-flex justify-content-between align-items-center"
+                           for="visibilityAll">
+                        <span>
+                            <i class="fa-solid fa-layer-group text-muted"></i> All
+                            <span class="text-muted">({{ ($visibilityCounts['public'] ?? 0) + ($visibilityCounts['private'] ?? 0) }})</span>
                         </span>
                     </label>
                 </div>
@@ -125,7 +112,7 @@
             </div>
         </div>
 
-        {{-- 時間範囲フィルター --}}
+        {{-- 時間範囲フィルター
         <div class="mb-4">
             <label class="form-label small fw-medium text-muted">Duration (minutes)</label>
             <div class="row g-2">
@@ -144,6 +131,6 @@
                            min="0">
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>

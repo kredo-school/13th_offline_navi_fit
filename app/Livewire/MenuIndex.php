@@ -15,7 +15,7 @@ class MenuIndex extends Component
 
     public $difficulty = [];
 
-    public $visibility = [];
+    public $visibility = '';
 
     public $tags = [];
 
@@ -37,7 +37,7 @@ class MenuIndex extends Component
     protected $queryString = [
         'search' => ['except' => ''],
         'difficulty' => ['except' => []],
-        'visibility' => ['except' => []],
+        'visibility' => ['except' => ''],
         'tags' => ['except' => []],
         'duration_min' => ['except' => ''],
         'duration_max' => ['except' => ''],
@@ -171,38 +171,22 @@ class MenuIndex extends Component
             ->forUser(Auth::id());
 
         // Apply filters
-        $this->applyDifficultyFilter($query);
         $this->applyVisibilityFilter($query);
         $this->applyTagsFilter($query);
-        $this->applyDurationFilter($query);
         $this->applySearchFilter($query);
         $this->applySorting($query);
 
         return $query->get();
     }
 
-    private function applyDifficultyFilter($query)
-    {
-        if (! empty($this->difficulty)) {
-            $query->where(function ($q) {
-                foreach ($this->difficulty as $difficulty) {
-                    $q->orWhereHas('basedOnTemplate', function ($subQ) use ($difficulty) {
-                        $subQ->where('difficulty', $difficulty);
-                    });
-                }
-            });
-        }
-    }
-
     private function applyVisibilityFilter($query)
     {
-        if (! empty($this->visibility)) {
-            if (in_array('public', $this->visibility) && ! in_array('private', $this->visibility)) {
-                $query->where('is_active', true);
-            } elseif (in_array('private', $this->visibility) && ! in_array('public', $this->visibility)) {
-                $query->where('is_active', false);
-            }
+        if ($this->visibility === 'public') {
+            $query->where('is_active', true);
+        } elseif ($this->visibility === 'private') {
+            $query->where('is_active', false);
         }
+        // 'all' または空の場合は何もしない（すべて表示）
     }
 
     private function applyTagsFilter($query)
@@ -215,16 +199,6 @@ class MenuIndex extends Component
                     });
                 }
             });
-        }
-    }
-
-    private function applyDurationFilter($query)
-    {
-        if ($this->duration_min) {
-            $query->where('estimated_duration', '>=', $this->duration_min);
-        }
-        if ($this->duration_max) {
-            $query->where('estimated_duration', '<=', $this->duration_max);
         }
     }
 
