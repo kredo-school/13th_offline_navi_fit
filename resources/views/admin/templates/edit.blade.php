@@ -78,15 +78,15 @@
                                         <label for="difficulty" class="form-label">Difficulty</label>
                                         <select class="form-select @error('difficulty') is-invalid @enderror"
                                             id="difficulty" name="difficulty" aria-label="Difficulty">
-                                            <option value="easy"
-                                                {{ old('difficulty', $template->difficulty) === 'easy' ? 'selected' : '' }}>
-                                                Easy</option>
-                                            <option value="normal"
-                                                {{ old('difficulty', $template->difficulty) === 'normal' ? 'selected' : '' }}>
-                                                Normal</option>
-                                            <option value="hard"
-                                                {{ old('difficulty', $template->difficulty) === 'hard' ? 'selected' : '' }}>
-                                                Hard</option>
+                                            <option value="beginner"
+                                                {{ old('difficulty', $template->difficulty) === 'beginner' ? 'selected' : '' }}>
+                                                Beginner</option>
+                                            <option value="intermediate"
+                                                {{ old('difficulty', $template->difficulty) === 'intermediate' ? 'selected' : '' }}>
+                                                Intermediate</option>
+                                            <option value="advanced"
+                                                {{ old('difficulty', $template->difficulty) === 'advanced' ? 'selected' : '' }}>
+                                                Advanced</option>
                                         </select>
                                         <div class="form-text">Select the overall difficulty level.</div>
                                         @error('difficulty')
@@ -253,7 +253,7 @@
                                                                     <input type="number" class="form-control text-center"
                                                                         name="exercises[exercise_{{ $index }}][rest_seconds]"
                                                                         value="{{ $templateExercise->rest_seconds }}"
-                                                                        min="0" max="999">
+                                                                        min="0" max="999" step="10">
                                                                     <button class="btn btn-outline-secondary increment"
                                                                         type="button">+</button>
                                                                 </div>
@@ -323,7 +323,7 @@
                                                             <td>{{ $exercise->equipment_category }}</td>
                                                             <td>
                                                                 <span
-                                                                    class="badge bg-{{ $exercise->difficulty === 'easy' ? 'success' : ($exercise->difficulty === 'normal' ? 'warning' : 'danger') }}">
+                                                                    class="badge bg-{{ $exercise->difficulty === 'beginner' ? 'success' : ($exercise->difficulty === 'intermediate' ? 'warning' : 'danger') }}">
                                                                     {{ ucfirst($exercise->difficulty) }}
                                                                 </span>
                                                             </td>
@@ -805,7 +805,7 @@
                             <label class="form-label">Rest Time (sec)</label>
                             <div class="input-group">
                                 <button class="btn btn-outline-secondary decrement" type="button">-</button>
-                                <input type="number" class="form-control text-center" name="exercises[${uniqueId}][rest_seconds]" value="60" min="0" max="999">
+                                <input type="number" class="form-control text-center" name="exercises[${uniqueId}][rest_seconds]" value="60" min="0" max="999" step="10">
                                 <button class="btn btn-outline-secondary increment" type="button">+</button>
                             </div>
                         </div>

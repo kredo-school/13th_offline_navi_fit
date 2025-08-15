@@ -35,7 +35,7 @@ class TemplateRequest extends FormRequest
             'difficulty' => [
                 'nullable',
                 'string',
-                'in:easy,normal,hard',
+                'in:beginner,intermediate,advanced',
             ],
             'is_active' => [
                 'nullable',
@@ -87,7 +87,7 @@ class TemplateRequest extends FormRequest
             'name.min' => 'Template name must be at least 2 characters.',
             'name.max' => 'Template name cannot exceed 255 characters.',
             'description.max' => 'Description cannot exceed 1000 characters.',
-            'difficulty.in' => 'Difficulty must be easy, normal, or hard.',
+            'difficulty.in' => 'Difficulty must be beginner, intermediate, or advanced.',
             'exercises.*.exercise_id.required_with' => 'Exercise selection is required.',
             'exercises.*.exercise_id.exists' => 'Selected exercise does not exist.',
             'exercises.*.sets.required_with' => 'Sets is required for each exercise.',

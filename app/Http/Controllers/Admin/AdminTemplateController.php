@@ -75,7 +75,7 @@ class AdminTemplateController extends Controller
             $data = [
                 'name' => $request->name,
                 'description' => $request->description,
-                'difficulty' => $request->difficulty ?? 'normal',
+                'difficulty' => $request->difficulty ?? 'intermediate',
                 'created_by' => Auth::id(),
                 'is_active' => $request->boolean('is_active', true),
             ];
@@ -184,7 +184,7 @@ class AdminTemplateController extends Controller
             $data = [
                 'name' => $request->name,
                 'description' => $request->description,
-                'difficulty' => $request->difficulty ?? 'normal',
+                'difficulty' => $request->difficulty ?? 'intermediate',
                 'is_active' => $request->boolean('is_active', true),
             ];
 
