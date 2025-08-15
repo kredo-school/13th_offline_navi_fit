@@ -89,6 +89,45 @@ class MenuIndex extends Component
         session()->flash('success', 'Menu deleted successfully.');
     }
 
+    public function getMenuType($menu)
+    {
+        if (! $menu->basedOnTemplate) {
+            return 'Custom';
+        }
+
+        // テンプレートベースの場合、編集されているかチェック
+        $templateExercises = $menu->basedOnTemplate->templateExercises;
+        $menuExercises = $menu->menuExercises;
+
+        // エクササイズ数が違う場合は編集あり
+        if ($templateExercises->count() !== $menuExercises->count()) {
+            return 'Template + Edits';
+        }
+
+        // エクササイズの内容をチェック
+        $templateExerciseIds = $templateExercises->pluck('exercise_id')->sort();
+        $menuExerciseIds = $menuExercises->pluck('exercise_id')->sort();
+
+        if ($templateExerciseIds->toArray() !== $menuExerciseIds->toArray()) {
+            return 'Template + Edits';
+        }
+
+        // セット数や重量などの詳細をチェック
+        foreach ($menuExercises as $menuExercise) {
+            $templateExercise = $templateExercises->where('exercise_id', $menuExercise->exercise_id)->first();
+            if ($templateExercise) {
+                if ($menuExercise->sets !== $templateExercise->sets ||
+                    $menuExercise->reps !== $templateExercise->reps ||
+                    $menuExercise->weight !== $templateExercise->weight ||
+                    $menuExercise->duration_seconds !== $templateExercise->duration_seconds) {
+                    return 'Template + Edits';
+                }
+            }
+        }
+
+        return 'Template';
+    }
+
     public function render()
     {
         $menus = $this->getFilteredMenus();
