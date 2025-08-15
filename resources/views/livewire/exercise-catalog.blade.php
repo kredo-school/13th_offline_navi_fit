@@ -14,25 +14,17 @@
                     <span class="input-group-text bg-white border-end-0">
                         <i class="fas fa-search text-muted"></i>
                     </span>
-                    <input type="text" 
-                           class="form-control border-start-0" 
-                           placeholder="Search for exercises"
-                           id="exerciseSearch"
-                           wire:model.live.debounce.300ms='searchExercise'
-                           autocomplete="off"
-                           style="border-left: none;">
-                    <button class="btn btn-outline-secondary" 
-                            type="button" 
-                            wire:click="clear"
-                            title="Clear the search terms">
+                    <input type="text" class="form-control border-start-0" placeholder="Search for exercises"
+                        id="exerciseSearch" wire:model.live.debounce.300ms='searchExercise' autocomplete="off"
+                        style="border-left: none;">
+                    <button class="btn btn-outline-secondary" type="button" wire:click="clear"
+                        title="Clear the search terms">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
 
                 {{-- Category Filter --}}
-                <select class="form-select form-select-sm"
-                    wire:model.live='categoryFilter'
-                    id="categoryFilter">
+                <select class="form-select form-select-sm" wire:model.live='categoryFilter' id="categoryFilter">
                     <option value="all">All Categories</option>
                     <option value="chest">Chest</option>
                     <option value="back">Back</option>
@@ -45,9 +37,7 @@
                 </select>
 
                 {{-- Difficulty Filter --}}
-                <select class="form-select form-select-sm" 
-                    wire:model.live='difficultyFilter'
-                    id="difficultyFilter">
+                <select class="form-select form-select-sm" wire:model.live='difficultyFilter' id="difficultyFilter">
                     <option value="all">All Levels</option>
                     <option value="beginner">Beginner</option>
                     <option value="intermediate">Intermediate</option>
@@ -55,9 +45,7 @@
                 </select>
 
                 {{-- Sort --}}
-                <select class="form-select form-select-sm" 
-                    wire:model.live='sortBy'
-                    id="sortBy">
+                <select class="form-select form-select-sm" wire:model.live='sortBy' id="sortBy">
                     <option value="name">Sort by Name</option>
                     <option value="difficulty">Sort by Difficulty</option>
                 </select>
@@ -68,20 +56,18 @@
         <div class="flex-fill overflow-auto p-0">
             <div class="d-flex flex-column gap-2 pt-2 px-3 pb-3 exercise-catalog-container">
                 @forelse($exercises as $exercise)
-                    <div class="card border exercise-card w-100" 
-                         wire:key="exercise-{{ $exercise->id }}"
-                         draggable="true" 
-                         data-exercise="{{ $exercise->name }}" 
-                         data-exercise-id="{{ $exercise->id }}">
+                    <div class="card border exercise-card w-100" wire:key="exercise-{{ $exercise->id }}"
+                        draggable="true" data-exercise="{{ $exercise->name }}" data-exercise-id="{{ $exercise->id }}">
                         <div class="card-body p-2">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="pe-2 flex-grow-1">
                                     <h6 class="card-title mb-1" style="font-size: 0.9rem;">{{ $exercise->name }}</h6>
                                     <p class="text-muted mb-2" style="font-size: 0.8rem;">
-                                        {{ isset($exercise->muscle_groups[0]) ? $exercise->muscle_groups[0] : 'General' }} •
+                                        {{ isset($exercise->muscle_groups[0]) ? $exercise->muscle_groups[0] : 'General' }}
+                                        •
                                         {{ $exercise->equipment_category ?? 'No equipment' }}
                                     </p>
-                                    
+
                                     {{-- 難易度バッジ --}}
                                     <div class="d-flex align-items-center mb-2">
                                         <span class="badge {{ $this->getDifficultyBadgeClass($exercise->difficulty) }}">
@@ -91,13 +77,13 @@
 
                                     {{-- Muscle Groups --}}
                                     <div class="d-flex flex-wrap gap-1 mb-2">
-                                        @if($exercise->muscle_groups && is_array($exercise->muscle_groups))
+                                        @if ($exercise->muscle_groups && is_array($exercise->muscle_groups))
                                             @foreach (array_slice($exercise->muscle_groups, 0, 3) as $muscleGroup)
                                                 <span class="badge bg-light text-dark" style="font-size: 0.7rem;">
                                                     {{ $muscleGroup }}
                                                 </span>
                                             @endforeach
-                                            @if(count($exercise->muscle_groups) > 3)
+                                            @if (count($exercise->muscle_groups) > 3)
                                                 <span class="badge bg-light text-muted" style="font-size: 0.7rem;">
                                                     +{{ count($exercise->muscle_groups) - 3 }}
                                                 </span>
@@ -108,12 +94,10 @@
                                     {{-- Action Buttons --}}
                                     <div class="d-flex gap-1">
                                         {{-- 詳細表示ボタン --}}
-                                        <button type="button" 
-                                                class="btn btn-outline-primary btn-sm flex-fill" 
-                                                wire:click="showExerciseDetails({{ $exercise->id }})"
-                                                wire:loading.attr="disabled"
-                                                wire:target="showExerciseDetails"
-                                                style="font-size: 0.75rem;">
+                                        <button type="button" class="btn btn-outline-primary btn-sm flex-fill"
+                                            wire:click="showExerciseDetails({{ $exercise->id }})"
+                                            wire:loading.attr="disabled" wire:target="showExerciseDetails"
+                                            style="font-size: 0.75rem;">
                                             <span wire:loading.remove wire:target="showExerciseDetails">
                                                 <i class="fas fa-eye me-1"></i>Details
                                             </span>
@@ -121,14 +105,11 @@
                                                 <i class="fas fa-spinner fa-spin me-1"></i>Loading...
                                             </span>
                                         </button>
-                                        
+
                                         {{-- メニューに追加ボタン --}}
-                                        <button type="button" 
-                                                class="btn btn-primary btn-sm flex-fill add-exercise-btn"
-                                                wire:click="addToMenu({{ $exercise->id }})"
-                                                wire:loading.attr="disabled"
-                                                wire:target="addToMenu"
-                                                style="font-size: 0.75rem;">
+                                        <button type="button" class="btn btn-primary btn-sm flex-fill add-exercise-btn"
+                                            wire:click="addToMenu({{ $exercise->id }})" wire:loading.attr="disabled"
+                                            wire:target="addToMenu" style="font-size: 0.75rem;">
                                             <span wire:loading.remove wire:target="addToMenu">
                                                 <i class="fas fa-plus me-1"></i>Add
                                             </span>
@@ -141,10 +122,9 @@
 
                                 {{-- Exercise Image --}}
                                 <div class="flex-shrink-0">
-                                    <img src="{{ $exercise->image_url ?? asset('images/navifit_icon.jpg') }}"
-                                        class="rounded" alt="{{ $exercise->name }}"
-                                        style="width: 70px; height: 70px; object-fit: cover;"
-                                        loading="lazy">
+                                    <img src="{{ $exercise->image_path ? asset('storage/' . $exercise->image_path) : asset('images/navifit_icon.jpg') }}"
+                                        class="img-fluid rounded" alt="{{ $exercise->name }}"
+                                        style="width: 70px; height: 70px; object-fit: cover;">
                                 </div>
                             </div>
                         </div>
@@ -153,7 +133,7 @@
                     <div class="text-center py-4 text-muted">
                         <i class="fas fa-clipboard-list display-6 text-muted mb-2"></i>
                         <p class="mb-0">No exercises found</p>
-                        @if($searchExercise || $categoryFilter !== 'all' || $difficultyFilter !== 'all')
+                        @if ($searchExercise || $categoryFilter !== 'all' || $difficultyFilter !== 'all')
                             <button wire:click="clear" class="btn btn-sm btn-outline-primary mt-2">
                                 <i class="fas fa-undo me-1"></i>Clear Filters
                             </button>
@@ -165,12 +145,9 @@
     </div>
 
     {{-- Livewire Exercise Details Modal --}}
-    @if($showModal && $selectedExercise)
-        <div class="modal fade show" 
-             style="display: block; background-color: rgba(0,0,0,0.5);"
-             tabindex="-1" 
-             aria-labelledby="exerciseModalTitle" 
-             aria-hidden="false">
+    @if ($showModal && $selectedExercise)
+        <div class="modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1"
+            aria-labelledby="exerciseModalTitle" aria-hidden="false">
             <div class="modal-dialog modal-xl modal-dialog-scrollable">
                 <div class="modal-content">
                     {{-- Modal Header --}}
@@ -180,13 +157,14 @@
                                 {{ $selectedExercise->name }}
                             </h2>
                             <div class="d-flex align-items-center gap-3">
-                                <span class="badge {{ $this->getDifficultyBadgeClass($selectedExercise->difficulty) }} px-3 py-2 rounded-pill">
+                                <span
+                                    class="badge {{ $this->getDifficultyBadgeClass($selectedExercise->difficulty) }} px-3 py-2 rounded-pill">
                                     {{ $this->getDifficultyLabel($selectedExercise->difficulty) }}
                                 </span>
                                 {{-- <span class="text-muted small">
                                     {{ $selectedExercise->equipment_category ?? 'No Category' }}
                                 </span>
-                                @if($selectedExercise->equipment_needed)
+                                @if ($selectedExercise->equipment_needed)
                                     <span class="text-muted small">•</span>
                                     <span class="text-muted small">
                                         {{ $selectedExercise->equipment_needed }}
@@ -194,17 +172,18 @@
                                 @endif --}}
                             </div>
                         </div>
-                        <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" wire:click="closeModal"
+                            aria-label="Close"></button>
                     </div>
 
                     {{-- Modal Body --}}
                     <div class="modal-body">
                         {{-- Media Section --}}
-                        {{-- <div class="ratio ratio-16x9 bg-light rounded mb-4">
-                            @if ($selectedExercise->image_url)
-                                <img src="{{ $selectedExercise->image_url }}" 
-                                     alt="{{ $selectedExercise->name }}"
-                                     class="object-fit-cover rounded">
+                        <div class="ratio ratio-16x9 bg-light rounded mb-4">
+                            @if ($selectedExercise->image_path)
+                                <img src="{{ asset('storage/' . $selectedExercise->image_path) }}"
+                                    alt="{{ $selectedExercise->name }}" class="img-fluid rounded"
+                                    style="max-height: 400px; width: 100%; object-fit: contain;">
                             @else
                                 <div class="d-flex align-items-center justify-content-center bg-light rounded">
                                     <div class="text-center">
@@ -213,7 +192,7 @@
                                     </div>
                                 </div>
                             @endif
-                        </div> --}}
+                        </div>
 
                         {{-- Stats Grid --}}
                         <div class="row g-3 mb-4">
@@ -256,7 +235,7 @@
                         </div>
 
                         {{-- Description --}}
-                        @if($selectedExercise->description)
+                        @if ($selectedExercise->description)
                             <div class="mb-4">
                                 <h5 class="fw-semibold text-dark mb-3">Description</h5>
                                 <p class="text-muted lh-lg">
@@ -280,7 +259,7 @@
                         </div>
 
                         {{-- Instructions --}}
-                        @if($selectedExercise->instructions)
+                        @if ($selectedExercise->instructions)
                             <div class="mb-4">
                                 <h5 class="fw-semibold text-dark mb-3">Instructions</h5>
                                 <div class="lh-lg">
@@ -290,7 +269,7 @@
                         @endif
 
                         {{-- Equipment Details
-                        @if($selectedExercise->equipment_needed)
+                        @if ($selectedExercise->equipment_needed)
                             <div class="mb-4">
                                 <h5 class="fw-semibold text-dark mb-3">Equipment Needed</h5>
                                 <div class="alert alert-info">
@@ -306,11 +285,9 @@
                         <button type="button" class="btn btn-outline-secondary" wire:click="closeModal">
                             <i class="fas fa-times me-2"></i>Close
                         </button>
-                        <button type="button" 
-                                class="btn btn-primary" 
-                                wire:click="addToMenu({{ $selectedExercise->id }})"
-                                wire:loading.attr="disabled"
-                                wire:target="addToMenu({{ $selectedExercise->id }})">
+                        <button type="button" class="btn btn-primary"
+                            wire:click="addToMenu({{ $selectedExercise->id }})" wire:loading.attr="disabled"
+                            wire:target="addToMenu({{ $selectedExercise->id }})">
                             <span wire:loading.remove wire:target="addToMenu({{ $selectedExercise->id }})">
                                 <i class="fas fa-plus me-2"></i>Add to Menu
                             </span>
