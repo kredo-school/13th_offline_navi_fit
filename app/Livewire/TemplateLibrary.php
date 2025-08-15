@@ -90,7 +90,6 @@ class TemplateLibrary extends Component
 
             // 成功メッセージを表示
             session()->flash('message', "Template '{$template->name}' has been added to your menu!");
-
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to select template.');
             Log::error('Template selection error: '.$e->getMessage());
@@ -254,7 +253,13 @@ class TemplateLibrary extends Component
      */
     public function getThumbnailUrl($template)
     {
-        return $template->image_path ?? 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=200&h=120&fit=crop';
+        if ($template->image_path) {
+            // 相対パスをフルURLに変換
+            return asset('storage/'.$template->image_path);
+        }
+
+        // ローカルのフォールバック画像を使用
+        return asset('images/default-template.jpg');
     }
 
     private function loadTemplates()
