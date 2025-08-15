@@ -3,6 +3,7 @@
 @section('title', 'menu')
 
 @section('content')
+@php $hideNavigation = true; @endphp {{--ここに一行追加--}}
 
     <body class="bg-light">
         <!-- Header -->
