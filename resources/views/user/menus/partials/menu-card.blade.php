@@ -1,4 +1,4 @@
-{{-- 改善版: resources/views/user/menus/partials/menu-card.blade.php --}}
+{{-- Livewire用メニューカード --}}
 <div class="col-12 col-sm-6 col-xl-4 mb-4">
     <div class="card h-100 shadow-sm border-0 rounded-4 position-relative overflow-hidden menu-card"
          data-menu-id="{{ $menu->id }}">
@@ -20,7 +20,6 @@
                                 {{ $menu->name }}
                             </a>
                         </h3>
-                        {{-- <p class="text-muted small mb-0">{{ $menu->description ?? 'No description.' }}</p> --}}
                     </div>
                 </div>
 
@@ -48,15 +47,6 @@
                     <i class="fa-solid fa-clock me-1"></i>
                     {{ $menu->estimated_duration }} min
                 </span>
-                {{-- 
-                <span class="d-inline-flex align-items-center">
-                    @if ($menu->basedOnTemplate)
-                        <span class="badge bg-success">{{ $menu->basedOnTemplate->difficulty }}</span>
-                    @else
-                        <span class="badge bg-secondary">Custom</span>
-                    @endif
-                </span> 
-                --}}
             </div>
 
             {{-- タグ（読みやすい薄色ピルバッジ） --}}
@@ -65,7 +55,7 @@
                     <span class="badge rounded-pill bg-light text-secondary border">{{ $muscleGroup }}</span>
                 @endforeach
                 @if ($menu->unique_muscle_groups->count() > 4)
-                    <span class="badge rounded-pill bg-light text-secondary border">+{{ $menu->unique_muscle_groups->count() - 4     }} more</span>
+                    <span class="badge rounded-pill bg-light text-secondary border">+{{ $menu->unique_muscle_groups->count() - 4 }} more</span>
                 @endif
 
                 @if ($menu->basedOnTemplate)
@@ -84,9 +74,10 @@
                        title="Edit" data-bs-toggle="tooltip" data-bs-title="Edit" aria-label="Edit {{ $menu->name }}">
                         <i class="fa-solid fa-pencil"></i>
                     </a>
-                    <button class="btn btn-sm btn-outline-danger delete-menu-btn"
+                    <button wire:click="deleteMenu({{ $menu->id }})"
+                            wire:confirm="Are you sure you want to delete '{{ $menu->name }}'?"
+                            class="btn btn-sm btn-outline-danger"
                             title="Delete" data-bs-toggle="tooltip" data-bs-title="Delete"
-                            data-menu-id="{{ $menu->id }}" data-menu-title="{{ $menu->name }}"
                             aria-label="Delete {{ $menu->name }}">
                         <i class="fa-solid fa-trash"></i>
                     </button>
@@ -96,9 +87,16 @@
         </div>
     </div>
 </div>
+
 <style>
-    .menu-card { transition: box-shadow .2s ease, transform .2s ease; }
-    .menu-card:hover { transform: translateY(-2px); box-shadow: var(--bs-box-shadow-lg) !important; }
-    .menu-card .badge { font-weight: 500; }
+    .menu-card { 
+        transition: box-shadow .2s ease, transform .2s ease; 
+    }
+    .menu-card:hover { 
+        transform: translateY(-2px); 
+        box-shadow: var(--bs-box-shadow-lg) !important; 
+    }
+    .menu-card .badge { 
+        font-weight: 500; 
+    }
 </style>
-  
