@@ -35,7 +35,7 @@ class TemplateSeeder extends Seeder
             [
                 'name' => 'Full Body Workout for Beginners',
                 'description' => 'A complete full-body workout plan designed for beginners, to be performed 2-3 times per week',
-                'difficulty' => 'normal',
+                'difficulty' => 'intermediate', // 'normal' から変更
                 'created_by' => $adminId,
                 'is_active' => 1,
                 'created_at' => $now,
@@ -44,7 +44,7 @@ class TemplateSeeder extends Seeder
             [
                 'name' => 'Upper Body Focus Program',
                 'description' => 'A specialized program targeting chest, back, shoulders, and arms',
-                'difficulty' => 'normal',
+                'difficulty' => 'intermediate', // 'normal' から変更
                 'created_by' => $adminId,
                 'is_active' => 1,
                 'created_at' => $now,
@@ -53,7 +53,7 @@ class TemplateSeeder extends Seeder
             [
                 'name' => 'Lower Body Focus Program',
                 'description' => 'A specialized program targeting legs and glutes',
-                'difficulty' => 'hard',
+                'difficulty' => 'advanced', // 'hard' から変更
                 'created_by' => $adminId,
                 'is_active' => 1,
                 'created_at' => $now,
@@ -62,7 +62,7 @@ class TemplateSeeder extends Seeder
             [
                 'name' => '3-Day Split Training',
                 'description' => 'A program divided into chest/back, shoulders/arms, and legs',
-                'difficulty' => 'hard',
+                'difficulty' => 'advanced', // 'hard' から変更
                 'created_by' => $adminId,
                 'is_active' => 1,
                 'created_at' => $now,
@@ -71,7 +71,7 @@ class TemplateSeeder extends Seeder
             [
                 'name' => 'Bodyweight Training Plan',
                 'description' => 'A training plan using only bodyweight exercises that can be done at home',
-                'difficulty' => 'easy',
+                'difficulty' => 'beginner', // 'easy' から変更
                 'created_by' => $adminId,
                 'is_active' => 1,
                 'created_at' => $now,
