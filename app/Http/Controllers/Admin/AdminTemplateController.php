@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TemplateRequest;
 use App\Models\Exercise;
 use App\Models\Template;
+use App\Utilities\FileUtility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -81,7 +82,11 @@ class AdminTemplateController extends Controller
 
             // Handle thumbnail upload
             if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
-                $data['image_path'] = $request->file('thumbnail')->store('images/templates', 'public');
+                $data['image_path'] = FileUtility::replaceFile(
+                    $request->file('thumbnail'),
+                    null,
+                    'images/templates'
+                );
             }
 
             $template = Template::create($data);
@@ -185,7 +190,11 @@ class AdminTemplateController extends Controller
 
             // Handle thumbnail upload
             if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
-                $data['image_path'] = $request->file('thumbnail')->store('images/templates', 'public');
+                $data['image_path'] = FileUtility::replaceFile(
+                    $request->file('thumbnail'),
+                    $template->image_path,
+                    'images/templates'
+                );
             }
 
             $template->update($data);

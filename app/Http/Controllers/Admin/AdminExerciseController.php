@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ExerciseRequest;
 use App\Models\Exercise;
+use App\Utilities\FileUtility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -51,8 +52,11 @@ class AdminExerciseController extends Controller
 
         // Handle image upload
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('exercises', 'public');
-            $data['image_path'] = $imagePath;
+            $data['image_path'] = FileUtility::replaceFile(
+                $request->file('image'),
+                null,
+                'exercises'
+            );
         }
 
         Exercise::create($data);
@@ -85,13 +89,11 @@ class AdminExerciseController extends Controller
 
         // Handle image upload
         if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($exercise->image_path && Storage::disk('public')->exists($exercise->image_path)) {
-                Storage::disk('public')->delete($exercise->image_path);
-            }
-
-            $imagePath = $request->file('image')->store('exercises', 'public');
-            $data['image_path'] = $imagePath;
+            $data['image_path'] = FileUtility::replaceFile(
+                $request->file('image'),
+                $exercise->image_path,
+                'exercises'
+            );
         }
         $exercise->update($data);
 
