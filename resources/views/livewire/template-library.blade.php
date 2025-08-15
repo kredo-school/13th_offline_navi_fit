@@ -444,7 +444,7 @@
         </div>
     @endif
 
-    {{-- Success/Error Messages --}}
+    {{-- Success/Error Messages
     @if (session()->has('message'))
         <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
             <i class="fas fa-check-circle me-2"></i>
@@ -459,7 +459,7 @@
             {{ session('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @endif
+    @endif --}}
 
     {{-- JavaScript for UI Enhancement --}}
     <script>

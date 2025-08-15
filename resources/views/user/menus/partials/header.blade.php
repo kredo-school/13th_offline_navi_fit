@@ -1,16 +1,25 @@
-<div class="card shadow-sm border-0 mb-4">
-    <div class="card-body p-3">
-        <div class="row align-items-center">
-            <div class="col-md-8 mb-2 mb-md-0">
-                <h1 class="h3 fw-bold mb-1">Menu List</h1>
-                <p class="text-muted mb-0 small">Manage the workout plan you created</p>
-            </div>
-            <div class="col-md-4">
-                <div class="d-flex justify-content-md-end">
-                    <a href="{{ route('menus.create') }}" class="btn btn-primary btn-sm">
-                        <i class="fa-solid fa-plus me-1"></i> Create a new menu
-                    </a>
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-body py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+            {{-- 左：タイトル＋補助説明（アイコンは装飾のみ） --}}
+            <div class="d-flex align-items-center gap-2 w-100 w-md-auto">
+                <span class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary"
+                      style="width:40px;height:40px;">
+                    <i class="fa-solid fa-dumbbell"></i>
+                </span>
+                <div class="min-w-0">
+                    <h1 class="h4 fw-semibold mb-0 text-truncate">Menu List</h1>
+                    <small class="text-muted">Manage the workout plan you created</small>
                 </div>
+            </div>
+
+            {{-- 右：既存の作成ボタンのみ（機能追加なし） --}}
+            <div class="ms-md-auto">
+                <a href="{{ route('menus.create') }}" class="btn btn-primary rounded-3 px-4 py-2 shadow-sm create-menu-btn">
+                    <i class="fa-solid fa-plus-circle me-2"></i>
+                    <span class="d-none d-sm-inline fw-medium">Create New Menu</span>
+                    <span class="d-inline d-sm-none fw-medium">Create</span>
+                </a>
             </div>
         </div>
     </div>

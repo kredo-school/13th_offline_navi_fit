@@ -115,7 +115,7 @@
             </div>
 
             {{-- 時間範囲フィルター --}}
-            <div class="mb-4">
+            {{-- <div class="mb-4">
                 <label class="form-label small fw-medium text-muted">Training Duration</label>
                 <div class="row g-2">
                     <div class="col-6">
@@ -133,15 +133,15 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             {{-- フィルター適用ボタン --}}
-            <div class="d-grid">
+            {{-- <div class="d-grid">
                 <button type="submit" class="btn btn-primary btn-sm">
                     <i class="fa-solid fa-filter me-1"></i>
                     Apply Filters
                 </button>
-            </div>
+            </div> --}}
         </form>
     </div>
 </div>
