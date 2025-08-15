@@ -23,6 +23,8 @@ class TrainingRecordDetail extends Model
         'reps',
         'weight',
         'notes',
+        'rest_seconds',
+        'duration_seconds',
     ];
 
     /**
@@ -35,6 +37,7 @@ class TrainingRecordDetail extends Model
         'order_index' => 'integer',
         'set_number' => 'integer',
         'reps' => 'integer',
+        'rest_seconds' => 'ineger',
     ];
 
     /**
