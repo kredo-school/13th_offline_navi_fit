@@ -1,4 +1,3 @@
-{{-- Livewire用メニューカード --}}
 <div class="col-12 col-sm-6 col-xl-4 mb-4">
     <div class="card h-100 shadow-sm border-0 rounded-4 position-relative overflow-hidden menu-card"
          data-menu-id="{{ $menu->id }}">
@@ -50,17 +49,21 @@
             </div>
 
             {{-- タグ（読みやすい薄色ピルバッジ） --}}
-            <div class="d-flex flex-wrap gap-2 mb-3">
-                @foreach ($menu->unique_muscle_groups->take(4) as $muscleGroup)
-                    <span class="badge rounded-pill bg-light text-secondary border">{{ $muscleGroup }}</span>
-                @endforeach
-                @if ($menu->unique_muscle_groups->count() > 4)
-                    <span class="badge rounded-pill bg-light text-secondary border">+{{ $menu->unique_muscle_groups->count() - 4 }} more</span>
-                @endif
-
-                @if ($menu->basedOnTemplate)
-                    <span class="badge rounded-pill bg-light text-secondary border">{{ $menu->basedOnTemplate->name }}</span>
-                @endif
+            <div class="mb-3">
+                <!-- 1行目: Muscle Groups -->
+                <div class="d-flex flex-wrap gap-2 mb-2">
+                    @foreach ($menu->unique_muscle_groups->take(4) as $muscleGroup)
+                        <span class="badge rounded-pill bg-light text-secondary border">{{ $muscleGroup }}</span>
+                    @endforeach
+                    @if ($menu->unique_muscle_groups->count() > 4)
+                        <span class="badge rounded-pill bg-light text-secondary border">+{{ $menu->unique_muscle_groups->count() - 4 }} more</span>
+                    @endif
+                </div>
+                
+                <!-- 2行目: Menu Type -->
+                <div class="d-flex">
+                    <span class="badge rounded-pill bg-light text-secondary border">{{ $this->getMenuType($menu) }}</span>
+                </div>
             </div>
 
             {{-- アクション --}}
