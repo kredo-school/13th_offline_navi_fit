@@ -16,12 +16,14 @@ class ExerciseRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'muscle_groups' => 'required|array',
-            'muscle_groups.*' => 'required|string|in:chest,back,shoulders,arms,legs,core,full_body',
+            'muscle_groups' => 'required|array|min:1',
+            'muscle_groups.*' => 'string|in:chest,back,shoulders,arms,legs,core,full_body',
+
             'equipment_category' => 'required|string|in:barbell,dumbbell,machine,bodyweight,timer',
             'equipment_needed' => 'nullable|string',
             'difficulty' => 'required|string|in:beginner,intermediate,advanced',
-            'instructions' => 'nullable|string',
+            'instructions' => 'nullable|array',
+            'instructions.*' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'is_active' => 'boolean',
         ];
@@ -39,6 +41,7 @@ class ExerciseRequest extends FormRequest
             'equipment_category.in' => 'Invalid equipment category selected',
             'difficulty.required' => 'Please select difficulty level',
             'difficulty.in' => 'Invalid difficulty level selected',
+            'instructions.array' => 'Instructions must be provided as steps',
         ];
     }
 
@@ -46,6 +49,23 @@ class ExerciseRequest extends FormRequest
     {
         if (! $this->has('is_active')) {
             $this->merge(['is_active' => true]);
+        }
+    }
+
+    /**
+     * Handle instruction steps and convert them to a string format
+     */
+    protected function passedValidation()
+    {
+        if ($this->has('instructions') && is_array($this->instructions)) {
+            // Filter out empty steps and join with newlines
+            $instructions = array_filter($this->instructions, function ($step) {
+                return ! empty(trim($step));
+            });
+
+            $this->merge([
+                'instructions' => ! empty($instructions) ? implode("\n", $instructions) : null,
+            ]);
         }
     }
 }

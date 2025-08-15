@@ -19,7 +19,7 @@
 
                         <!-- Search and Filter Form -->
                         <form method="GET" action="{{ route('admin.exercises.index') }}" class="mb-4">
-                            <div class="row">
+                            <div class="row overflow-x-auto">
                                 <div class="col-md-3">
                                     <input type="text" name="search" class="form-control"
                                         placeholder="Search exercises..." value="{{ request('search') }}">
@@ -84,9 +84,9 @@
                         </form>
 
                         <!-- Exercise List -->
-                        <div class="row">
+                        <div class="row overflow-x-auto">
                             @forelse($exercises as $exercise)
-                                <div class="col-md-4 mb-4">
+                                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                                     <div class="card h-100">
                                         @if ($exercise->image_path)
                                             <img src="{{ asset('storage/' . $exercise->image_path) }}" class="card-img-top"
@@ -122,16 +122,16 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="card-footer">
+                                        <div class="card-footer d-flex justify-content-between align-items-center">
                                             <a href="{{ route('admin.exercises.show', $exercise) }}"
-                                                class="btn btn-info btn-sm">View</a>
+                                                class="btn btn-info btn-sm flex-grow-0">View</a>
                                             <a href="{{ route('admin.exercises.edit', $exercise) }}"
-                                                class="btn btn-warning btn-sm">Edit</a>
+                                                class="btn btn-warning btn-sm flex-grow-0 mx-1">Edit</a>
                                             <form action="{{ route('admin.exercises.destroy', $exercise) }}" method="POST"
-                                                class="d-inline">
+                                                class="d-inline m-0">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                <button type="submit" class="btn btn-danger btn-sm flex-grow-0"
                                                     onclick="return confirm('Are you sure?')">Delete</button>
                                             </form>
                                         </div>
@@ -149,7 +149,7 @@
                         </div>
 
                         <!-- Pagination -->
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center mt-4">
                             {{ $exercises->appends(request()->query())->links() }}
                         </div>
                     </div>
