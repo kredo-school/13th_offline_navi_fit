@@ -1,6 +1,9 @@
 @extends('admin.layout')
 
 @section('content')
+    {{-- Bootstrap Icons CDN --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -15,6 +18,7 @@
                             @csrf
                             @method('PUT')
 
+                            {{-- Exercise Name --}}
                             <div class="form-group mb-3">
                                 <label for="name">Exercise Name *</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
@@ -24,6 +28,7 @@
                                 @enderror
                             </div>
 
+                            {{-- Description --}}
                             <div class="form-group mb-3">
                                 <label for="description">Description</label>
                                 <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
@@ -33,169 +38,174 @@
                                 @enderror
                             </div>
 
+                            {{-- Target Muscle Groups --}}
                             <div class="form-group mb-3">
                                 <label>Target Muscle Groups *</label>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="muscle_groups[]"
-                                                value="chest" id="chest"
-                                                {{ in_array('chest', old('muscle_groups', $exercise->muscle_groups)) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="chest">Chest</label>
+                                <div class="muscle-groups-container">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            @foreach (['chest', 'back', 'shoulders', 'arms'] as $muscle)
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" name="muscle_groups[]"
+                                                        id="muscle_{{ $muscle }}" value="{{ $muscle }}"
+                                                        {{ in_array($muscle, old('muscle_groups', is_array($exercise->muscle_groups) ? $exercise->muscle_groups : [])) ? 'checked' : '' }}>
+                                                    <label class="form-check-label"
+                                                        for="muscle_{{ $muscle }}">{{ ucfirst($muscle) }}</label>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="muscle_groups[]"
-                                                value="back" id="back"
-                                                {{ in_array('back', old('muscle_groups', $exercise->muscle_groups)) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="back">Back</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="muscle_groups[]"
-                                                value="shoulders" id="shoulders"
-                                                {{ in_array('shoulders', old('muscle_groups', $exercise->muscle_groups)) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="shoulders">Shoulders</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="muscle_groups[]"
-                                                value="arms" id="arms"
-                                                {{ in_array('arms', old('muscle_groups', $exercise->muscle_groups)) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="arms">Arms</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="muscle_groups[]"
-                                                value="legs" id="legs"
-                                                {{ in_array('legs', old('muscle_groups', $exercise->muscle_groups)) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="legs">Legs</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="muscle_groups[]"
-                                                value="core" id="core"
-                                                {{ in_array('core', old('muscle_groups', $exercise->muscle_groups)) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="core">Core</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="muscle_groups[]"
-                                                value="full_body" id="full_body"
-                                                {{ in_array('full_body', old('muscle_groups', $exercise->muscle_groups)) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="full_body">Full Body</label>
+                                        <div class="col-md-6">
+                                            @foreach (['legs', 'core', 'full_body'] as $muscle)
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" name="muscle_groups[]"
+                                                        id="muscle_{{ $muscle }}" value="{{ $muscle }}"
+                                                        {{ in_array($muscle, old('muscle_groups', is_array($exercise->muscle_groups) ? $exercise->muscle_groups : [])) ? 'checked' : '' }}>
+                                                    <label class="form-check-label"
+                                                        for="muscle_{{ $muscle }}">{{ ucfirst(str_replace('_', ' ', $muscle)) }}</label>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
                                 @error('muscle_groups')
-                                    <div class="text-danger">{{ $message }}</div>
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
+                                <small class="form-text text-muted">Please select at least one muscle group.</small>
                             </div>
 
+                            {{-- Equipment Category --}}
                             <div class="form-group mb-3">
                                 <label for="equipment_category">Equipment Category *</label>
                                 <select class="form-control @error('equipment_category') is-invalid @enderror"
                                     id="equipment_category" name="equipment_category" required>
-                                    <option value="">Select Equipment Category</option>
-                                    <option value="barbell"
-                                        {{ old('equipment_category', $exercise->equipment_category) == 'barbell' ? 'selected' : '' }}>
-                                        Barbell</option>
-                                    <option value="dumbbell"
-                                        {{ old('equipment_category', $exercise->equipment_category) == 'dumbbell' ? 'selected' : '' }}>
-                                        Dumbbell</option>
-                                    <option value="machine"
-                                        {{ old('equipment_category', $exercise->equipment_category) == 'machine' ? 'selected' : '' }}>
-                                        Machine</option>
-                                    <option value="bodyweight"
-                                        {{ old('equipment_category', $exercise->equipment_category) == 'bodyweight' ? 'selected' : '' }}>
-                                        Bodyweight</option>
-                                    <option value="timer"
-                                        {{ old('equipment_category', $exercise->equipment_category) == 'timer' ? 'selected' : '' }}>
-                                        Timer</option>
+                                    <option value="">Select Equipment</option>
+                                    @foreach (['barbell', 'dumbbell', 'machine', 'bodyweight', 'timer'] as $equip)
+                                        <option value="{{ $equip }}"
+                                            {{ old('equipment_category', $exercise->equipment_category) == $equip ? 'selected' : '' }}>
+                                            {{ ucfirst($equip) }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @error('equipment_category')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
+                            {{-- Equipment Details --}}
                             <div class="form-group mb-3">
-                                <label for="equipment_needed">Equipment Needed</label>
+                                <label for="equipment_needed">Equipment Details</label>
                                 <input type="text" class="form-control @error('equipment_needed') is-invalid @enderror"
                                     id="equipment_needed" name="equipment_needed"
                                     value="{{ old('equipment_needed', $exercise->equipment_needed) }}"
-                                    placeholder="e.g., Olympic barbell, 45lb plates">
+                                    placeholder="E.g. Barbell, Bench, Squat Rack">
                                 @error('equipment_needed')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
+                            {{-- Difficulty --}}
                             <div class="form-group mb-3">
                                 <label for="difficulty">Difficulty Level *</label>
                                 <select class="form-control @error('difficulty') is-invalid @enderror" id="difficulty"
                                     name="difficulty" required>
                                     <option value="">Select Difficulty</option>
-                                    <option value="beginner"
-                                        {{ old('difficulty', $exercise->difficulty) == 'beginner' ? 'selected' : '' }}>
-                                        Beginner</option>
-                                    <option value="intermediate"
-                                        {{ old('difficulty', $exercise->difficulty) == 'intermediate' ? 'selected' : '' }}>
-                                        Intermediate</option>
-                                    <option value="advanced"
-                                        {{ old('difficulty', $exercise->difficulty) == 'advanced' ? 'selected' : '' }}>
-                                        Advanced</option>
+                                    @foreach (['beginner', 'intermediate', 'advanced'] as $level)
+                                        <option value="{{ $level }}"
+                                            {{ old('difficulty', $exercise->difficulty) == $level ? 'selected' : '' }}>
+                                            {{ ucfirst($level) }}
+                                        </option>
+                                    @endforeach
                                 </select>
                                 @error('difficulty')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
+                            {{-- Instructions --}}
                             <div class="form-group mb-3">
-                                <label for="instructions">Instructions</label>
-                                <textarea class="form-control @error('instructions') is-invalid @enderror" id="instructions" name="instructions"
-                                    rows="5" placeholder="Step-by-step instructions for performing this exercise">{{ old('instructions', $exercise->instructions) }}</textarea>
+                                <label>Instructions (Steps)</label>
+                                <div class="instruction-steps">
+                                    @php
+                                        $instructionSteps = old(
+                                            'instructions',
+                                            $exercise->instructions
+                                                ? explode("\n", $exercise->instructions)
+                                                : ['', '', ''],
+                                        );
+                                        // 最低3つのステップを確保
+                                        while (count($instructionSteps) < 3) {
+                                            $instructionSteps[] = '';
+                                        }
+                                    @endphp
+
+                                    {{-- Step 1 --}}
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <strong>Step 1</strong> - Preparation
+                                        </div>
+                                        <div class="card-body">
+                                            <textarea class="form-control" id="instructions_1" name="instructions[]" rows="2"
+                                                placeholder="Explain the first step...">{{ $instructionSteps[0] }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    {{-- Step 2 --}}
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <strong>Step 2</strong> - Execution
+                                        </div>
+                                        <div class="card-body">
+                                            <textarea class="form-control" id="instructions_2" name="instructions[]" rows="2"
+                                                placeholder="Explain the second step...">{{ $instructionSteps[1] }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    {{-- Step 3 --}}
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <strong>Step 3</strong> - Finish
+                                        </div>
+                                        <div class="card-body">
+                                            <textarea class="form-control" id="instructions_3" name="instructions[]" rows="2"
+                                                placeholder="Explain the third step...">{{ $instructionSteps[2] }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
                                 @error('instructions')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
 
+                            {{-- Current Image --}}
                             <div class="form-group mb-3">
                                 <label>Current Image</label>
                                 <div>
                                     @if ($exercise->image_path)
                                         <img src="{{ asset('storage/' . $exercise->image_path) }}"
                                             alt="{{ $exercise->name }}" class="img-thumbnail"
-                                            style="height: 200px; width: 100%; object-fit: contain;">
+                                            style="max-height: 200px;">
                                     @else
-                                        <p class="text-muted">No image uploaded</p>
+                                        <div class="alert alert-info">No image uploaded</div>
                                     @endif
                                 </div>
                             </div>
 
+                            {{-- Image Upload --}}
                             <div class="form-group mb-3">
-                                <label for="image">Image Upload</label>
+                                <label for="image">Update Image</label>
                                 <input type="file" class="form-control @error('image') is-invalid @enderror"
                                     id="image" name="image" accept="image/*">
+                                <small class="form-text text-muted">Leave empty to keep current image</small>
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                                <small class="form-text text-muted">Max file size: 2MB. Supported formats: JPEG, PNG, JPG,
-                                    GIF</small>
                             </div>
 
-                            <div class="form-group mb-3">
-                                <div class="form-group mb-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="is_active" value="1"
-                                            id="is_active" {{ old('is_active', $exercise->is_active) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="is_active">
-                                            Active (visible in exercise lists)
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Update Exercise</button>
-                                    <a href="{{ route('admin.exercises.index', $exercise) }}"
-                                        class="btn btn-secondary">Cancel</a>
-                                </div>
+                            {{-- Buttons --}}
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Update Exercise</button>
+                                <a href="{{ route('admin.exercises.index') }}" class="btn btn-secondary">Cancel</a>
+                            </div>
                         </form>
                     </div>
                 </div>

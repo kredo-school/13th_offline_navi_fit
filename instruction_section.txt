@@ -1,0 +1,23 @@
+@extends('admin.layout')
+                            <div class="form-group mb-3">
+                                <label>Instructions (Steps)</label>
+                                <div class="instruction-steps">
+                                    <div class="mb-2">
+                                        <label for="instructions_1">Step 1</label>
+                                        <textarea class="form-control" id="instructions_1" name="instructions[]" rows="2" placeholder="Explain the first step...">{{ old('instructions.0') }}</textarea>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="instructions_2">Step 2</label>
+                                        <textarea class="form-control" id="instructions_2" name="instructions[]" rows="2" placeholder="Explain the second step...">{{ old('instructions.1') }}</textarea>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="instructions_3">Step 3</label>
+                                        <textarea class="form-control" id="instructions_3" name="instructions[]" rows="2" placeholder="Explain the third step...">{{ old('instructions.2') }}</textarea>
+                                    </div>
+                                </div>
+                                @error('instructions')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">

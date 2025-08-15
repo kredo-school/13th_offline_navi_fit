@@ -50,6 +50,11 @@ class AdminExerciseController extends Controller
     {
         $data = $request->validated();
 
+        // Convert instructions array to string
+        if (isset($data['instructions']) && is_array($data['instructions'])) {
+            $data['instructions'] = implode("\n", array_filter($data['instructions']));
+        }
+
         // Handle image upload
         if ($request->hasFile('image')) {
             $data['image_path'] = FileUtility::replaceFile(
@@ -86,6 +91,11 @@ class AdminExerciseController extends Controller
     public function update(ExerciseRequest $request, Exercise $exercise)
     {
         $data = $request->validated();
+
+        // Convert instructions array to string
+        if (isset($data['instructions']) && is_array($data['instructions'])) {
+            $data['instructions'] = implode("\n", array_filter($data['instructions']));
+        }
 
         // Handle image upload
         if ($request->hasFile('image')) {
