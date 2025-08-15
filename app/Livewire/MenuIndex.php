@@ -110,7 +110,8 @@ class MenuIndex extends Component
         // Extract unique muscle groups for filtering
         $this->muscleGroups = $this->exercises->flatMap(function ($exercise) {
             return $exercise->muscle_groups ?? [];
-        })->unique()->values()->toArray();
+        })->unique()->sort()->values()->toArray();
+        // ここでアルファベット順に
 
         // Extract unique equipment categories for filtering
         $this->equipmentCategories = $this->exercises->pluck('equipment_category')
