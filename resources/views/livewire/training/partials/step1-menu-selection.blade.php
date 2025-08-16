@@ -87,14 +87,6 @@
                                 <span>{{ $menu->menuExercises->count() }}種目</span>
                             </div>
                         </div>
-
-                        @if ($selectedMenuId === $menu->id)
-                            <div class="mt-3 text-center">
-                                <span class="badge bg-primary">
-                                    <i class="fas fa-check me-1"></i>選択中
-                                </span>
-                            </div>
-                        @endif
                     </div>
                 </div>
             </div>

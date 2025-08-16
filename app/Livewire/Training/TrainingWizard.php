@@ -121,8 +121,14 @@ class TrainingWizard extends Component
 
     public function selectMenu(int $menuId)
     {
-        $this->selectedMenuId = $menuId;
-        $this->dispatch('menu-selected');
+        // トグル機能：既に選択されているメニューをクリックした場合は選択を解除
+        if ($this->selectedMenuId === $menuId) {
+            $this->selectedMenuId = null;
+            $this->dispatch('menu-deselected');
+        } else {
+            $this->selectedMenuId = $menuId;
+            $this->dispatch('menu-selected');
+        }
     }
 
     public function goToStep1()
