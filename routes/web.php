@@ -87,6 +87,13 @@ Route::middleware(['auth', 'setup'])->group(function () {
     Route::post('/menus/{menu}/exercises/reorder', [MenuController::class, 'reorderExercises'])->name('menus.exercises.reorder');
     Route::post('/menus/from-template/{template}', [MenuController::class, 'createFromTemplate'])->name('menus.from-template');
 
+    // Training Wizard (Livewire)
+    Route::get('/training/wizard', \App\Livewire\Training\TrainingWizard::class)
+        ->name('training.wizard');
+
+    Route::get('/training/wizard/{menu}', \App\Livewire\Training\TrainingWizard::class)
+        ->name('training.wizard.with-menu');
+
     // training records
     Route::resource('training-records', TrainingRecordController::class);
 

@@ -37,7 +37,7 @@ class TrainingRecordDetail extends Model
         'order_index' => 'integer',
         'set_number' => 'integer',
         'reps' => 'integer',
-        'rest_seconds' => 'ineger',
+        'rest_seconds' => 'integer',
     ];
 
     /**
