@@ -180,8 +180,9 @@ class TrainingWizard extends Component
         foreach ($menu->menuExercises as $index => $menuExercise) {
             $previousRecord = $this->getPreviousRecord($menuExercise->exercise_id);
 
-            // デフォルトで1セット作成
-            for ($setNumber = 1; $setNumber <= 1; $setNumber++) {
+            // ユーザーがセット数を設定している場合はその数、設定していない場合はデフォルトで1セット作成
+            $setsCount = $menuExercise->sets ?? 1;
+            for ($setNumber = 1; $setNumber <= $setsCount; $setNumber++) {
                 $this->workoutSets[] = [
                     'id' => uniqid(),
                     'exercise_id' => $menuExercise->exercise_id,
