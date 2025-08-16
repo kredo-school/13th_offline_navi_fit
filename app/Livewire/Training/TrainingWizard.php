@@ -13,7 +13,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('components.layouts.app')]
+#[Layout('components.layouts.app', ['hideNavigation' => true])]
 #[Title('Training Wizard')]
 class TrainingWizard extends Component
 {
@@ -37,7 +37,7 @@ class TrainingWizard extends Component
 
     public string $selectedCategory = 'all';
 
-    public string $selectedDifficulty = 'all';
+    // public string $selectedDifficulty = 'all';
 
     // ローディング状態
     public bool $isTransitioning = false;
@@ -62,7 +62,13 @@ class TrainingWizard extends Component
 
         // 検索
         if ($this->searchTerm) {
-            $query->where('name', 'like', '%'.$this->searchTerm.'%');
+            $searchTerm = trim($this->searchTerm);
+
+            if (! empty($searchTerm)) {
+                // LIKE句の特殊文字をエスケープ
+                $escapedTerm = str_replace(['%', '_'], ['\\%', '\\_'], $searchTerm);
+                $query->where('name', 'like', '%'.$escapedTerm.'%');
+            }
         }
 
         // カテゴリフィルタ（メニューに含まれるエクササイズのmuscle_groupsから判定）
@@ -73,11 +79,11 @@ class TrainingWizard extends Component
         }
 
         // 難易度フィルタ（メニューに含まれるエクササイズの平均難易度から判定）
-        if ($this->selectedDifficulty !== 'all') {
-            $query->whereHas('menuExercises.exercise', function ($q) {
-                $q->where('difficulty', $this->selectedDifficulty);
-            });
-        }
+        // if ($this->selectedDifficulty !== 'all') {
+        //     $query->whereHas('menuExercises.exercise', function ($q) {
+        //         $q->where('difficulty', $this->selectedDifficulty);
+        //     });
+        // }
 
         return $query->get();
     }
