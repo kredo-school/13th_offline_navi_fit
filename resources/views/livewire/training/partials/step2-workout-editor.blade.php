@@ -1,4 +1,16 @@
 <div class="space-y-4">
+    {{-- Menu Name Display --}}
+    <div class="card border-1 shadow-sm mb-4">
+        <div class="card-body p-4 text-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <i class="fas fa-dumbbell text-primary me-3" style="font-size: 1.2rem;"></i>
+                <div>
+                    <h2 class="h4 fw-bold text-dark mb-1">{{ $this->selectedMenu->name ?? 'メニュー名なし' }}</h2>                
+                </div>
+            </div>
+        </div>
+    </div>
+
     @if($this->selectedMenu)
         @php
             $groupedSets = collect($workoutSets)->groupBy('exercise_id');
