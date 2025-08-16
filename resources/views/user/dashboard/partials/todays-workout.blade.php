@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <a href="{{ route('menus.index') }}"
+        <a href="{{ route('training.wizard') }}"
             class="btn btn-light text-primary w-100 py-3 fw-semibold d-flex align-items-center justify-content-center gap-2">
             <i class="bi bi-play-fill"></i>
             <span>Start Training</span>
