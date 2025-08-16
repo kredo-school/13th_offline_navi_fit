@@ -10,7 +10,7 @@
             @forelse($templates as $template)
                 <div class="card border template-card" draggable="true">
                     <div class="position-relative">
-                        <img src="{{ $template->image_url ?? 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=200&h=120&fit=crop' }}"
+                        <img src="{{ isset($template->image_path) ? asset('storage/' . $template->image_path) : asset('images/default-template.jpg') }}"
                             class="card-img-top" alt="{{ $template->name }}" style="height: 120px; object-fit: cover;">
                         @php
                             $badgeClass = 'bg-success';
@@ -38,7 +38,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <div class="d-flex align-items-center">
                                 <i class="fa-regular fa-clock me-1" style="font-size: 0.8rem;"></i>
-                                <span style="font-size: 0.8rem;">{{ $template->estimated_time ?? '30' }} min</span>
+                                <span style="font-size: 0.8rem;">{{ $template->estimated_duration ?? '30' }} min</span>
                             </div>
                             <div class="d-flex align-items-center">
                                 <i class="fa-solid fa-bullseye me-1" style="font-size: 0.8rem;"></i>

@@ -19,10 +19,8 @@
                 @forelse($templates as $template)
                     <div class="card border template-card" draggable="true">
                         <div class="position-relative">
-                            <img src="{{ $this->getThumbnailUrl($template) }}"
-                                class="card-img-top" alt="{{ $template->name }}" 
-                                style="height: 120px; object-fit: cover;"
-                                loading="lazy">
+                            <img src="{{ $this->getThumbnailUrl($template) }}" class="card-img-top"
+                                alt="{{ $template->name }}" style="height: 120px; object-fit: cover;" loading="lazy">
                             {{-- 難易度バッジ --}}
                             {{-- <span class="badge {{ $this->getDifficultyBadgeClass($template->difficulty) }} position-absolute top-0 end-0 m-1"
                                 style="font-size: 0.75rem;">
@@ -37,11 +35,11 @@
                             </p> --}}
 
                             {{-- Creator Info --}}
-                            @if($template->creator)
+                            @if ($template->creator)
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="fas fa-user-circle me-1 text-muted" style="font-size: 0.8rem;"></i>
                                     <span class="text-muted" style="font-size: 0.75rem;">
-                                        by Admin 
+                                        by Admin
                                         {{-- by {{ $template->creator->name }} --}}
                                     </span>
                                 </div>
@@ -62,23 +60,23 @@
 
                             {{-- Additional Stats --}}
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div class="d-flex align-items-center">
+                                {{-- カロリーはいらないので削除 8/16 --}}
+                                {{-- <div class="d-flex align-items-center">
                                     <i class="fas fa-fire me-1 text-warning" style="font-size: 0.8rem;"></i>
-                                    <span style="font-size: 0.8rem;">{{ $this->getEstimatedCalories($template) }} kcal</span>
-                                </div>
-                                <div class="d-flex align-items-center">
+                                    <span style="font-size: 0.8rem;">{{ $this->getEstimatedCalories($template) }}
+                                        kcal</span>
+                                </div> --}}
+                                {{-- レビュー機能実装の際にここも表示させる --}}
+                                {{-- <div class="d-flex align-items-center">
                                     <i class="fas fa-star me-1 text-warning" style="font-size: 0.8rem;"></i>
                                     <span style="font-size: 0.8rem;">{{ $this->getTemplateRating($template) }}</span>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="d-flex gap-2">
-                                <button type="button" 
-                                        class="btn btn-outline-primary btn-sm flex-fill"
-                                        style="font-size: 0.8rem;" 
-                                        wire:click="showTemplateDetails({{ $template->id }})"
-                                        wire:loading.attr="disabled"
-                                        wire:target="showTemplateDetails({{ $template->id }})">
+                                <button type="button" class="btn btn-outline-primary btn-sm flex-fill"
+                                    style="font-size: 0.8rem;" wire:click="showTemplateDetails({{ $template->id }})"
+                                    wire:loading.attr="disabled" wire:target="showTemplateDetails({{ $template->id }})">
                                     <span wire:loading.remove wire:target="showTemplateDetails({{ $template->id }})">
                                         <i class="fa-solid fa-eye me-1"></i>Details
                                     </span>
@@ -101,12 +99,9 @@
     </div>
 
     {{-- Livewire Template Details Modal --}}
-    @if($showModal && $selectedTemplate)
-        <div class="modal fade show" 
-             style="display: block; background-color: rgba(0,0,0,0.5);"
-             tabindex="-1" 
-             aria-labelledby="templateModalTitle" 
-             aria-hidden="false">
+    @if ($showModal && $selectedTemplate)
+        <div class="modal fade show" style="display: block; background-color: rgba(0,0,0,0.5);" tabindex="-1"
+            aria-labelledby="templateModalTitle" aria-hidden="false">
             <div class="modal-dialog modal-xl modal-dialog-scrollable">
                 <div class="modal-content rounded-4 shadow-lg">
                     {{-- ヘッダー --}}
@@ -122,7 +117,8 @@
                                         {{ $this->getDifficultyLabel($selectedTemplate->difficulty) }}
                                     </span> --}}
                                 </div>
-                                <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" wire:click="closeModal"
+                                    aria-label="Close"></button>
                             </div>
                             <p class="text-muted mb-3">
                                 {{ $selectedTemplate->description ?? 'No description available.' }}
@@ -130,9 +126,10 @@
                             <div class="d-flex align-items-center gap-4 small text-muted">
                                 <div class="d-flex align-items-center gap-1">
                                     <i class="fas fa-calendar"></i>
-                                    <span>Created: {{ $selectedTemplate->created_at?->format('F j, Y') ?? date('F j, Y') }}</span>
+                                    <span>Created:
+                                        {{ $selectedTemplate->created_at?->format('F j, Y') ?? date('F j, Y') }}</span>
                                 </div>
-                                {{-- @if($selectedTemplate->creator)
+                                {{-- @if ($selectedTemplate->creator)
                                     <div class="d-flex align-items-center gap-1">
                                         <i class="fas fa-user"></i>
                                         <span>by {{ $selectedTemplate->creator->name }}</span>
@@ -177,10 +174,10 @@
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link px-4 py-3" id="stats-tab" data-bs-toggle="tab"
-                                    data-bs-target="#stats" type="button" role="tab" aria-controls="stats"
+                                <button class="nav-link px-4 py-3" id="reviews-tab" data-bs-toggle="tab"
+                                    data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews"
                                     aria-selected="false">
-                                    Stats
+                                    Reviews
                                 </button>
                             </li>
                         </ul>
@@ -190,7 +187,8 @@
                     <div class="modal-body">
                         <div class="tab-content" id="templateTabContent">
                             {{-- 概要タブ --}}
-                            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                            <div class="tab-pane fade show active" id="overview" role="tabpanel"
+                                aria-labelledby="overview-tab">
                                 {{-- 統計グリッド --}}
                                 <div class="row g-3 mb-4">
                                     <div class="col-6 col-md-3">
@@ -213,18 +211,22 @@
                                     </div>
                                     <div class="col-6 col-md-3">
                                         <div class="bg-warning bg-opacity-10 rounded-3 p-3 text-center">
-                                            <i class="fas fa-fire text-warning fs-4 mb-2"></i>
+                                            <i class="fas fa-star text-warning fs-4 mb-2"></i>
                                             <div class="fs-3 fw-bold text-warning">
-                                                {{ $this->getEstimatedCalories($selectedTemplate) }}
+                                                {{ ucfirst($selectedTemplate->difficulty ?? 'beginner') }}
                                             </div>
-                                            <div class="small text-muted">kcal</div>
+                                            <div class="small text-muted">difficulty</div>
                                         </div>
                                     </div>
                                     <div class="col-6 col-md-3">
                                         <div class="bg-info bg-opacity-10 rounded-3 p-3 text-center">
                                             <i class="fas fa-star text-info fs-4 mb-2"></i>
                                             <div class="fs-3 fw-bold text-info">
-                                                {{ $this->getTemplateRating($selectedTemplate) }}
+                                                @if (isset($selectedTemplate->rating) && $selectedTemplate->rating > 0)
+                                                    {{ $this->getTemplateRating($selectedTemplate) }}
+                                                @else
+                                                    -
+                                                @endif
                                             </div>
                                             <div class="small text-muted">rating</div>
                                         </div>
@@ -239,7 +241,8 @@
                                             @php $muscleGroups = $this->getMuscleGroups($selectedTemplate); @endphp
                                             @if (count($muscleGroups) > 0)
                                                 @foreach ($muscleGroups as $muscleGroup)
-                                                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">
+                                                    <span
+                                                        class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">
                                                         {{ $muscleGroup }}
                                                     </span>
                                                 @endforeach
@@ -257,7 +260,8 @@
                                             @php $equipment = $this->getEquipmentNeeded($selectedTemplate); @endphp
                                             @if (count($equipment) > 0)
                                                 @foreach ($equipment as $item)
-                                                    <span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill">
+                                                    <span
+                                                        class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill">
                                                         {{ ucfirst($item) }}
                                                     </span>
                                                 @endforeach
@@ -271,7 +275,7 @@
                                 </div>
 
                                 {{-- 作成者情報 --}}
-                                {{-- @if($selectedTemplate->creator)
+                                {{-- @if ($selectedTemplate->creator)
                                     <div class="bg-light rounded-3 p-4 mb-4">
                                         <h3 class="fs-5 fw-semibold text-dark mb-3">Created by</h3>
                                         <div class="d-flex align-items-center gap-3">
@@ -289,14 +293,16 @@
                             </div>
 
                             {{-- エクササイズタブ --}}
-                            <div class="tab-pane fade" id="exercises" role="tabpanel" aria-labelledby="exercises-tab">
+                            <div class="tab-pane fade" id="exercises" role="tabpanel"
+                                aria-labelledby="exercises-tab">
                                 <div class="d-flex flex-column gap-3">
                                     @if ($selectedTemplate->templateExercises && $selectedTemplate->templateExercises->count() > 0)
                                         @foreach ($selectedTemplate->templateExercises as $index => $templateExercise)
                                             <div class="border rounded-3 p-3 hover-shadow">
                                                 <div class="d-flex align-items-center justify-content-between">
                                                     <div class="d-flex align-items-center gap-3">
-                                                        <div class="badge bg-primary text-white px-3 py-2 rounded-pill fw-medium">
+                                                        <div
+                                                            class="badge bg-primary text-white px-3 py-2 rounded-pill fw-medium">
                                                             {{ $index + 1 }}
                                                         </div>
 
@@ -304,19 +310,22 @@
                                                             <h4 class="fw-semibold text-dark mb-1">
                                                                 {{ $templateExercise->exercise?->name ?? 'Exercise Name' }}
                                                             </h4>
-                                                            <div class="d-flex align-items-center gap-3 small text-muted">
+                                                            <div
+                                                                class="d-flex align-items-center gap-3 small text-muted">
                                                                 <span>{{ $templateExercise->sets ?? 0 }} sets</span>
                                                                 <span>{{ $templateExercise->reps ?? 0 }} reps</span>
                                                                 @if (isset($templateExercise->weight) && $templateExercise->weight > 0)
                                                                     <span>{{ $templateExercise->weight }}kg</span>
                                                                 @endif
-                                                                <span>{{ $templateExercise->rest_seconds ?? 60 }}s rest</span>
+                                                                <span>{{ $templateExercise->rest_seconds ?? 60 }}s
+                                                                    rest</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="d-flex align-items-center gap-2">
-                                                        @if($templateExercise->exercise)
-                                                            <span class="badge {{ $this->getDifficultyBadgeClass($templateExercise->exercise->difficulty) }} bg-opacity-10 px-2 py-1 rounded-pill small fw-medium">
+                                                        @if ($templateExercise->exercise)
+                                                            <span
+                                                                class="badge {{ $this->getDifficultyBadgeClass($templateExercise->exercise->difficulty) }} bg-opacity-10 px-2 py-1 rounded-pill small fw-medium">
                                                                 {{ $this->getDifficultyLabel($templateExercise->exercise->difficulty) }}
                                                             </span>
                                                         @endif
@@ -324,20 +333,23 @@
                                                 </div>
 
                                                 {{-- エクササイズ詳細 --}}
-                                                @if($templateExercise->exercise)
+                                                @if ($templateExercise->exercise)
                                                     <div class="mt-3 pt-3 border-top">
                                                         <div class="row g-3 mb-3">
                                                             <div class="col-md-8">
-                                                                <h5 class="fw-medium text-dark mb-2">Target Muscle Groups</h5>
+                                                                <h5 class="fw-medium text-dark mb-2">Target Muscle
+                                                                    Groups</h5>
                                                                 <div class="d-flex flex-wrap gap-1 mb-3">
                                                                     @if (is_array($templateExercise->exercise->muscle_groups) && count($templateExercise->exercise->muscle_groups) > 0)
                                                                         @foreach ($templateExercise->exercise->muscle_groups as $muscleGroup)
-                                                                            <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">
+                                                                            <span
+                                                                                class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill small">
                                                                                 {{ $muscleGroup }}
                                                                             </span>
                                                                         @endforeach
                                                                     @else
-                                                                        <span class="badge bg-light text-muted px-2 py-1 rounded-pill small">
+                                                                        <span
+                                                                            class="badge bg-light text-muted px-2 py-1 rounded-pill small">
                                                                             None specified
                                                                         </span>
                                                                     @endif
@@ -350,7 +362,7 @@
                                                                         <span class="fw-medium">Category:</span>
                                                                         {{ ucfirst($templateExercise->exercise->muscle_groups[0] ?? 'Bodyweight') }}
                                                                     </div>
-                                                                    @if($templateExercise->exercise->equipment_needed)
+                                                                    @if ($templateExercise->exercise->equipment_needed)
                                                                         <div>
                                                                             <span class="fw-medium">Equipment:</span>
                                                                             {{ $templateExercise->exercise->equipment_needed }}
@@ -361,7 +373,7 @@
                                                         </div>
 
                                                         {{-- 実行手順 --}}
-                                                        @if($templateExercise->exercise->instructions)
+                                                        @if ($templateExercise->exercise->instructions)
                                                             <div class="mb-3">
                                                                 <h5 class="fw-medium text-dark mb-2">Instructions</h5>
                                                                 <p class="small text-dark">
@@ -383,39 +395,21 @@
                                 </div>
                             </div>
 
-                            {{-- 統計タブ --}}
-                            <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
-                                <div class="row g-4">
-                                    <div class="col-md-6">
-                                        <div class="bg-light rounded-3 p-4">
-                                            <h3 class="fs-5 fw-semibold text-dark mb-4">Workout Statistics</h3>
-                                            <div class="row g-3 text-center">
-                                                <div class="col-6">
-                                                    <div class="fs-3 fw-bold text-primary">{{ $this->getTotalSets($selectedTemplate) }}</div>
-                                                    <div class="small text-muted">Total Sets</div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="fs-3 fw-bold text-success">{{ $selectedTemplate->templateExercises?->count() ?? 0 }}</div>
-                                                    <div class="small text-muted">Exercises</div>
-                                                </div>
-                                            </div>
+                            {{-- レビュータブ --}}
+                            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                                <div class="text-center py-5">
+                                    <i class="fas fa-star text-muted mb-4" style="font-size: 4rem;"></i>
+                                    <h3 class="fs-5 fw-semibold text-dark mb-2">Reviews</h3>
+
+                                    @if (isset($selectedTemplate->rating) && $selectedTemplate->rating > 0)
+                                        <div class="mb-3">
+                                            <div class="fs-1 fw-bold text-warning">
+                                                {{ $this->getTemplateRating($selectedTemplate) }}</div>
+                                            <div class="text-muted">Average Rating</div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="bg-light rounded-3 p-4">
-                                            <h3 class="fs-5 fw-semibold text-dark mb-4">Usage Statistics</h3>
-                                            <div class="row g-3 text-center">
-                                                <div class="col-6">
-                                                    <div class="fs-3 fw-bold text-warning">{{ $this->getPopularityScore($selectedTemplate) }}</div>
-                                                    <div class="small text-muted">Times Used</div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="fs-3 fw-bold text-info">{{ $this->getTemplateRating($selectedTemplate) }}</div>
-                                                    <div class="small text-muted">User Rating</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endif
+
+                                    <p class="text-muted">Review feature will be added in a future update.</p>
                                 </div>
                             </div>
                         </div>
@@ -426,11 +420,9 @@
                         <button type="button" class="btn btn-outline-secondary" wire:click="closeModal">
                             <i class="fas fa-times me-2"></i>Close
                         </button>
-                        <button type="button" 
-                                class="btn btn-success" 
-                                wire:click="createFromTemplate({{ $selectedTemplate->id }})"
-                                wire:loading.attr="disabled"
-                                wire:target="createFromTemplate({{ $selectedTemplate->id }})">
+                        <button type="button" class="btn btn-success"
+                            wire:click="createFromTemplate({{ $selectedTemplate->id }})" wire:loading.attr="disabled"
+                            wire:target="createFromTemplate({{ $selectedTemplate->id }})">
                             <span wire:loading.remove wire:target="createFromTemplate({{ $selectedTemplate->id }})">
                                 <i class="fas fa-plus me-2"></i>Use This Template
                             </span>
