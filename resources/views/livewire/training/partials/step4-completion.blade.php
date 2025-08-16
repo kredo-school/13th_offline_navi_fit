@@ -33,7 +33,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="d-flex align-items-center">
-                                    <i class="fas fa-trophy text-muted me-3" style="font-size: 20px;"></i>
+                                    <i class="fas fa-dumbbell text-muted me-3" style="font-size: 20px;"></i>
                                     <div>
                                         <div class="small text-muted">メニュー</div>
                                         <div class="fw-medium">{{ $this->selectedMenu->name ?? '' }}</div>
@@ -74,16 +74,22 @@
                 </div>
 
                 {{-- Motivational Message --}}
-                <div class="card bg-gradient text-white mb-4" 
-                     style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    <div class="card-body p-4 text-center">
-                        <h3 class="h5 fw-semibold mb-3">
-                            素晴らしい努力です！
-                        </h3>
-                        <p class="mb-0">
-                            継続は力なり。今日の頑張りが明日の成果につながります。<br>
-                            次回のトレーニングも頑張りましょう！
-                        </p>
+                <div class="card border-1 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <div class="bg-primary bg-opacity-10 rounded-3 p-4">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-white rounded-circle p-3 me-4">
+                                    <i class="fas fa-heart text-primary" style="font-size: 20px;"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-semibold text-dark mb-2">素晴らしい努力です！</div>
+                                    <div class="small text-muted">
+                                        継続は力なり。今日の頑張りが明日の成果につながります。<br>
+                                        次回のトレーニングも頑張りましょう！
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -116,20 +122,8 @@
                         </button>
                     </div>
                 </div>
-
-                {{-- Auto-redirect notice --}}
-                <div class="text-center">
-                    <p class="small text-muted mb-0">
-                        5秒後に自動的にダッシュボードに戻ります
-                    </p>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    setTimeout(function() {
-        @this.goHome();
-    }, 5000);
-</script>
