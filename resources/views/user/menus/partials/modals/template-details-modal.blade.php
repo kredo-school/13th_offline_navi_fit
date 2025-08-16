@@ -24,7 +24,7 @@
                             </h2>
                             <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill fw-medium">
                                 @if (isset($template))
-                                    {{ $template->difficulty }}
+                                    {{ ucfirst($template->difficulty) }}
                                 @else
                                     Intermediate
                                 @endif
@@ -105,6 +105,7 @@
                             Exercises
                         </button>
                     </li>
+                    {{-- 将来実装 --}}
                     <li class="nav-item" role="presentation">
                         <button class="nav-link px-4 py-3" id="reviews-tab" data-bs-toggle="tab"
                             data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews"
@@ -123,11 +124,17 @@
                     <div class="tab-pane fade show active" id="overview" role="tabpanel"
                         aria-labelledby="overview-tab">
 
-
+                        {{-- テンプレート画像表示（もし画像があれば） --}}
+                        @if (isset($template) && isset($template->image_path) && !empty($template->image_path))
+                            <div class="mb-4 text-center">
+                                <img src="{{ asset('storage/' . $template->image_path) }}" alt="{{ $template->name }}"
+                                    class="img-fluid rounded-3" style="max-height: 200px; object-fit: contain;">
+                            </div>
+                        @endif
 
                         {{-- 統計グリッド --}}
                         <div class="row g-3 mb-4">
-                            <div class="col-6 col-md-3">
+                            <div class="col-6 col-md-4">
                                 <div class="bg-primary bg-opacity-10 rounded-3 p-3 text-center">
                                     <i class="fas fa-clock text-primary fs-4 mb-2"></i>
                                     <div class="fs-3 fw-bold text-primary">
@@ -140,7 +147,7 @@
                                     <div class="small text-muted">min</div>
                                 </div>
                             </div>
-                            <div class="col-6 col-md-3">
+                            <div class="col-6 col-md-4">
                                 <div class="bg-success bg-opacity-10 rounded-3 p-3 text-center">
                                     <i class="fas fa-bullseye text-success fs-4 mb-2"></i>
                                     <div class="fs-3 fw-bold text-success">
@@ -153,30 +160,17 @@
                                     <div class="small text-muted">exercises</div>
                                 </div>
                             </div>
-                            <div class="col-6 col-md-3">
-                                <div class="bg-warning bg-opacity-10 rounded-3 p-3 text-center">
-                                    <i class="fas fa-bolt text-warning fs-4 mb-2"></i>
-                                    <div class="fs-3 fw-bold text-warning">
-                                        @if (isset($template) && isset($template->estimated_calories))
-                                            {{ $template->estimated_calories }}
-                                        @else
-                                            0
-                                        @endif
-                                    </div>
-                                    <div class="small text-muted">kcal</div>
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-3">
+                            <div class="col-6 col-md-4">
                                 <div class="bg-info bg-opacity-10 rounded-3 p-3 text-center">
                                     <i class="fas fa-star text-info fs-4 mb-2"></i>
                                     <div class="fs-3 fw-bold text-info">
-                                        @if (isset($template) && isset($template->rating))
-                                            {{ $template->rating }}
+                                        @if (isset($template) && isset($template->difficulty))
+                                            {{ ucfirst($template->difficulty) }}
                                         @else
-                                            0
+                                            -
                                         @endif
                                     </div>
-                                    <div class="small text-muted">rating</div>
+                                    <div class="small text-muted">difficulty</div>
                                 </div>
                             </div>
                         </div>
@@ -219,25 +213,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        {{-- 人気度メトリクス --}}
-                        {{-- <div class="bg-light rounded-3 p-4">
-                                    <h3 class="fs-5 fw-semibold text-dark mb-4">人気度</h3>
-                                    <div class="row g-3 text-center">
-                                        <div class="col-4">
-                                            <div class="fs-3 fw-bold text-dark">85%</div>
-                                            <div class="small text-muted">人気度</div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="fs-3 fw-bold text-dark">78%</div>
-                                            <div class="small text-muted">完了率</div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="fs-3 fw-bold text-dark">4.3</div>
-                                            <div class="small text-muted">ユーザー評価</div>
-                                        </div>
-                                    </div>
-                                </div> --}}
                     </div>
 
                     {{-- エクササイズタブ --}}
@@ -276,11 +251,7 @@
                                                     <div class="d-flex align-items-center gap-2">
                                                         <span
                                                             class="badge bg-warning bg-opacity-10 text-warning px-2 py-1 rounded-pill small fw-medium">
-                                                            {{ $templateExercise->exercise->difficulty ?? 'Intermediate' }}
-                                                        </span>
-                                                        <span class="small text-muted">
-                                                            {{ $templateExercise->exercise->estimated_calories ?? 0 }}
-                                                            kcal
+                                                            {{ ucfirst($templateExercise->exercise->difficulty ?? 'Intermediate') }}
                                                         </span>
                                                         <i class="fas fa-chevron-down text-muted transition-transform duration-200"
                                                             :class="{ 'rotate-180': expanded }"></i>
@@ -344,20 +315,24 @@
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {{-- レビュータブ --}}
-                <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                    <div class="text-center py-5">
-                        <i class="fas fa-star text-muted mb-4" style="font-size: 4rem;"></i>
-                        <h3 class="fs-5 fw-semibold text-dark mb-2">Reviews</h3>
-                        <p class="text-muted">Review feature will be added in a future update.</p>
+                    {{-- レビュータブ（将来実装用） --}}
+                    <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                        <div class="text-center py-5">
+                            <i class="fas fa-star text-muted mb-4" style="font-size: 4rem;"></i>
+                            <h3 class="fs-5 fw-semibold text-dark mb-2">Reviews</h3>
+                            <p class="text-muted">Review feature will be added in a future update.</p>
+                        </div>
                     </div>
+                    {{-- テンプレート画像表示 --}}
+                    @if (isset($template) && isset($template->image_path) && !empty($template->image_path))
+                        <div class="mb-4 text-center">
+                            <img src="{{ asset('storage/' . $template->image_path) }}" alt="{{ $template->name }}"
+                                class="img-fluid rounded-3" style="max-height: 200px; object-fit: contain;">
+                        </div>
+                    @endif
                 </div>
-
             </div>
         </div>
-
     </div>
-</div>
 </div>
