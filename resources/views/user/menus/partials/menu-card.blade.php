@@ -26,16 +26,6 @@
             $imageIndex = $menu->id % count($fallbackImages);
             $fallbackImage = $fallbackImages[$imageIndex];
 
-            // 初回作成時のみ完全ランダムな画像を選択（オプション）
-            if (!$imagePath && !isset($menu->selected_fallback_image)) {
-                // 完全にランダムな選択（メニューID依存ではなく）
-                $randomIndex = rand(0, count($fallbackImages) - 1);
-                $fallbackImage = $fallbackImages[$randomIndex];
-
-                // 選択した画像を覚えておく（オプション - データベースに保存する場合）
-                // $menu->selected_fallback_image = $fallbackImage;
-                // $menu->save();
-            }
         @endphp
 
         <div class="position-relative">
