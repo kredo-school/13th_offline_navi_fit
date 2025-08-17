@@ -14,7 +14,7 @@
                             <img src="{{ $template->image_path
                                 ? (Str::startsWith($template->image_path, 'thumbnails/')
                                     ? url($template->image_path)
-                                    : url('images/templates/' . basename($template->image_path)))
+                                    : url('templates/' . basename($template->image_path)))
                                 : url('images/default-template.jpg') }}"
                                 class="card-img-top" alt="{{ $template->name }}"
                                 style="height: 80px; object-fit: cover;">
