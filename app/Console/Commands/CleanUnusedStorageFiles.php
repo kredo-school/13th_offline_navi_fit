@@ -39,7 +39,7 @@ class CleanUnusedStorageFiles extends Command
         // ストレージディレクトリ内のすべてのファイルを取得
         $this->cleanDirectory('avatars', $this->getProfileAvatars(), $dryRun);
         $this->cleanDirectory('exercises', $this->getExerciseImages(), $dryRun);
-        $this->cleanDirectory('images/templates', $this->getTemplateImages(), $dryRun);
+        $this->cleanDirectory('templates', $this->getTemplateImages(), $dryRun);
         $this->cleanThumbnails($dryRun);
 
         $this->info('ストレージのクリーンアップが完了しました！');

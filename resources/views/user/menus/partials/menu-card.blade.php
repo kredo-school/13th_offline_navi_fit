@@ -1,7 +1,7 @@
 <div class="col-12 col-sm-6 col-xl-4 mb-4">
     <div class="card border shadow-sm rounded-4 position-relative overflow-hidden menu-card"
         data-menu-id="{{ $menu->id }}">
-        {{-- サムネイル画像 - テンプレートの画像があれば表示、なければ新しいデフォルト画像 --}}
+        {{-- サムネイル画像 - テンプレートの画像があれば表示、なければランダムでデフォルト画像 --}}
         @php
             // テンプレートの画像を取得
             $imagePath = null;
@@ -11,23 +11,41 @@
                 $imagePath = $menu->basedOnTemplate->image_path;
             }
 
-            // 新しく追加したデフォルト画像の配列
+            // 新しいデフォルト画像の配列（新しいディレクトリ構造に合わせる）
             $fallbackImages = [
-                'images/menus/default1.jpg',
-                'images/menus/default2.jpg',
-                'images/menus/default3.jpg',
-                'images/menus/default4.jpg',
-                'images/menus/default5.jpg',
+                'templates/defaults/default1.jpg',
+                'templates/defaults/default2.jpg',
+                'templates/defaults/default3.jpg',
+                'templates/defaults/default4.jpg',
+                'templates/defaults/default5.jpg',
+                'templates/defaults/default6.jpg',
+                'templates/defaults/default7.jpg',
             ];
 
-            // メニューIDに基づいて画像を選択
+            // メニューIDに基づいて決定論的にランダムな画像を選択
             $imageIndex = $menu->id % count($fallbackImages);
             $fallbackImage = $fallbackImages[$imageIndex];
+
+            // 初回作成時のみ完全ランダムな画像を選択（オプション）
+            if (!$imagePath && !isset($menu->selected_fallback_image)) {
+                // 完全にランダムな選択（メニューID依存ではなく）
+                $randomIndex = rand(0, count($fallbackImages) - 1);
+                $fallbackImage = $fallbackImages[$randomIndex];
+
+                // 選択した画像を覚えておく（オプション - データベースに保存する場合）
+                // $menu->selected_fallback_image = $fallbackImage;
+                // $menu->save();
+            }
         @endphp
 
         <div class="position-relative">
-            <img src="{{ $imagePath ? asset('storage/' . $imagePath) : asset($fallbackImage) }}" class="card-img-top"
-                alt="{{ $menu->name }}" style="height: 120px; object-fit: cover;" loading="lazy">
+            @if ($imagePath)
+                <img src="{{ asset('storage/' . $imagePath) }}" class="card-img-top" alt="{{ $menu->name }}"
+                    style="height: 120px; object-fit: cover;" loading="lazy">
+            @else
+                <img src="{{ asset('storage/' . $fallbackImage) }}" class="card-img-top" alt="{{ $menu->name }}"
+                    style="height: 120px; object-fit: cover;" loading="lazy">
+            @endif
         </div>
 
         <div class="card-body p-3">

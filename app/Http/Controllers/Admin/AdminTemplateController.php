@@ -85,7 +85,7 @@ class AdminTemplateController extends Controller
                 $data['image_path'] = FileUtility::replaceFile(
                     $request->file('thumbnail'),
                     null,
-                    'images/templates'
+                    'templates'
                 );
             }
 
@@ -193,7 +193,7 @@ class AdminTemplateController extends Controller
                 $data['image_path'] = FileUtility::replaceFile(
                     $request->file('thumbnail'),
                     $template->image_path,
-                    'images/templates'
+                    'templates'
                 );
             }
 
