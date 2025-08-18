@@ -55,7 +55,7 @@ class GoalController extends Controller
             ['is_active' => true]
         ));
 
-        return redirect()->route('dashboard')->with('success', 'Goals set successfully! Welcome to your fitness journey.');
+        return redirect()->route('dashboard');
     }
 
     public function show(Goal $goal)
