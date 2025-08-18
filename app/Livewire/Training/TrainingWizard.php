@@ -8,6 +8,7 @@ use App\Models\TrainingRecordDetail;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -162,9 +163,12 @@ class TrainingWizard extends Component
 
     public function goToStep4()
     {
-        $this->saveTrainingRecord();
-        $this->markStepCompleted(3);
-        $this->currentStep = 4;
+        $success = $this->saveTrainingRecord();
+
+        if ($success) {
+            $this->markStepCompleted(3);
+            $this->currentStep = 4;
+        }
     }
 
     public function goToPreviousStep()
@@ -273,7 +277,9 @@ class TrainingWizard extends Component
 
     public function toggleSetCompletion(string $setId)
     {
-        $this->updateSet($setId, 'completed',
+        $this->updateSet(
+            $setId,
+            'completed',
             ! collect($this->workoutSets)->firstWhere('id', $setId)['completed']
         );
     }
@@ -301,10 +307,22 @@ class TrainingWizard extends Component
 
     private function saveTrainingRecord()
     {
-        // トランザクション開始
         DB::beginTransaction();
 
         try {
+            // バリデーション追加
+            if (! $this->selectedMenuId) {
+                $this->addError('save', 'メニューが選択されていません。');
+
+                return false;
+            }
+
+            if (empty(collect($this->workoutSets)->where('completed', true))) {
+                $this->addError('save', '完了したセットがありません。');
+
+                return false;
+            }
+
             // TrainingRecord作成
             $record = TrainingRecord::create([
                 'user_id' => Auth::id(),
@@ -318,14 +336,22 @@ class TrainingWizard extends Component
                 ->where('completed', true);
 
             foreach ($completedSets as $set) {
+                // 各フィールドのバリデーション
+                if (! isset($set['exercise_id']) || ! $set['exercise_id']) {
+                    $this->addError('save', '無効なエクササイズデータが含まれています。');
+                    DB::rollback();
+
+                    return false;
+                }
+
                 TrainingRecordDetail::create([
                     'training_record_id' => $record->id,
                     'exercise_id' => $set['exercise_id'],
-                    'order_index' => $set['order_index'],
-                    'set_number' => $set['set_number'],
-                    'weight' => $set['weight'],
-                    'reps' => $set['reps'],
-                    'rest_seconds' => $set['rest_seconds'],
+                    'order_index' => $set['order_index'] ?? 1,
+                    'set_number' => $set['set_number'] ?? 1,
+                    'weight' => $set['weight'] ?? 0,
+                    'reps' => $set['reps'] ?? 0,
+                    'rest_seconds' => $set['rest_seconds'] ?? 60,
                 ]);
             }
 
@@ -334,10 +360,21 @@ class TrainingWizard extends Component
             $this->completedRecord = $record;
             $this->trainingRecordId = $record->id;
 
+            return true;
         } catch (\Exception $e) {
             DB::rollback();
-            $this->addError('save', '保存中にエラーが発生しました。');
-            throw $e;
+
+            // ログに詳細を記録
+            Log::error('Training record save failed', [
+                'user_id' => Auth::id(),
+                'menu_id' => $this->selectedMenuId,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            $this->addError('save', '保存中にエラーが発生しました。再度お試しください。');
+
+            return false;
         }
     }
 
