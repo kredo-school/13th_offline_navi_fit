@@ -39,6 +39,16 @@
             <!-- 今日の記録がない場合のフォーム表示 -->
             <form action="{{ route('body-records.store') }}" method="POST" novalidate>
                 @csrf
+
+                <!-- エラーメッセージ表示部分を追加 -->
+                @if ($errors->any())
+                    <div class="alert alert-danger mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <span>{{ $errors->first() }}</span>
+                        </div>
+                    </div>
+                @endif
                 <div class="mb-3">
                     <label for="recorded_date" class="form-label small fw-medium">Date</label>
                     <div class="input-group">
