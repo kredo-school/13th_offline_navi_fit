@@ -32,7 +32,7 @@
                              alt="NaviFit Logo" 
                              id="logo-image"
                              :style="{ width: isScrolled ? '35px' : '40px', height: isScrolled ? '35px' : '40px' }"
-                             style="transition: all 0.3s ease; border-radius: 8px;">
+                             style="width: 40px; height: 40px; transition: all 0.3s ease; border-radius: 8px;">
                     </a>
                     
                     <!-- Navigation Links -->
