@@ -2,3 +2,171 @@
 /* @tailwind base;
 @tailwind components;
 @tailwind utilities; */
+
+/* ===== NaviFit共通スタイル ===== */
+
+/* ===== カラーシステム定義 ===== */
+:root {
+    /* Brand core colors */
+    --brand-strong: #064E79;   /* Primary（濃い紺） */
+    --brand:        #1C89CD;   /* Accent（青）      */
+    --accent2:      #5AB360;   /* 緑                 */
+    --slate:        #53748C;
+    --slate-light:  #90A4B2;
+    
+    /* Text colors */
+    --text-primary: var(--brand-strong);
+    --text-secondary: var(--slate);
+    --text-muted: var(--slate-light);
+    
+    /* Interaction colors */
+    --hover-bg-light: rgba(28, 137, 205, 0.08);
+    --hover-bg-dark: rgba(28, 137, 205, 0.15);
+    --accent-hover: rgba(90, 179, 96, 0.1);
+    
+    /* Surface colors */
+    --glass-bg: rgba(255,255,255,.65);
+    --border-light: rgba(0,0,0,.06);
+    
+    /* Bootstrap color overrides */
+    --bs-primary: var(--brand-strong);
+    --bs-info: var(--brand);
+    --bs-success: var(--accent2);
+}
+
+:root[data-bs-theme="dark"] {
+    --glass-bg: rgba(25,25,28,.6);
+    --border-light: rgba(255,255,255,.08);
+}
+
+/* ===== 共通アクションボタン ===== */
+.action-btn {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(83, 116, 140, 0.1);
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    background: var(--hover-bg-light);
+    color: var(--brand);
+    transform: translateY(-1px);
+}
+
+.action-btn:focus {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+}
+
+[data-bs-theme="dark"] .action-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .action-btn:hover {
+    background: var(--hover-bg-dark);
+    color: var(--brand);
+}
+
+/* アクションボタンのサイズバリエーション */
+.action-btn.btn-sm {
+    width: 32px;
+    height: 32px;
+}
+
+.action-btn.btn-lg {
+    width: 48px;
+    height: 48px;
+}
+
+/* ===== 共通ドロップダウンスタイル ===== */
+.dropdown-menu.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-light);
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    min-width: 200px;
+}
+
+.dropdown-menu.glass .dropdown-item {
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.dropdown-menu.glass .dropdown-item:hover {
+    background: var(--hover-bg-light);
+    color: var(--brand);
+}
+
+.dropdown-menu.glass .dropdown-item.text-danger:hover {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+[data-bs-theme="dark"] .dropdown-menu.glass .dropdown-item {
+    color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .dropdown-menu.glass .dropdown-item:hover {
+    background: var(--hover-bg-dark);
+    color: var(--brand);
+}
+
+/* ===== 共通ユーティリティクラス ===== */
+.text-brand {
+    color: var(--brand) !important;
+}
+
+.text-brand-strong {
+    color: var(--brand-strong) !important;
+}
+
+.text-accent {
+    color: var(--accent2) !important;
+}
+
+.bg-brand {
+    background-color: var(--brand) !important;
+}
+
+.bg-brand-strong {
+    background-color: var(--brand-strong) !important;
+}
+
+.bg-accent {
+    background-color: var(--accent2) !important;
+}
+
+/* ===== アクセシビリティ強化 ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ハイコントラストモード対応 */
+@media (prefers-contrast: high) {
+    .action-btn {
+        border: 1px solid currentColor;
+    }
+    
+    .dropdown-menu.glass {
+        border-width: 2px;
+    }
+}
