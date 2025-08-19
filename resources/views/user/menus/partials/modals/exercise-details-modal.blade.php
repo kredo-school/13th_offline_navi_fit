@@ -71,16 +71,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-md-3">
-                        <div class="bg-danger bg-opacity-10 rounded p-3 text-center">
-                            <i class="bi bi-lightning text-danger fs-4 mb-2"></i>
-                            <div class="small text-muted">Calories</div>
-                            <div class="fw-medium text-dark" id="caloriesBurn">
-                                {{ isset($exercise) && $exercise->estimated_calories ? $exercise->estimated_calories : '-' }}
-                                kcal
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 {{-- Description --}}

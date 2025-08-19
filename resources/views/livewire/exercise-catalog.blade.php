@@ -210,7 +210,11 @@
                                     <i class="fas fa-dumbbell text-success fs-4 mb-2"></i>
                                     <div class="small text-muted">Equipment</div>
                                     <div class="fw-medium text-dark" style="font-size: 0.85rem;">
-                                        {{ $selectedExercise->equipment_needed ?? 'None' }}
+                                        @if ($selectedExercise->equipment_needed && $selectedExercise->equipment_category != $selectedExercise->equipment_needed)
+                                            {{ $selectedExercise->equipment_needed }}
+                                        @else
+                                            {{ $selectedExercise->equipment_category ?? 'None' }}
+                                        @endif
                                     </div>
                                 </div>
                             </div>

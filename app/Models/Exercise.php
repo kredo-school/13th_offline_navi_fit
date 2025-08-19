@@ -23,7 +23,6 @@ class Exercise extends Model
         'equipment_needed',
         'difficulty',
         'instructions',
-
         'image_path',
         'is_active',
     ];
@@ -116,5 +115,30 @@ class Exercise extends Model
     public function scopeGym($query)
     {
         return $query->whereIn('equipment_category', ['barbell', 'dumbbell', 'machine']);
+    }
+
+    /**
+     * エクササイズの推定時間（分単位）を計算
+     *
+     * @return int 推定時間（分）
+     */
+    public function getEstimatedTimeAttribute()
+    {
+        // デフォルト値：種目1つあたり平均3セットで各セット45秒、セット間休憩120秒と仮定
+        $defaultSets = 3;
+        $defaultSetTime = 45; // 秒
+        $defaultRestTime = 120; // 秒
+
+        // 合計時間の計算
+        $setTime = $defaultSets * $defaultSetTime;
+
+        // 休憩時間（最初のセットは休憩なし）
+        $restTime = ($defaultSets - 1) * $defaultRestTime;
+
+        // 総時間（秒）
+        $totalSeconds = $setTime + $restTime;
+
+        // 分に変換して切り上げ
+        return ceil($totalSeconds / 60);
     }
 }
