@@ -262,9 +262,6 @@ class ExerciseEditor extends Component
         session()->flash('message', 'Menu has been cleared.');
     }
 
-    /**
-     * メニューを保存
-     */
     public function saveMenu()
     {
         if (! $this->validateMenu()) {
@@ -276,6 +273,17 @@ class ExerciseEditor extends Component
         $this->saving = true;
 
         try {
+            // 重複チェック - exercise_idが重複しているか確認
+            $exerciseIds = array_column($this->exercises, 'exercise_id');
+            $uniqueExerciseIds = array_unique($exerciseIds);
+
+            if (count($exerciseIds) !== count($uniqueExerciseIds)) {
+                session()->flash('error', 'Duplicate exercises detected. Each exercise can only be added once.');
+                $this->saving = false;
+
+                return;
+            }
+
             DB::transaction(function () {
                 // メニューを作成
                 $menu = Menu::create([
@@ -304,7 +312,6 @@ class ExerciseEditor extends Component
 
             // リダイレクト（Livewire推奨のnavigate）
             return redirect()->route('menus.index');
-
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to save menu. Please try again.');
             Log::error('Menu save error: '.$e->getMessage());
@@ -343,11 +350,12 @@ class ExerciseEditor extends Component
      */
     public function getTotalSets()
     {
-        return array_sum(array_column($this->exercises, 'sets'));
-    }
+        $sets = array_column($this->exercises, 'sets');
+        // 数値以外の値をフィルタリングし、nullや空文字列を0に変換
+        $numericSets = array_map(function ($value) {
+            return is_numeric($value) ? (int) $value : 0;
+        }, $sets);
 
-    public function render()
-    {
-        return view('livewire.exercise-editor');
+        return array_sum($numericSets);
     }
 }
