@@ -25,7 +25,7 @@
                     <select wire:model.live="selectedCategory" class="form-select">
                         <option value="all">All Categories</option>
                         @foreach ($this->categories as $category)
-                        <option value="{{ $category }}">{{ $category }}</option>
+                            <option value="{{ $category }}">{{ $category }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -41,123 +41,92 @@
             </div>
         </div>
     </div>
-    
+
     {{-- Menu Grid --}}
     <div class="row g-4 mb-4">
         @forelse($this->menus as $menu)
-        <div class="col-12 col-md-6 col-lg-4" wire:key="menu-{{ $menu->id }}">
-            <div wire:click="selectMenu({{ $menu->id }})"
-                class="card h-100 border-2 {{ $selectedMenuId === $menu->id ? 'border-primary shadow-lg' : 'border-light' }}"
-                style="cursor: pointer; transition: all 0.3s ease; border-radius: 0.75rem;
+            <div class="col-12 col-md-6 col-lg-4" wire:key="menu-{{ $menu->id }}">
+                <div wire:click="selectMenu({{ $menu->id }})"
+                    class="card h-100 border-2 {{ $selectedMenuId === $menu->id ? 'border-primary shadow-lg' : 'border-light' }}"
+                    style="cursor: pointer; transition: all 0.3s ease; border-radius: 0.75rem;
                         {{ $selectedMenuId === $menu->id ? 'transform: scale(1.05);' : '' }}">
 
-                {{-- Card Image/Header --}}
-                @php
-                    // テンプレートの画像を取得
-                    $imagePath = null;
+                    {{-- Card Image/Header --}}
+                    @php
+                        // 新しいデフォルト画像の配列
+                        $defaultImages = [
+                            'templates/defaults/default1.jpg',
+                            'templates/defaults/default2.jpg',
+                            'templates/defaults/default3.jpg',
+                            'templates/defaults/default4.jpg',
+                            'templates/defaults/default5.jpg',
+                            'templates/defaults/default6.jpg',
+                            'templates/defaults/default7.jpg',
+                        ];
 
-                    // ベースとなったテンプレートの画像を確認
-                    if (isset($menu->based_on_template_id) && $menu->basedOnTemplate && $menu->basedOnTemplate->image_path) {
-                        $imagePath = $menu->basedOnTemplate->image_path;
-                    }
+                        // メニューIDに基づいて決定論的にランダムな画像を選択
+                        $imageIndex = $menu->id % count($defaultImages);
+                        $menuImage = $defaultImages[$imageIndex];
+                    @endphp
 
-                    // 新しいデフォルト画像の配列（新しいディレクトリ構造に合わせる）
-                    $fallbackImages = [
-                        'templates/defaults/default1.jpg',
-                        'templates/defaults/default2.jpg',
-                        'templates/defaults/default3.jpg',
-                        'templates/defaults/default4.jpg',
-                        'templates/defaults/default5.jpg',
-                        'templates/defaults/default6.jpg',
-                        'templates/defaults/default7.jpg',
-                    ];
-
-                    // メニューIDに基づいて決定論的にランダムな画像を選択
-                    $imageIndex = $menu->id % count($fallbackImages);
-                    $fallbackImage = $fallbackImages[$imageIndex];
-
-                    // 画像が存在するかチェック
-                    $imageExists = false;
-                    if ($imagePath) {
-                        $imageExists = file_exists(public_path('storage/' . $imagePath));
-                    }
-                    if (!$imageExists && $fallbackImage) {
-                        $imageExists = file_exists(public_path('storage/' . $fallbackImage));
-                    }
-                @endphp
-
-                <div class="position-relative overflow-hidden" style="border-radius: 0.75rem 0.75rem 0 0;">
-                    @if ($imageExists && $imagePath)
-                        <img src="{{ asset('storage/' . $imagePath) }}" class="w-100" alt="{{ $menu->name }}"
+                    <div class="position-relative overflow-hidden" style="border-radius: 0.75rem 0.75rem 0 0;">
+                        <img src="{{ asset('storage/' . $menuImage) }}" class="w-100" alt="{{ $menu->name }}"
                             style="height: 200px; object-fit: cover;">
-                    @elseif ($imageExists && $fallbackImage)
-                        <img src="{{ asset('storage/' . $fallbackImage) }}" class="w-100" alt="{{ $menu->name }}"
-                            style="height: 200px; object-fit: cover;">
-                    @else
-                        {{-- 画像が見つからない場合は現在のアイコン表示を維持 --}}
-                        <div class="bg-gradient-primary d-flex align-items-center justify-content-center text-white"
-                            style="height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            <div class="text-center">
-                                <i class="fas fa-dumbbell fa-3x mb-2"></i>
-                                <div class="fw-bold">{{ $menu->menuExercises->count() }} {{ $menu->menuExercises->count() === 1 ? 'exercise' : 'exercises' }}</div>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-semibold text-dark mb-2" style="line-height: 1.4;">
+                            {{ $menu->name }}
+                        </h5>
+
+                        {{-- Description placeholder - adjust height to match template --}}
+                        <p class="text-muted small mb-3" style="min-height: 2.5rem; line-height: 1.4;">
+                            {{ $menu->description ?? 'description' }}
+                        </p>
+
+                        {{-- Stats --}}
+                        <div class="d-flex justify-content-between align-items-center text-muted small mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-clock me-1"></i>
+                                <span>{{ $menu->estimated_duration }}min</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fa-solid fa-dumbbell me-1"></i>
+                                <span>{{ $menu->menuExercises->count() }}
+                                    {{ $menu->menuExercises->count() === 1 ? 'exercise' : 'exercises' }}</span>
                             </div>
                         </div>
-                    @endif
-                </div>
 
-                <div class="card-body p-4">
-                    <h5 class="card-title fw-semibold text-dark mb-2" style="line-height: 1.4;">
-                        {{ $menu->name }}
-                    </h5>
-
-                    {{-- Description placeholder - adjust height to match template --}}
-                    <p class="text-muted small mb-3" style="min-height: 2.5rem; line-height: 1.4;">
-                        {{ $menu->description ?? 'description' }}
-                    </p>
-
-                    {{-- Stats --}}
-                    <div class="d-flex justify-content-between align-items-center text-muted small mb-3">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-clock me-1"></i>
-                            <span>{{ $menu->estimated_duration }}min</span>
+                        {{-- Exercise List as Tags --}}
+                        <div class="d-flex flex-wrap gap-1">
+                            @foreach ($menu->menuExercises->take(3) as $index => $menuExercise)
+                                <span class="badge bg-light text-dark small px-2 py-1">
+                                    {{ $menuExercise->exercise->name }}
+                                </span>
+                            @endforeach
+                            @if ($menu->menuExercises->count() > 3)
+                                <span class="badge bg-light text-muted small px-2 py-1">
+                                    +{{ $menu->menuExercises->count() - 3 }}
+                                </span>
+                            @endif
                         </div>
-                        <div class="d-flex align-items-center">
-                            <i class="fa-solid fa-dumbbell me-1"></i>
-                            <span>{{ $menu->menuExercises->count() }} {{ $menu->menuExercises->count() === 1 ? 'exercise' : 'exercises' }}</span>
-                        </div>
-                    </div>
-
-                    {{-- Exercise List as Tags --}}
-                    <div class="d-flex flex-wrap gap-1">
-                        @foreach ($menu->menuExercises->take(3) as $index => $menuExercise)
-                        <span class="badge bg-light text-dark small px-2 py-1">
-                            {{ $menuExercise->exercise->name }}
-                        </span>
-                        @endforeach
-                        @if ($menu->menuExercises->count() > 3)
-                        <span class="badge bg-light text-muted small px-2 py-1">
-                            +{{ $menu->menuExercises->count() - 3 }}
-                        </span>
-                        @endif
                     </div>
                 </div>
             </div>
-        </div>
         @empty
-        <div class="col-12">
-            <div class="text-center py-5" style="padding: 4rem 0;">
-                <i class="fas fa-filter fa-4x text-muted mb-4"></i>
-                <h4 class="text-dark fw-semibold mb-2">検索条件に一致するメニューが見つかりません</h4>
-                <p class="text-muted">検索キーワードやフィルター条件を変更してお試しください</p>
+            <div class="col-12">
+                <div class="text-center py-5" style="padding: 4rem 0;">
+                    <i class="fas fa-filter fa-4x text-muted mb-4"></i>
+                    <h4 class="text-dark fw-semibold mb-2">検索条件に一致するメニューが見つかりません</h4>
+                    <p class="text-muted">検索キーワードやフィルター条件を変更してお試しください</p>
+                </div>
             </div>
-        </div>
         @endforelse
     </div>
 
     {{-- Next Button --}}
     {{-- <div class="d-flex justify-content-end pt-4">
-        <button wire:click="goToStep2" type="button" class="btn btn-primary btn-lg px-4 shadow-lg" @if
-            (!$selectedMenuId) disabled @endif>
+        <button wire:click="goToStep2" type="button" class="btn btn-primary btn-lg px-4 shadow-lg" @if (!$selectedMenuId) disabled @endif>
             <span>次へ進む</span>
         </button>
     </div> --}}

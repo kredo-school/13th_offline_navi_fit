@@ -13,10 +13,33 @@
 
         <div class="d-flex flex-column gap-3">
             @forelse($recentWorkouts as $workout)
+                @php
+                    // 新しいデフォルト画像の配列（新しいディレクトリ構造に合わせる）
+                    $defaultImages = [
+                        'templates/defaults/default1.jpg',
+                        'templates/defaults/default2.jpg',
+                        'templates/defaults/default3.jpg',
+                        'templates/defaults/default4.jpg',
+                        'templates/defaults/default5.jpg',
+                        'templates/defaults/default6.jpg',
+                        'templates/defaults/default7.jpg',
+                    ];
+
+                    // トレーニングに関連するIDを取得（メニューID、テンプレートID、またはトレーニングID自体）
+                    $referenceId = $workout->menu_id ?? ($workout->template_id ?? $workout->id);
+
+                    // 決定論的にランダムな画像を選択
+                    $imageIndex = $referenceId % count($defaultImages);
+                    $workoutImage = $defaultImages[$imageIndex];
+                @endphp
+
                 <a href="{{ route('training-history.show', $workout->id) }}" class="text-decoration-none text-dark">
                     <div class="bg-light rounded p-3 border hover-shadow">
                         <div class="d-flex align-items-center gap-3">
-                            <div class="bg-secondary rounded" style="width: 64px; height: 64px;"></div>
+                            <!-- 画像表示部分を修正 -->
+                            <img src="{{ asset('storage/' . $workoutImage) }}" class="rounded" alt="Workout Image"
+                                style="width: 64px; height: 64px; object-fit: cover;">
+
                             <div class="flex-grow-1">
                                 <h6 class="mb-1">
                                     {{ $workout->menu ? $workout->menu->name : ($workout->template ? $workout->template->name : 'Custom Workout') }}
