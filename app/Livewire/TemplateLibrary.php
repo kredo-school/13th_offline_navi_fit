@@ -133,10 +133,10 @@ class TemplateLibrary extends Component
             foreach ($template->templateExercises as $templateExercise) {
                 // 各セットの時間（平均45秒）+ 休憩時間
                 $setTime = ($templateExercise->sets ?? 0) * 45;
-                $restTime = ($templateExercise->sets ?? 0) * ($templateExercise->rest_seconds ?? 60);
+                $restTime = ($templateExercise->sets ?? 0) * ($templateExercise->rest_seconds ?? 120); // 60秒から120秒に変更
 
                 if ($templateExercise->sets > 0) {
-                    $restTime -= ($templateExercise->rest_seconds ?? 60); // 最初のセットは休憩なし
+                    $restTime -= ($templateExercise->rest_seconds ?? 120); // 最初のセットは休憩なし
                 }
 
                 $totalTime += $setTime + $restTime;
@@ -149,28 +149,28 @@ class TemplateLibrary extends Component
     /**
      * テンプレートの推定カロリーを計算
      */
-    public function getEstimatedCalories($template)
-    {
-        // エクササイズから推定カロリーを計算
-        $totalCalories = 0;
-        if ($template->templateExercises) {
-            foreach ($template->templateExercises as $templateExercise) {
-                if ($templateExercise->exercise) {
-                    // 難易度とセット数に基づいて大まかなカロリーを計算
-                    $baseCalories = match ($templateExercise->exercise->difficulty) {
-                        'beginner' => 8,
-                        'intermediate' => 12,
-                        'advanced' => 16,
-                        default => 10
-                    };
-                    $sets = $templateExercise->sets ?? 1;
-                    $totalCalories += $baseCalories * $sets;
-                }
-            }
-        }
+    // public function getEstimatedCalories($template)
+    // {
+    //     // エクササイズから推定カロリーを計算
+    //     $totalCalories = 0;
+    //     if ($template->templateExercises) {
+    //         foreach ($template->templateExercises as $templateExercise) {
+    //             if ($templateExercise->exercise) {
+    //                 // 難易度とセット数に基づいて大まかなカロリーを計算
+    //                 $baseCalories = match ($templateExercise->exercise->difficulty) {
+    //                     'beginner' => 8,
+    //                     'intermediate' => 12,
+    //                     'advanced' => 16,
+    //                     default => 10
+    //                 };
+    //                 $sets = $templateExercise->sets ?? 1;
+    //                 $totalCalories += $baseCalories * $sets;
+    //             }
+    //         }
+    //     }
 
-        return $totalCalories > 0 ? $totalCalories : 200; // デフォルト200kcal
-    }
+    //     return $totalCalories > 0 ? $totalCalories : 200; // デフォルト200kcal
+    // }
 
     /**
      * 筋肉グループの配列を取得
@@ -191,28 +191,56 @@ class TemplateLibrary extends Component
     }
 
     /**
-     * 必要な器具の配列を取得
+     * 必要な器具の配列を取得（重複を避けて表示）
      */
     public function getEquipmentNeeded($template)
     {
-        $equipment = [];
+        $equipmentSet = []; // 重複チェック用の連想配列
 
         if ($template->templateExercises) {
             foreach ($template->templateExercises as $templateExercise) {
                 if ($templateExercise->exercise) {
-                    // equipment_categoryを使用
-                    if ($templateExercise->exercise->equipment_category) {
-                        $equipment[] = $templateExercise->exercise->equipment_category;
-                    }
-                    // equipment_neededも利用
+                    // equipment_neededの処理
                     if ($templateExercise->exercise->equipment_needed) {
-                        $equipment[] = $templateExercise->exercise->equipment_needed;
+                        // 可能性のある区切り文字で分割
+                        $patterns = [',', ';', '、', '/', '&'];
+                        $equipmentText = $templateExercise->exercise->equipment_needed;
+
+                        // 区切り文字を空白に置換
+                        foreach ($patterns as $pattern) {
+                            $equipmentText = str_replace($pattern, ' ', $equipmentText);
+                        }
+
+                        // 単語の境界で分割（連続した文字を単語として認識）
+                        preg_match_all('/\b[A-Za-z0-9]+(?:\s+[A-Za-z0-9]+)*\b/', $equipmentText, $matches);
+
+                        if (isset($matches[0]) && is_array($matches[0])) {
+                            foreach ($matches[0] as $item) {
+                                $item = trim($item);
+                                if (! empty($item)) {
+                                    $itemLower = strtolower($item);
+                                    if (! isset($equipmentSet[$itemLower])) {
+                                        $equipmentSet[$itemLower] = $item;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // equipment_categoryの処理
+                    if ($templateExercise->exercise->equipment_category) {
+                        $category = trim($templateExercise->exercise->equipment_category);
+                        $categoryLower = strtolower($category);
+                        if (! empty($category) && ! isset($equipmentSet[$categoryLower])) {
+                            $equipmentSet[$categoryLower] = $category;
+                        }
                     }
                 }
             }
         }
 
-        return array_unique(array_filter($equipment));
+        // 値のみを返す
+        return array_values($equipmentSet);
     }
 
     /**
