@@ -32,12 +32,12 @@
                              alt="NaviFit Logo" 
                              id="logo-image"
                              :style="{ width: isScrolled ? '35px' : '40px', height: isScrolled ? '35px' : '40px' }"
-                             style="width: 40px; height: 40px; transition: all 0.3s ease; border-radius: 8px;">
+                             style="transition: all 0.3s ease; border-radius: 8px;">
                     </a>
                     
                     <!-- Navigation Links -->
                     <div class="d-flex align-items-center gap-1">
-                        <a href="#" 
+                        <a href="{{ route('training.wizard') }}" 
                            class="nav-link-custom"
                            data-nav-item="training"
                            aria-current="{{ request()->routeIs('training.*') ? 'page' : 'false' }}">
