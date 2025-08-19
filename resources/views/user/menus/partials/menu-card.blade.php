@@ -1,18 +1,10 @@
 <div class="col-12 col-sm-6 col-xl-4 mb-4">
     <div class="card border shadow-sm rounded-4 position-relative overflow-hidden menu-card"
         data-menu-id="{{ $menu->id }}">
-        {{-- サムネイル画像 - テンプレートの画像があれば表示、なければランダムでデフォルト画像 --}}
+        {{-- サムネイル画像 - ランダムでデフォルト画像 --}}
         @php
-            // テンプレートの画像を取得
-            $imagePath = null;
-
-            // ベースとなったテンプレートの画像を確認
-            if (isset($menu->based_on_template_id) && $menu->basedOnTemplate && $menu->basedOnTemplate->image_path) {
-                $imagePath = $menu->basedOnTemplate->image_path;
-            }
-
             // 新しいデフォルト画像の配列（新しいディレクトリ構造に合わせる）
-            $fallbackImages = [
+            $defaultImages = [
                 'templates/defaults/default1.jpg',
                 'templates/defaults/default2.jpg',
                 'templates/defaults/default3.jpg',
@@ -23,19 +15,13 @@
             ];
 
             // メニューIDに基づいて決定論的にランダムな画像を選択
-            $imageIndex = $menu->id % count($fallbackImages);
-            $fallbackImage = $fallbackImages[$imageIndex];
-
+            $imageIndex = $menu->id % count($defaultImages);
+            $menuImage = $defaultImages[$imageIndex];
         @endphp
 
         <div class="position-relative">
-            @if ($imagePath)
-                <img src="{{ asset('storage/' . $imagePath) }}" class="card-img-top" alt="{{ $menu->name }}"
-                    style="height: 120px; object-fit: cover;" loading="lazy">
-            @else
-                <img src="{{ asset('storage/' . $fallbackImage) }}" class="card-img-top" alt="{{ $menu->name }}"
-                    style="height: 120px; object-fit: cover;" loading="lazy">
-            @endif
+            <img src="{{ asset('storage/' . $menuImage) }}" class="card-img-top" alt="{{ $menu->name }}"
+                style="height: 120px; object-fit: cover;" loading="lazy">
         </div>
 
         <div class="card-body p-3">
