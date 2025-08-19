@@ -1,3 +1,4 @@
-@tailwind base;
+/* Tailwind CSS temporarily disabled to fix Bootstrap navbar conflicts */
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
