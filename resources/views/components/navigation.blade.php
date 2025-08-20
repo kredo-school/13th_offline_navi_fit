@@ -1,6 +1,7 @@
 <header class="navigation-header" 
         x-data="navigationState()" 
         x-init="init()"
+        x-cloak
         :class="{ 'scrolled': isScrolled }"
         style="position: sticky; top: 0; z-index: 1030; transition: all 0.3s ease;">
     
@@ -30,9 +31,7 @@
                        aria-label="NaviFitホームに戻る">
                         <img src="{{ asset('images/navifit_icon.jpg') }}" 
                              alt="NaviFit Logo" 
-                             id="logo-image"
-                             :style="{ width: isScrolled ? '35px' : '40px', height: isScrolled ? '35px' : '40px' }"
-                             style="transition: all 0.3s ease; border-radius: 8px;">
+                             id="logo-image">
                     </a>
                     
                     <!-- Navigation Links -->
