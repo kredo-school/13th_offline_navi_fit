@@ -254,26 +254,52 @@
             const modalElement = document.getElementById('exerciseModal');
 
             // Bootstrap Modal のためのヘルパー関数
+            let modalBackdrop = null;
+
             function showModal() {
                 if (modalElement) {
+                    // 既存のモーダル状態をクリア
+                    hideModal();
+
+                    // モーダルを表示
                     modalElement.classList.add('show');
                     modalElement.style.display = 'block';
+                    modalElement.setAttribute('aria-modal', 'true');
+                    modalElement.setAttribute('role', 'dialog');
+
+                    // bodyにクラスを追加
                     document.body.classList.add('modal-open');
-                    const backdrop = document.createElement('div');
-                    backdrop.className = 'modal-backdrop fade show';
-                    document.body.appendChild(backdrop);
+                    document.body.style.overflow = 'hidden';
+
+                    // 新しいbackdropを作成
+                    modalBackdrop = document.createElement('div');
+                    modalBackdrop.className = 'modal-backdrop fade show';
+                    document.body.appendChild(modalBackdrop);
                 }
             }
 
             function hideModal() {
                 if (modalElement) {
+                    // モーダルを非表示
                     modalElement.classList.remove('show');
                     modalElement.style.display = 'none';
+                    modalElement.removeAttribute('aria-modal');
+                    modalElement.setAttribute('aria-hidden', 'true');
+
+                    // bodyのスタイルを元に戻す
                     document.body.classList.remove('modal-open');
-                    const backdrop = document.querySelector('.modal-backdrop');
-                    if (backdrop) {
-                        backdrop.parentNode.removeChild(backdrop);
+                    document.body.style.overflow = '';
+                    document.body.style.paddingRight = '';
+
+                    // backdropを削除
+                    if (modalBackdrop && modalBackdrop.parentNode) {
+                        modalBackdrop.parentNode.removeChild(modalBackdrop);
                     }
+
+                    // 他のすべてのbackdropも削除（念のため）
+                    document.querySelectorAll('.modal-backdrop').forEach(el => {
+                        el.parentNode.removeChild(el);
+                    });
                 }
             }
 
@@ -296,6 +322,7 @@
             if (addExerciseBtn) {
                 addExerciseBtn.addEventListener('click', function(e) {
                     e.preventDefault();
+                    e.stopPropagation(); // イベント伝播を止める
                     showModal();
                 });
             }
