@@ -47,8 +47,8 @@
         @forelse($this->menus as $menu)
             <div class="col-12 col-md-6 col-lg-4" wire:key="menu-{{ $menu->id }}">
                 <div wire:click="selectMenu({{ $menu->id }})"
-                    class="card h-100 border-2 {{ $selectedMenuId === $menu->id ? 'border-primary shadow-lg' : 'border-light' }}"
-                    style="cursor: pointer; transition: all 0.3s ease; border-radius: 0.75rem;
+                    class="card menu-card h-100 border-2 {{ $selectedMenuId === $menu->id ? 'border-primary shadow-lg' : 'border-light' }}"
+                    style="cursor: pointer; border-radius: 0.75rem;
                         {{ $selectedMenuId === $menu->id ? 'transform: scale(1.05);' : '' }}">
 
                     {{-- Card Image/Header --}}
@@ -131,3 +131,18 @@
         </button>
     </div> --}}
 </div>
+
+<style>
+    .menu-card {
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .menu-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--bs-box-shadow) !important;
+    }
+
+    .menu-card .badge {
+        font-weight: 500;
+    }
+</style>
