@@ -9,9 +9,9 @@
     <div class="container-xxl">
         <div class="d-flex align-items-center justify-content-between py-3">
             <div class="d-flex align-items-center">
-                <a href="{{ route('training-history.index') }}" class="btn btn-outline-secondary btn-sm me-3">
+                <button type="button" class="btn btn-outline-secondary btn-sm me-3" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i>
-                </a>
+                </button>
                 <div>
                     <h1 class="h4 mb-0 text-dark">トレーニング詳細</h1>
                     <p class="text-muted small mb-0">トレーニング記録の詳細情報</p>

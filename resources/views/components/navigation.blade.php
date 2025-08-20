@@ -41,7 +41,7 @@
                            class="nav-link-custom"
                            data-nav-item="training"
                            aria-current="{{ request()->routeIs('training.*') ? 'page' : 'false' }}">
-                            <span class="link-text">Training</span>
+                            <span class="link-text">Workout Log</span>
                             <div class="link-underline"></div>
                         </a>
                         

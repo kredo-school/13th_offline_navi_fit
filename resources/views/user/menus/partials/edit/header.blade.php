@@ -3,10 +3,10 @@
     <div class="container-fluid px-4 py-3">
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
-                <a href="{{ route('menus.show', $menu) }}" class="btn btn-light rounded-circle me-3"
-                    aria-label="Return to Menu Details">
+                <button type="button" class="btn btn-light rounded-circle me-3" 
+                    onclick="history.back()" aria-label="Go Back">
                     <i class="bi bi-arrow-left"></i>
-                </a>
+                </button>
                 <div>
                     <h1 class="h4 mb-1">Edit Menu</h1>
                     <nav class="small text-muted">
@@ -20,16 +20,6 @@
                         <span class="text-primary">Edit</span>
                     </nav>
                 </div>
-            </div>
-
-            <div class="d-flex align-items-center gap-2">
-                <a href="{{ route('menus.show', $menu) }}" class="btn btn-outline-secondary">
-                    Cancel
-                </a>
-                <button type="button" class="btn btn-primary" id="saveButton">
-                    <i class="bi bi-check-circle me-1"></i>
-                    Update
-                </button>
             </div>
         </div>
     </div>

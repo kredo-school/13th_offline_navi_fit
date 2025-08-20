@@ -6,9 +6,9 @@
         <div class="row mb-4">
             <div class="col-12 d-flex justify-content-between align-items-center">
                 <h2><i class="fas fa-weight me-2" style="color: #254D70;"></i>Record Weight & Body Fat</h2>
-                <a href="{{ route('dashboard') }}" class="btn btn-outline-primary">
-                    <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
-                </a>
+                <button type="button" class="btn btn-outline-primary" onclick="history.back()">
+                    <i class="fas fa-arrow-left me-2"></i>Go Back
+                </button>
             </div>
         </div>
 
