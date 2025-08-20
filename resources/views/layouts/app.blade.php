@@ -28,7 +28,34 @@
     @livewireStyles
 
     <style>
-
+        /* Alpine.js初期化中のちらつきを防ぐ */
+        [x-cloak] { 
+            display: none !important; 
+        }
+        
+        /* ロゴのデフォルトサイズを設定してちらつきを防ぐ */
+        #logo-image {
+            width: 40px;
+            height: 40px;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+        
+        /* スクロール時のサイズ（Alpine.js初期化後に適用） */
+        .navigation-header.scrolled #logo-image {
+            width: 35px !important;
+            height: 35px !important;
+        }
+        
+        /* ナビゲーション全体の初期状態を安定化 */
+        .navigation-header {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .navigation-header:not([x-cloak]) {
+            opacity: 1;
+        }
     </style>
 
 </head>
