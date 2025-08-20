@@ -181,31 +181,7 @@ class MenuController extends Controller
             'menuExercises.exercise',
         ]);
 
-        // Get active templates
-        $templates = Template::with('templateExercises.exercise')
-            ->active()
-            ->get();
-
-        // Get all active exercises for the catalog
-        $exercises = Exercise::active()
-            ->orderBy('name')
-            ->get();
-
-        // Group exercises by category
-        $exercisesByCategory = $exercises->groupBy('equipment_category');
-
-        // Extract unique muscle groups for filtering
-        $muscleGroups = $exercises->flatMap(function ($exercise) {
-            return $exercise->muscle_groups ?? [];
-        })->unique()->values()->toArray();
-
-        return view('user.menus.edit', compact(
-            'menu',
-            'templates',
-            'exercises',
-            'exercisesByCategory',
-            'muscleGroups'
-        ));
+        return view('user.menus.edit', compact('menu'));
     }
 
     /**

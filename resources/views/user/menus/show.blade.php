@@ -11,10 +11,10 @@
             <div class="container-xxl py-3">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center gap-3">
-                        <a href="{{ route('menus.index') }}" class="btn btn-light rounded-circle p-2"
-                            aria-label="Back to Menu List">
+                        <button type="button" class="btn btn-light rounded-circle p-2" 
+                            onclick="history.back()" aria-label="Go Back">
                             <i class="fa-solid fa-arrow-left"></i>
-                        </a>
+                        </button>
                         <div>
                             <h1 class="h5 mb-0 fw-semibold">{{ $menu->name }}</h1>
                             <p class="small text-muted mb-0">Menu Details</p>

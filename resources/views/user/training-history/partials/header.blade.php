@@ -9,9 +9,9 @@
     <div class="container-xxl">
         <div class="d-flex align-items-center justify-content-between py-3">
             <div class="d-flex align-items-center">
-                <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary btn-sm me-3">
+                <button type="button" class="btn btn-outline-secondary btn-sm me-3" onclick="history.back()">
                     <i class="fas fa-arrow-left"></i>
-                </a>
+                </button>
                 <div>
                     <h1 class="h4 mb-0 text-dark">Training History</h1>
                     <p class="text-muted small mb-0">過去のトレーニング記録を確認</p>
