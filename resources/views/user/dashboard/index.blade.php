@@ -4,6 +4,15 @@
 
 @section('content')
 <main class="container-fluid py-4">
+    <!-- Calendar Section - New -->
+    <section class="mb-4">
+        <div class="row">
+            <div class="col-12">
+                @include('user.dashboard.partials.calendar')
+            </div>
+        </div>
+    </section>
+
     <!-- Training Section -->
     <section class="mb-4">
         <div class="row g-4">
