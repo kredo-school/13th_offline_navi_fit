@@ -1,7 +1,7 @@
 {{-- 
 /**
  * Training History Header
- * ヘッダー部分（タイトル、戻るボタン）
+ * Header section (title, back button)
  */
 --}}
 
@@ -13,15 +13,15 @@
                     <i class="fas fa-arrow-left"></i>
                 </button>
                 <div>
-                    <h1 class="h4 mb-0 text-dark">トレーニング詳細</h1>
-                    <p class="text-muted small mb-0">トレーニング記録の詳細情報</p>
+                    <h1 class="h4 mb-0 text-dark">Training Details</h1>
+                    <p class="text-muted small mb-0">Detailed information for this training record</p>
                 </div>
             </div>
 
             <div class="d-flex align-items-center gap-2">
                 <a href="{{ route('training-history.edit', $record->id) }}" class="btn btn-outline-primary btn-sm">
                     <i class="fas fa-edit me-1"></i>
-                    編集
+                    Edit
                 </a>
             </div>
         </div>

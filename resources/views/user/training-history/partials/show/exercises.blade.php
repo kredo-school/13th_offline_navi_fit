@@ -1,17 +1,17 @@
 {{-- 
 /**
  * Training Detail Exercise Details
- * エクササイズ詳細（各種目の詳細情報）
+ * Exercise details (detailed information for each exercise)
  */
 --}}
 
 <div class="card shadow-sm">
     <div class="card-body">
-        <h3 class="h5 fw-semibold mb-4">エクササイズ詳細</h3>
+        <h3 class="h5 fw-semibold mb-4">Exercise Details</h3>
 
         <div class="row g-4">
             @php
-                // エクササイズごとにグループ化
+                // Group by exercise
                 $groupedDetails = $record->details->groupBy('exercise_id');
             @endphp
 
@@ -19,18 +19,18 @@
                 @php
                     $exercise = $details->first()->exercise;
 
-                    // 合計ボリューム計算
+                    // Calculate total volume
                     $totalVolume = $details->sum(function ($detail) {
                         return $detail->weight * $detail->reps;
                     });
 
-                    // 1RMの計算（最大の値を取得）
+                    // Calculate 1RM (get max value)
                     $maxOneRM = 0;
                     $bestSet = null;
 
                     foreach ($details as $detail) {
                         if ($detail->reps <= 36 && $detail->reps > 0 && $detail->weight > 0) {
-                            // ブジャルスキーの公式
+                            // Brzycki formula
                             $oneRM = $detail->weight * (36 / (37 - $detail->reps));
 
                             if ($oneRM > $maxOneRM) {
@@ -40,7 +40,7 @@
                         }
                     }
 
-                    // 前回の1RMを取得（同じエクササイズで最新の記録）
+                    // Get previous 1RM (latest record for the same exercise)
                     $previousRecords = App\Models\TrainingRecordDetail::join(
                         'training_records',
                         'training_records.id',
@@ -59,18 +59,18 @@
 
                     foreach ($previousRecords as $prevDetail) {
                         if ($prevDetail->reps <= 36 && $prevDetail->reps > 0 && $prevDetail->weight > 0) {
-                            // ブジャルスキーの公式
+                            // Brzycki formula
                             $oneRM = $prevDetail->weight * (36 / (37 - $prevDetail->reps));
 
                             if ($oneRM > $previousMaxOneRM) {
                                 $previousMaxOneRM = $oneRM;
                                 $previousBestSet = $prevDetail;
-                                break; // 最新の最大1RMだけ取得
+                                break; // Get only the latest maximum 1RM
                             }
                         }
                     }
 
-                    // 1RMの伸び率
+                    // 1RM growth rate
                     $oneRMGrowth = 0;
                     if ($previousMaxOneRM > 0 && $maxOneRM > 0) {
                         $oneRMGrowth = (($maxOneRM - $previousMaxOneRM) / $previousMaxOneRM) * 100;
@@ -83,8 +83,8 @@
                                 <div class="badge bg-primary text-white fw-medium px-3 py-2 rounded-pill">
                                     {{ $loop->index + 1 }}
                                 </div>
-                                <h4 class="h6 mb-0">{{ $exercise->name ?? '未設定' }}</h4>
-                                {{-- パーソナルレコードバッジがあれば表示 --}}
+                                <h4 class="h6 mb-0">{{ $exercise->name ?? 'Not set' }}</h4>
+                                {{-- Display Personal Record badge if exists --}}
                                 @if ($details->contains('is_personal_record', true))
                                     <div class="badge bg-warning-subtle text-warning d-flex align-items-center gap-1">
                                         <i class="fas fa-award" style="font-size: 0.7rem;"></i>
@@ -93,26 +93,26 @@
                                 @endif
                             </div>
 
-                            {{-- エクササイズ合計ボリューム --}}
+                            {{-- Exercise total volume --}}
                             <div class="badge bg-secondary text-white px-3 py-2">
-                                合計: {{ number_format($totalVolume, 1) }} kg
+                                Total: {{ number_format($totalVolume, 1) }} kg
                             </div>
                         </div>
 
-                        {{-- 1RM計算結果 --}}
+                        {{-- 1RM calculation results --}}
                         @if ($maxOneRM > 0)
                             <div class="alert alert-info mb-3">
                                 <div class="row align-items-center">
                                     <div class="col-md-6">
-                                        <h5 class="mb-1">推定1RM: {{ number_format($maxOneRM, 1) }} kg</h5>
+                                        <h5 class="mb-1">Estimated 1RM: {{ number_format($maxOneRM, 1) }} kg</h5>
                                         <p class="small mb-0">
-                                            ベストセット: {{ $bestSet->weight }}kg × {{ $bestSet->reps }}回
+                                            Best set: {{ $bestSet->weight }}kg × {{ $bestSet->reps }} reps
                                         </p>
                                     </div>
                                     <div class="col-md-6">
                                         @if ($oneRMGrowth != 0)
                                             <div class="d-flex align-items-center">
-                                                <span class="me-2">前回比:</span>
+                                                <span class="me-2">vs Previous:</span>
                                                 <span
                                                     class="{{ $oneRMGrowth > 0 ? 'text-success' : 'text-danger' }} fw-bold">
                                                     {{ $oneRMGrowth > 0 ? '+' : '' }}{{ number_format($oneRMGrowth, 1) }}%
@@ -122,13 +122,13 @@
                                             </div>
                                             @if ($previousBestSet)
                                                 <p class="small mb-0">
-                                                    前回: {{ $previousBestSet->weight }}kg ×
-                                                    {{ $previousBestSet->reps }}回
+                                                    Previous: {{ $previousBestSet->weight }}kg ×
+                                                    {{ $previousBestSet->reps }} reps
                                                     ({{ number_format($previousMaxOneRM, 1) }}kg)
                                                 </p>
                                             @endif
                                         @else
-                                            <p class="small mb-0">前回のデータがありません</p>
+                                            <p class="small mb-0">No previous data available</p>
                                         @endif
                                     </div>
                                 </div>
@@ -139,11 +139,11 @@
                             <table class="table table-sm">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>セット</th>
-                                        <th>回数</th>
-                                        <th>重量</th>
-                                        <th>推定1RM</th>
-                                        <th>メモ</th> <!-- 常に表示 -->
+                                        <th>Set</th>
+                                        <th>Reps</th>
+                                        <th>Weight</th>
+                                        <th>Est. 1RM</th>
+                                        <th>Notes</th> <!-- Always display -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -165,7 +165,7 @@
                                                     -
                                                 @endif
                                             </td>
-                                            <td>{{ $detail->notes ?: '-' }}</td> <!-- 常に表示、内容がなければ「-」 -->
+                                            <td>{{ $detail->notes ?: '-' }}</td> <!-- Always display, show "-" if empty -->
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -175,7 +175,7 @@
                 </div>
             @empty
                 <div class="col-12 text-center text-muted py-4">
-                    エクササイズ記録はありません
+                    No exercise records available
                 </div>
             @endforelse
         </div>

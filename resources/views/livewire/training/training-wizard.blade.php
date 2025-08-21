@@ -10,7 +10,7 @@
                         </button>
                         <div>
                             <h1 class="h4 mb-0 text-dark fw-semibold">Training Wizard</h1>
-                            <p class="small text-muted mb-0">トレーニング記録を作成</p>
+                            <p class="small text-muted mb-0">Create Training Record</p>
                         </div>
                     </div>
                 </div>
@@ -31,10 +31,10 @@
                 <div class="mb-4">
                     @include('livewire.training.partials.step-indicator')
                 </div>
-                
+
                 {{-- Content Area --}}
                 <div wire:loading.class="opacity-50" wire:target="goToStep1, goToStep2, goToStep3, goToStep4">
-                    @if($currentStep === 1)
+                    @if ($currentStep === 1)
                         @include('livewire.training.partials.step1-menu-selection')
                     @elseif($currentStep === 2)
                         @include('livewire.training.partials.step2-workout-editor')

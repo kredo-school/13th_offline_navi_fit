@@ -1,12 +1,12 @@
 {{-- 
 /**
  * Training Detail Personal Records
- * パーソナルレコードセクション（新記録達成の表示）
+ * Personal record section (display of new records achieved)
  */
 --}}
 
 @php
-    // 個人記録を達成したエクササイズを取得
+    // Get exercises that achieved personal records
     $personalRecords = $record->details->filter(function ($detail) {
         return $detail->is_personal_record ?? false;
     });
@@ -17,18 +17,18 @@
         <div class="card-body">
             <div class="d-flex align-items-center gap-2 mb-3">
                 <i class="fas fa-award text-warning"></i>
-                <h3 class="h5 fw-semibold text-warning-emphasis mb-0">パーソナルレコード</h3>
+                <h3 class="h5 fw-semibold text-warning-emphasis mb-0">Personal Records</h3>
             </div>
 
             <div class="d-flex flex-column gap-2">
                 @foreach ($personalRecords as $record)
                     <div class="d-flex align-items-center justify-content-between">
-                        <span class="text-warning-emphasis">{{ $record->exercise->name ?? '未設定' }}</span>
+                        <span class="text-warning-emphasis">{{ $record->exercise->name ?? 'Not set' }}</span>
                         <div class="d-flex align-items-center gap-2">
                             @if ($record->weight)
                                 <span class="fw-medium text-warning-emphasis">{{ $record->weight }}kg</span>
                             @endif
-                            <span class="fw-medium text-warning-emphasis">{{ $record->reps }}回</span>
+                            <span class="fw-medium text-warning-emphasis">{{ $record->reps }} reps</span>
                         </div>
                     </div>
                 @endforeach
