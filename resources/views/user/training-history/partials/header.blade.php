@@ -1,7 +1,7 @@
 {{-- 
 /**
  * Training History Header
- * ヘッダー部分（タイトル、戻るボタン、エクスポートボタン、フィルターボタン）
+ * Header section (title, back button, export button, filter button)
  */
 --}}
 
@@ -14,20 +14,20 @@
                 </button>
                 <div>
                     <h1 class="h4 mb-0 text-dark">Training History</h1>
-                    <p class="text-muted small mb-0">過去のトレーニング記録を確認</p>
+                    <p class="text-muted small mb-0">View your past training records</p>
                 </div>
             </div>
 
             <div class="d-flex align-items-center gap-2">
                 <button class="btn btn-outline-secondary btn-sm" type="button" onclick="window.print()">
                     <i class="fas fa-download me-1"></i>
-                    エクスポート
+                    Export
                 </button>
 
                 <button class="btn btn-outline-primary btn-sm" type="button"
                     onclick="document.getElementById('advancedFilters').classList.toggle('d-none')">
                     <i class="fas fa-filter me-1"></i>
-                    フィルター
+                    Filter
                 </button>
             </div>
         </div>

@@ -117,8 +117,8 @@
             <div class="col-12">
                 <div class="text-center py-5" style="padding: 4rem 0;">
                     <i class="fas fa-filter fa-4x text-muted mb-4"></i>
-                    <h4 class="text-dark fw-semibold mb-2">検索条件に一致するメニューが見つかりません</h4>
-                    <p class="text-muted">検索キーワードやフィルター条件を変更してお試しください</p>
+                    <h4 class="text-dark fw-semibold mb-2">No menus match your search criteria</h4>
+                    <p class="text-muted">Try changing your search keywords or filters</p>
                 </div>
             </div>
         @endforelse

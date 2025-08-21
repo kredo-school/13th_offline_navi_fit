@@ -1,41 +1,41 @@
 {{-- 
 /**
  * Training Detail Metrics Dashboard
- * メトリクスダッシュボード（統計指標）
+ * Metrics dashboard (statistical indicators)
  */
 --}}
 
 <div class="row g-3 mb-4">
-    {{-- 総セット数 --}}
+    {{-- Total Sets --}}
     <div class="col-6 col-md-3">
         <div class="card shadow-sm h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-2">
-                    <div class="text-muted small fw-medium">総セット数</div>
+                    <div class="text-muted small fw-medium">Total Sets</div>
                 </div>
                 <div class="display-6 fw-bold text-dark">{{ $record->details->count() }}</div>
             </div>
         </div>
     </div>
 
-    {{-- 総回数 --}}
+    {{-- Total Reps --}}
     <div class="col-6 col-md-3">
         <div class="card shadow-sm h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-2">
-                    <div class="text-muted small fw-medium">総回数</div>
+                    <div class="text-muted small fw-medium">Total Reps</div>
                 </div>
                 <div class="display-6 fw-bold text-dark">{{ $record->details->sum('reps') }}</div>
             </div>
         </div>
     </div>
 
-    {{-- 総ボリューム --}}
+    {{-- Total Volume --}}
     <div class="col-6 col-md-3">
         <div class="card shadow-sm h-100">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between mb-2">
-                    <div class="text-muted small fw-medium">総ボリューム</div>
+                    <div class="text-muted small fw-medium">Total Volume</div>
                 </div>
                 <div class="display-6 fw-bold text-dark">{{ number_format($record->details->sum('volume')) }}</div>
                 <div class="text-muted small">kg</div>
@@ -43,16 +43,16 @@
         </div>
     </div>
 
-    {{-- 消費カロリー --}}
+    {{-- Calories or Duration --}}
     @if ($record->duration_minutes)
         <div class="col-6 col-md-3">
             <div class="card shadow-sm h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between mb-2">
-                        <div class="text-muted small fw-medium">トレーニング時間</div>
+                        <div class="text-muted small fw-medium">Training Duration</div>
                     </div>
                     <div class="display-6 fw-bold text-dark">{{ $record->duration_minutes }}</div>
-                    <div class="text-muted small">分</div>
+                    <div class="text-muted small">min</div>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
             <div class="card shadow-sm h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between mb-2">
-                        <div class="text-muted small fw-medium">消費カロリー</div>
+                        <div class="text-muted small fw-medium">Calories Burned</div>
                     </div>
                     <div class="display-6 fw-bold text-dark">{{ $record->calories }}</div>
                     <div class="text-muted small">kcal</div>
@@ -69,6 +69,6 @@
             </div>
         </div>
     @else
-        <!-- 他の指標を表示するか、何も表示しない -->
+        <!-- Display other metrics or nothing -->
     @endif
 </div>
