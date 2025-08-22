@@ -3,11 +3,10 @@
         <div class="d-flex align-items-center justify-content-between position-relative">
             @php
                 $steps = [
-                    ['number' => 1, 'title' => 'Select Menu', 'description' => 'Choose your workout'],
-                    ['number' => 2, 'title' => 'Edit Performance', 'description' => 'Enter sets & weights'],
-                    ['number' => 3, 'title' => 'Confirm', 'description' => 'Review your record'],
-                    ['number' => 4, 'title' => 'Complete', 'description' => 'Training record complete'],
-                ];
+                    ['number' => 1, 'title' => 'Slelect Plan', 'description' => 'Choose your workout plan to begin'],
+                    ['number' => 2, 'title' => 'Log Workout', 'description' => 'Enter sets, reps, and weights'],
+                    ['number' => 3, 'title' => 'Confirm', 'description' => 'Check your logged details'],
+                    ['number' => 4, 'title' => 'Complete', 'description' => 'Save and finish your workout']
             @endphp
 
             @foreach ($steps as $index => $step)

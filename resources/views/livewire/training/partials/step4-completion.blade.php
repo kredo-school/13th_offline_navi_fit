@@ -9,17 +9,18 @@
                         <i class="fas fa-check-circle text-success" style="font-size: 48px;"></i>
                     </div>
                     <h1 class="h2 fw-bold text-dark mb-3">
-                        Well done!
+                        Great Job!
                     </h1>
                     <p class="h5 text-muted">
-                        Your training record has been saved successfully
+                        Your workout log has been saved successfully.
                     </p>
                 </div>
 
                 {{-- Workout Summary --}}
                 <div class="card border-1 shadow-sm mb-4">
                     <div class="card-body p-4">
-                        <h2 class="h4 fw-semibold text-dark mb-4">This Workout</h2>
+                        <h2 class="h4 fw-semibold text-dark mb-4">Today's Workout</h2>
+
 
                         <div class="row g-3 mb-4">
                             <div class="col-6">
@@ -35,7 +36,7 @@
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-dumbbell text-muted me-3" style="font-size: 20px;"></i>
                                     <div>
-                                        <div class="small text-muted">Menu</div>
+                                        <div class="small text-muted">Workout Plan</div>
                                         <div class="fw-medium">{{ $this->selectedMenu->name ?? '' }}</div>
                                     </div>
                                 </div>
@@ -51,7 +52,8 @@
                                         </div>
                                         <div>
                                             <div class="fw-medium text-dark">Workout Completed</div>
-                                            <div class="small text-muted">{{ $this->getCompletedSetsCount() }} sets
+                                            <div class="small text-muted">{{ $this->getCompletedSetsCount() }}sets
+
                                                 completed</div>
                                         </div>
                                     </div>
@@ -65,8 +67,9 @@
                                         </div>
                                         <div>
                                             <div class="fw-medium text-dark">Total Volume</div>
-                                            <div class="small text-muted">{{ number_format($this->getTotalVolume()) }}kg
-                                                lifted</div>
+                                            <div class="small text-muted">You lifted
+                                                {{ number_format($this->getTotalVolume()) }}kg in total!</div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -84,10 +87,20 @@
                                     <i class="fas fa-heart text-primary" style="font-size: 20px;"></i>
                                 </div>
                                 <div>
-                                    <div class="fw-semibold text-dark mb-2">Great effort!</div>
+                                    <div class="fw-semibold text-dark mb-2">Amazing effort!</div>
                                     <div class="small text-muted">
-                                        Consistency is key. Today's effort leads to tomorrow's results.<br>
-                                        Keep up the good work for your next training!
+                                        @php
+                                            $messages = [
+                                                "Consistency builds strength.<br>Small steps, solid gains.",
+                                                "Brick by brick, you get stronger.<br>Today's work powers tomorrow.",
+                                                "Little by little becomes a lot.<br>Keep showing up.",
+                                                "Sweat today, strength tomorrow.<br>Stay the course.",
+                                                "Habits forge results.<br>Keep the rhythm."
+                                            ];
+                                            $randomMessage = $messages[array_rand($messages)];
+                                        @endphp
+                                        {!! $randomMessage !!}
+
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +114,8 @@
                         <button wire:click="redirectToStats" type="button"
                             class="btn btn-primary w-100 py-3 d-flex align-items-center justify-content-center">
                             <i class="fas fa-chart-line me-2"></i>
-                            <span>View Stats</span>
+                            <span>View Analytics</span>
+
                         </button>
                     </div>
 
@@ -109,7 +123,8 @@
                         <button wire:click="createNew" type="button"
                             class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center">
                             <i class="fas fa-trophy me-2"></i>
-                            <span>New Record</span>
+                            <span>New Log</span>
+
                         </button>
                     </div>
 
@@ -117,7 +132,7 @@
                         <button wire:click="goHome" type="button"
                             class="btn btn-outline-secondary w-100 py-3 d-flex align-items-center justify-content-center">
                             <i class="fas fa-home me-2"></i>
-                            <span>Back to Home</span>
+                            <span>Back to Dashboard</span>
                         </button>
                     </div>
                 </div>

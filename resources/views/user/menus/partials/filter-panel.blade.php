@@ -92,7 +92,7 @@
         {{-- タグフィルター（筋肉グループ） --}}
         <div class="mb-4">
             <label class="form-label small fw-medium text-muted">Muscle Groups</label>
-            <div class="d-grid gap-2" style="max-height: 200px; overflow-y: auto;">
+            <div class="d-grid gap-2">
                 @foreach ($muscleGroups as $muscleGroup)
                     <div class="form-check">
                         <input class="form-check-input" 

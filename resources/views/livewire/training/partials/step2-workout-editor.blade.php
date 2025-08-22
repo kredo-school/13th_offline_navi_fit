@@ -54,11 +54,12 @@
                     @if (!empty($previousRecord))
                         <div class="bg-light rounded p-3 mb-4">
                             <div class="small text-muted">
-                                <span class="fw-medium">Previous record:</span>
-                                @if (isset($previousRecord['weight']))
+                                <span class="fw-medium">previous Record:</span>
+                                @if(isset($previousRecord['weight']))
                                     <span class="ms-2">{{ $previousRecord['weight'] }}kg</span>
                                 @endif
-                                @if (isset($previousRecord['reps']))
+                                @if(isset($previousRecord['reps']))
+
                                     <span class="ms-2">{{ $previousRecord['reps'] }} reps</span>
                                 @endif
                                 @if (isset($previousRecord['date']))
@@ -69,9 +70,9 @@
                     @else
                         <div class="bg-light rounded p-3 mb-4">
                             <div class="small text-muted">
-                                <span class="fw-medium">Previous record:</span>
+                                <span class="fw-medium">Previous Record:</span>
                                 <span class="ms-2">-</span>
-                                <span class="ms-2 text-muted">(First time)</span>
+                                <span class="ms-2 text-muted">(No Previous Record)</span>
                             </div>
                         </div>
                     @endif
@@ -83,12 +84,12 @@
                                 <thead>
                                     <tr class="border-bottom">
                                         <th class="text-muted fw-normal small">Set</th>
-                                        @if ($exercise->equipment_category !== 'bodyweight')
+                                        @if($exercise->equipment_category !== 'bodyweight')
                                             <th class="text-muted fw-normal small">Weight(kg)</th>
                                         @endif
                                         <th class="text-muted fw-normal small">Reps</th>
                                         <th class="text-muted fw-normal small">Rest(sec)</th>
-                                        <th class="text-muted fw-normal small">Completed</th>
+                                        <th class="text-muted fw-normal small">Done</th>
                                         <th class="text-muted fw-normal small">Actions</th>
                                     </tr>
                                 </thead>
@@ -147,12 +148,17 @@
 
     {{-- Navigation --}}
     <div class="d-flex justify-content-between pt-4">
-        <button wire:click="goToStep1" type="button" class="btn btn-outline-secondary">
+        <button wire:click="goToStep1"
+                type="button" 
+                class="btn btn-outline-secondary">
             Back
         </button>
-        <button wire:click="goToStep3" type="button" class="btn btn-primary"
-            @if (empty($workoutSets)) disabled @endif>
-            Next to Confirmation
+        <button wire:click="goToStep3"
+                type="button" 
+                class="btn btn-primary"
+                @if(empty($workoutSets)) disabled @endif>
+            Confirm
+
         </button>
     </div>
 

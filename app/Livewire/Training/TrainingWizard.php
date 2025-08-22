@@ -152,7 +152,7 @@ class TrainingWizard extends Component
     {
         // 最低1セット以上が必要
         if (empty($this->workoutSets)) {
-            $this->addError('sets', '最低1セット以上追加してください。');
+            $this->addError('sets', 'Add at least one exercise before saving your workout plan.');
 
             return;
         }

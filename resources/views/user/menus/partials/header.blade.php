@@ -8,7 +8,7 @@
                     <i class="fa-solid fa-dumbbell"></i>
                 </span>
                 <div class="min-w-0">
-                    <h1 class="h4 fw-semibold mb-0 text-truncate">Menu List</h1>
+                    <h1 class="h4 fw-semibold mb-0 text-truncate">My Plans</h1>
                     <small class="text-muted">Manage the workout plan you created</small>
                 </div>
             </div>
@@ -16,7 +16,7 @@
             <div class="ms-md-auto">
                 <a href="{{ route('menus.create') }}" class="btn btn-primary rounded-3 px-4 py-2 shadow-sm create-menu-btn">
                     <i class="fa-solid fa-plus-circle me-2"></i>
-                    <span class="d-none d-sm-inline fw-medium">Create New Menu</span>
+                    <span class="d-none d-sm-inline fw-medium">Create New Workout plans</span>
                     <span class="d-inline d-sm-none fw-medium">Create</span>
                 </a>
             </div>

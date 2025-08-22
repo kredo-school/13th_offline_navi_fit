@@ -14,19 +14,22 @@
                 <div class="col-6 col-md-3">
                     <div class="bg-success bg-opacity-10 rounded-3 p-3 text-center">
                         <div class="h3 fw-bold text-success mb-1">{{ number_format($this->getTotalVolume()) }}</div>
-                        <div class="small text-muted">Total Volume(kg)</div>
+                        <div class="small text-muted">Total Volume (kg)</div>
+
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="bg-info bg-opacity-10 rounded-3 p-3 text-center">
                         <div class="h3 fw-bold text-info mb-1">{{ $this->getUniqueExercisesCount() }}</div>
-                        <div class="small text-muted">Exercises</div>
+                        <div class="small text-muted">{{ $this->getUniqueExercisesCount() === 1 ? 'Exercise' : 'Exercises' }}</div>
+
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="bg-warning bg-opacity-10 rounded-3 p-3 text-center">
                         <div class="h3 fw-bold text-warning mb-1">{{ $this->getEstimatedDuration() }}</div>
-                        <div class="small text-muted">Estimated Time(min)</div>
+                        <div class="small text-muted">Estimated Duration (min)</div>
+
                     </div>
                 </div>
             </div>
@@ -64,8 +67,8 @@
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div>
                                 <h3 class="h5 fw-semibold text-dark mb-1">{{ $exercise->name }}</h3>
-                                <p class="small text-muted mb-0">{{ $completedSets }}/{{ $totalSets }} sets completed
-                                </p>
+                                <p class="small text-muted mb-0">{{ $completedSets }}/{{ $totalSets }} Sets Completed</p>
+
                             </div>
                         </div>
 
@@ -74,11 +77,12 @@
                                 <thead>
                                     <tr class="border-bottom">
                                         <th class="text-muted fw-normal small">Set</th>
-                                        @if ($exercise->equipment_category !== 'bodyweight')
-                                            <th class="text-muted fw-normal small">Weight(kg)</th>
+                                        @if($exercise->equipment_category !== 'bodyweight')
+                                            <th class="text-muted fw-normal small">Weight (kg)</th>
                                         @endif
                                         <th class="text-muted fw-normal small">Reps</th>
-                                        <th class="text-muted fw-normal small">Rest(sec)</th>
+                                        <th class="text-muted fw-normal small">Rest (sec)</th>
+
                                         <th class="text-muted fw-normal small">Status</th>
                                         <th class="text-muted fw-normal small">Edit</th>
                                     </tr>
@@ -111,15 +115,16 @@
                                                     style="width: 70px;">
                                             </td>
                                             <td>
-                                                <span
-                                                    class="badge {{ $set['completed'] ? 'bg-success' : 'bg-secondary' }} text-white small">
-                                                    {{ $set['completed'] ? 'Completed' : 'Not Completed' }}
+                                                <span class="badge {{ $set['completed'] ? 'bg-success' : 'bg-secondary' }} text-white small">
+                                                    {{ $set['completed'] ? 'Completed' : 'Incomplete' }}
                                                 </span>
                                             </td>
                                             <td>
                                                 <button wire:click="toggleSetCompletion('{{ $set['id'] }}')"
-                                                    type="button" class="btn btn-link text-primary p-1"
-                                                    title="Toggle completion status">
+                                                        type="button" 
+                                                        class="btn btn-link text-primary p-1" 
+                                                        title="Toggle Completion">
+
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                             </td>
@@ -137,17 +142,25 @@
     {{-- Notes Section --}}
     <div class="card border-1 shadow-sm mb-4">
         <div class="card-body p-4">
-            <h3 class="h5 fw-semibold text-dark mb-4">Notes</h3>
-            <textarea wire:model="notes" class="form-control" rows="4" placeholder="Add notes about today's training..."></textarea>
+            <h3 class="h5 fw-semibold text-dark mb-4">Memo</h3>
+            <textarea wire:model="notes"
+                      class="form-control" 
+                      rows="4" 
+                      placeholder="Leave a note about today's workout..."></textarea>
+
         </div>
     </div>
 
     {{-- Navigation --}}
     <div class="d-flex justify-content-between pt-4">
-        <button wire:click="goToStep2" type="button" class="btn btn-outline-secondary">
-            Back to Edit
+        <button wire:click="goToStep2"
+                type="button" 
+                class="btn btn-outline-secondary">
+            Back to Log
         </button>
-        <button wire:click="goToStep4" type="button" class="btn btn-success btn-lg">
+        <button wire:click="goToStep4"
+                type="button" 
+                class="btn btn-success btn-lg">
             Save Record
         </button>
     </div>

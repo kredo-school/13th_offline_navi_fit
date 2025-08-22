@@ -18,7 +18,7 @@
                         <i class="fas fa-search position-absolute top-50 translate-middle-y text-muted"
                             style="left: 12px;"></i>
                         <input type="text" wire:model.live.debounce.300ms="searchTerm" class="form-control ps-5"
-                            placeholder="Search for your menu"...">
+                            placeholder="Search for your workout plan"...">
                     </div>
                 </div>
                 <div class="col-12 col-lg-3">

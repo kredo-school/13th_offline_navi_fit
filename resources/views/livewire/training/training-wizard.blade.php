@@ -9,8 +9,8 @@
                             <i class="fas fa-arrow-left"></i>
                         </button>
                         <div>
-                            <h1 class="h4 mb-0 text-dark fw-semibold">Training Wizard</h1>
-                            <p class="small text-muted mb-0">Create Training Record</p>
+                            <h1 class="h4 mb-0 text-dark fw-semibold">Workout Log</h1>
+                            {{-- <p class="small text-muted mb-0">トレーニング記録を作成</p> --}}
                         </div>
                     </div>
                 </div>
