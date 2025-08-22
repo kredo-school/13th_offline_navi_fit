@@ -19,7 +19,7 @@
                                     <li>
                                         <a class="dropdown-item"
                                             href="{{ route('training-history.edit', $record->id) }}">
-                                            編集
+                                            Edit
                                         </a>
                                     </li>
                                     <li>
@@ -27,8 +27,8 @@
                                             action="{{ route('training-history.destroy', $record->id) }}">
                                             @csrf @method('DELETE')
                                             <button type="submit" class="dropdown-item text-danger"
-                                                onclick="return confirm('削除しますか？')">
-                                                削除
+                                                onclick="return confirm('Are you sure you want to delete?')">
+                                                Delete
                                             </button>
                                         </form>
                                     </li>
@@ -36,16 +36,16 @@
                             </div>
                         </div>
 
-                        <h3 class="h6 mb-3">{{ $record->menu->name ?? 'メニュー未設定' }}</h3>
+                        <h3 class="h6 mb-3">{{ $record->menu->name ?? 'No menu set' }}</h3>
 
                         <div class="row text-center mb-3">
                             <div class="col-3">
                                 <div class="fw-medium">{{ $record->details->count() }}</div>
-                                <div class="text-muted small">セット</div>
+                                <div class="text-muted small">Sets</div>
                             </div>
                             <div class="col-3">
                                 <div class="fw-medium">{{ $record->details->sum('reps') }}</div>
-                                <div class="text-muted small">回数</div>
+                                <div class="text-muted small">Reps</div>
                             </div>
                             <div class="col-3">
                                 <div class="fw-medium">{{ number_format($record->details->sum('volume')) }}</div>
@@ -53,18 +53,18 @@
                             </div>
                             <div class="col-3">
                                 <div class="fw-medium">{{ $record->duration_minutes ?? '-' }}</div>
-                                <div class="text-muted small">分</div>
+                                <div class="text-muted small">min</div>
                             </div>
                         </div>
 
                         <div class="border-top pt-3">
-                            <p class="text-muted small mb-0">{{ $record->note ?? '記録なし' }}</p>
+                            <p class="text-muted small mb-0">{{ $record->note ?? 'No notes' }}</p>
                         </div>
                     </div>
                 </div>
             </div>
         @empty
-            <div class="col-12 text-center text-muted">記録がありません。</div>
+            <div class="col-12 text-center text-muted">No records found.</div>
         @endforelse
     </div>
 </div>
@@ -77,13 +77,13 @@
                 <table class="table table-hover align-middle">
                     <thead>
                         <tr>
-                            <th>日時</th>
-                            <th>メニュー</th>
-                            <th>テンプレート</th>
-                            <th class="text-center">セット数</th>
-                            <th class="text-center">総回数</th>
-                            <th class="text-center">総重量</th>
-                            <th class="text-center">操作</th>
+                            <th>Date/Time</th>
+                            <th>Menu</th>
+                            <th>Template</th>
+                            <th class="text-center">Sets</th>
+                            <th class="text-center">Total Reps</th>
+                            <th class="text-center">Total Weight</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,22 +122,24 @@
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">削除の確認</h5>
+                                                        <h5 class="modal-title">Confirm Deletion</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        このトレーニング記録を削除してもよろしいですか？この操作は取り消せません。
+                                                        Are you sure you want to delete this training record? This
+                                                        action cannot be undone.
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">キャンセル</button>
+                                                            data-bs-dismiss="modal">Cancel</button>
                                                         <form
                                                             action="{{ route('training-history.destroy', $record->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">削除する</button>
+                                                            <button type="submit"
+                                                                class="btn btn-danger">Delete</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -148,7 +150,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center py-4 text-muted">記録がありません。</td>
+                                <td colspan="7" class="text-center py-4 text-muted">No records found.</td>
                             </tr>
                         @endforelse
                     </tbody>

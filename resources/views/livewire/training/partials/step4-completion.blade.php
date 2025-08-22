@@ -21,6 +21,7 @@
                     <div class="card-body p-4">
                         <h2 class="h4 fw-semibold text-dark mb-4">Today's Workout</h2>
 
+
                         <div class="row g-3 mb-4">
                             <div class="col-6">
                                 <div class="d-flex align-items-center">
@@ -52,6 +53,7 @@
                                         <div>
                                             <div class="fw-medium text-dark">Workout Completed</div>
                                             <div class="small text-muted">{{ $this->getCompletedSetsCount() }}sets
+
                                                 completed</div>
                                         </div>
                                     </div>
@@ -67,6 +69,7 @@
                                             <div class="fw-medium text-dark">Total Volume</div>
                                             <div class="small text-muted">You lifted
                                                 {{ number_format($this->getTotalVolume()) }}kg in total!</div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -97,6 +100,7 @@
                                             $randomMessage = $messages[array_rand($messages)];
                                         @endphp
                                         {!! $randomMessage !!}
+
                                     </div>
                                 </div>
                             </div>
@@ -111,6 +115,7 @@
                             class="btn btn-primary w-100 py-3 d-flex align-items-center justify-content-center">
                             <i class="fas fa-chart-line me-2"></i>
                             <span>View Analytics</span>
+
                         </button>
                     </div>
 
@@ -119,6 +124,7 @@
                             class="btn btn-success w-100 py-3 d-flex align-items-center justify-content-center">
                             <i class="fas fa-trophy me-2"></i>
                             <span>New Log</span>
+
                         </button>
                     </div>
 

@@ -31,10 +31,10 @@
                 <div class="mb-4">
                     @include('livewire.training.partials.step-indicator')
                 </div>
-                
+
                 {{-- Content Area --}}
                 <div wire:loading.class="opacity-50" wire:target="goToStep1, goToStep2, goToStep3, goToStep4">
-                    @if($currentStep === 1)
+                    @if ($currentStep === 1)
                         @include('livewire.training.partials.step1-menu-selection')
                     @elseif($currentStep === 2)
                         @include('livewire.training.partials.step2-workout-editor')

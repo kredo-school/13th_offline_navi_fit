@@ -1,7 +1,7 @@
 {{-- 
 /**
  * Training Detail Hero Section
- * ヒーローセクション（グラデーション背景、メインタイトル、基本情報）
+ * Hero section (gradient background, main title, basic information)
  */
 --}}
 
@@ -15,30 +15,30 @@
     <div class="card-body text-white position-relative p-5">
         <div class="d-flex align-items-center mb-2">
             <i class="fas fa-calendar me-2"></i>
-            <span class="text-white-50">{{ $record->training_date->format('Y年m月d日 (D) H:i') }}</span>
+            <span class="text-white-50">{{ $record->training_date->format('Y-m-d (D) H:i') }}</span>
         </div>
 
-        <h2 class="display-6 fw-bold mb-2">{{ $record->menu->name ?? 'トレーニング記録' }}</h2>
+        <h2 class="display-6 fw-bold mb-2">{{ $record->menu->name ?? 'Training Record' }}</h2>
 
-        <p class="h5 text-white-75 mb-4">{{ $record->template->title ?? '未設定' }}</p>
+        <p class="h5 text-white-75 mb-4">{{ $record->template->title ?? 'Not set' }}</p>
 
         <div class="d-flex flex-wrap gap-3 small">
             @if ($record->duration_minutes)
                 <div class="d-flex align-items-center">
                     <i class="fas fa-clock me-1"></i>
-                    <span>{{ $record->duration_minutes }}分</span>
+                    <span>{{ $record->duration_minutes }} min</span>
                 </div>
             @endif
 
             <div class="d-flex align-items-center">
                 <i class="fas fa-bullseye me-1"></i>
-                <span>{{ $record->details->count('exercise_id') }}種目</span>
+                <span>{{ $record->details->count('exercise_id') }} exercises</span>
             </div>
 
             @if ($record->calories)
                 <div class="d-flex align-items-center">
                     <i class="fas fa-fire me-1"></i>
-                    <span>{{ $record->calories }}kcal</span>
+                    <span>{{ $record->calories }} kcal</span>
                 </div>
             @endif
         </div>

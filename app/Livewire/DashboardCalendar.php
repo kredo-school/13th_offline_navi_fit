@@ -6,7 +6,8 @@ use App\Models\Goal;
 use App\Models\TrainingRecord;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Component;
+use Illuminate\Support\Str;
+use Livewire\Component; // 追加
 
 class DashboardCalendar extends Component
 {
@@ -19,6 +20,8 @@ class DashboardCalendar extends Component
     public $startOfWeek;
 
     public $endOfWeek;
+
+    public $trainingDaysCount = 0; // 追加：トレーニング実施日数
 
     public function mount()
     {
@@ -50,14 +53,37 @@ class DashboardCalendar extends Component
             ->where('training_date', '>=', $threeMonthsAgo)
             ->get();
 
+        // トレーニング実施日をカウント (重複日を除く)
+        $this->trainingDaysCount = $allRecords->pluck('training_date')->unique()->count();
+
         // カレンダー表示用にイベントデータを整形
         foreach ($allRecords as $record) {
+            // トレーニングメニュー名を取得
+            $menuName = $record->menu ? $record->menu->name : 'Training';
+            $title = Str::limit($menuName, 15);
+
+            // 強度または種類に基づいて色を決定
+            // $intensity = $record->perceived_intensity ?? 0;
+            // $color = '#4ade80'; // デフォルト緑
+
+            // if ($intensity >= 8) {
+            //     $color = '#ef4444'; // 高強度：赤
+            // } elseif ($intensity >= 5) {
+            //     $color = '#f97316'; // 中強度：オレンジ
+            // } elseif ($intensity >= 3) {
+            //     $color = '#3b82f6'; // 低強度：青
+            // }
+
             $this->events[] = [
-                'title' => 'Training',
+                'title' => $title,
                 'start' => $record->training_date,
                 'url' => route('training-history.show', $record->id),
-                'backgroundColor' => '#4ade80', // 緑色
+                'backgroundColor' => '#4ade80',
                 'borderColor' => '#4ade80',
+                'extendedProps' => [
+                    'menuName' => $menuName,
+                    'duration' => $record->duration ?? null,
+                ],
             ];
         }
     }
