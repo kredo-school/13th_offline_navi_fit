@@ -86,7 +86,8 @@ class TrainingWizard extends Component
         //     });
         // }
 
-        return $query->get();
+        return $query->orderBy('created_at', 'desc')->get();
+
     }
 
     #[Computed]
