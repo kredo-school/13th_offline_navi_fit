@@ -39,10 +39,10 @@
                             <div class="link-underline"></div>
                         </a>
                         
-                        <a href="#" 
+                        <a href="{{ route('training-history.index') }}" 
                            class="nav-link-custom"
-                           data-nav-item="stats"
-                           aria-current="{{ request()->routeIs('stats.*') ? 'page' : 'false' }}">
+                           data-nav-item="history"
+                           aria-current="{{ request()->routeIs('training-history.*') ? 'page' : 'false' }}">
                             <span class="link-text">History</span>
                             <div class="link-underline"></div>
                         </a>
