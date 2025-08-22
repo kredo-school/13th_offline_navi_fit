@@ -96,12 +96,12 @@
                                         {{-- 詳細表示ボタン --}}
                                         <button type="button" class="btn btn-outline-primary btn-sm flex-fill"
                                             wire:click="showExerciseDetails({{ $exercise->id }})"
-                                            wire:loading.attr="disabled" wire:target="showExerciseDetails"
+                                            wire:loading.attr="disabled" wire:target="showExerciseDetails({{ $exercise->id }})"
                                             style="font-size: 0.75rem;">
-                                            <span wire:loading.remove wire:target="showExerciseDetails">
+                                            <span wire:loading.remove wire:target="showExerciseDetails({{ $exercise->id }})">
                                                 <i class="fas fa-eye me-1"></i>Details
                                             </span>
-                                            <span wire:loading wire:target="showExerciseDetails">
+                                            <span wire:loading wire:target="showExerciseDetails({{ $exercise->id }})">
                                                 <i class="fas fa-spinner fa-spin me-1"></i>Loading...
                                             </span>
                                         </button>
@@ -109,11 +109,11 @@
                                         {{-- メニューに追加ボタン --}}
                                         <button type="button" class="btn btn-primary btn-sm flex-fill add-exercise-btn"
                                             wire:click="addToMenu({{ $exercise->id }})" wire:loading.attr="disabled"
-                                            wire:target="addToMenu" style="font-size: 0.75rem;">
-                                            <span wire:loading.remove wire:target="addToMenu">
+                                            wire:target="addToMenu({{ $exercise->id }})" style="font-size: 0.75rem;">
+                                            <span wire:loading.remove wire:target="addToMenu({{ $exercise->id }})">
                                                 <i class="fas fa-plus me-1"></i>Add
                                             </span>
-                                            <span wire:loading wire:target="addToMenu">
+                                            <span wire:loading wire:target="addToMenu({{ $exercise->id }})">
                                                 <i class="fas fa-spinner fa-spin me-1"></i>Adding...
                                             </span>
                                         </button>
