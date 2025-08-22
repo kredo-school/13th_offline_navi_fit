@@ -6,11 +6,18 @@
     <form method="POST" action="{{ route('register') }}" class="auth-form">
         @csrf
 
-        <!-- 2列グリッド: username + e-mail -->
+        {{-- 2列グリッド: username + e-mail --}}
         <div class="form-row">
             <div class="form-group">
-                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                    value="{{ old('name') }}" placeholder="username" required autofocus autocomplete="name">
+                <input id="name" 
+                    type="text" 
+                    class="form-control @error('name') is-invalid @enderror" 
+                    name="name"
+                    value="{{ old('name') }}" 
+                    placeholder="username" 
+                    required 
+                    autofocus 
+                    autocomplete="name">
 
                 @error('name')
                     <div class="error-message">{{ $message }}</div>
@@ -18,8 +25,14 @@
             </div>
 
             <div class="form-group">
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                    name="email" value="{{ old('email') }}" placeholder="e-mail" required autocomplete="email">
+                <input id="email" 
+                    type="email" 
+                    class="form-control @error('email') is-invalid @enderror"
+                    name="email" 
+                    value="{{ old('email') }}" 
+                    placeholder="e-mail" 
+                    required 
+                    autocomplete="email">
 
                 @error('email')
                     <div class="error-message">{{ $message }}</div>
@@ -27,36 +40,54 @@
             </div>
         </div>
 
-        <!-- password + confirm password -->
+        {{-- パスワード入力フィールド（表示/非表示トグル付き） --}}
         <div class="form-group" x-data="{ showPassword: false }">
-            <div class="relative">
-                <input 
-                    id="password" 
+            <div style="position: relative;">
+                <input id="password" 
                     x-bind:type="showPassword ? 'text' : 'password'"
-                    class="form-control pr-10 @error('password') is-invalid @enderror"
+                    class="form-control @error('password') is-invalid @enderror"
                     name="password" 
                     placeholder="password" 
                     required 
-                    autocomplete="new-password">
+                    autocomplete="new-password"
+                    style="padding-right: 45px;">
 
-                <button 
-                    type="button"
+                {{-- パスワード表示/非表示トグルボタン --}}
+                <button type="button"
                     x-on:click="showPassword = !showPassword"
-                    class="absolute inset-y-0 right-0 flex items-center justify-center w-10 text-gray-600 hover:text-gray-800 focus:outline-none transition-colors cursor-pointer"
+                    style="position: absolute; 
+                           top: 0; 
+                           right: 0; 
+                           bottom: 0; 
+                           width: 40px; 
+                           border: none; 
+                           background: transparent; 
+                           display: flex; 
+                           align-items: center; 
+                           justify-content: center; 
+                           cursor: pointer;
+                           color: #6b7280;
+                           transition: color 0.2s ease;"
                     tabindex="-1"
-                    title="パスワードを表示/非表示">
+                    title="パスワードを表示/非表示"
+                    onmouseover="this.style.color='#374151'"
+                    onmouseout="this.style.color='#6b7280'">
+                    
+                    {{-- 目のアイコン（パスワード表示時） --}}
                     <i x-show="showPassword" 
-                       class="fas fa-eye text-lg"
-                       style="font-size: 16px;"
-                       x-transition:enter="transition ease-out duration-150"
-                       x-transition:enter-start="opacity-0 scale-90"
-                       x-transition:enter-end="opacity-100 scale-100"></i>
+                        class="fas fa-eye"
+                        style="font-size: 16px;"
+                        x-transition:enter="transition ease-out duration-150"
+                        x-transition:enter-start="opacity-0 scale-90"
+                        x-transition:enter-end="opacity-100 scale-100"></i>
+                    
+                    {{-- 目に斜線のアイコン（パスワード非表示時） --}}
                     <i x-show="!showPassword" 
-                       class="fas fa-eye-slash text-lg"
-                       style="font-size: 16px;"
-                       x-transition:enter="transition ease-out duration-150"
-                       x-transition:enter-start="opacity-0 scale-90"
-                       x-transition:enter-end="opacity-100 scale-100"></i>
+                        class="fas fa-eye-slash"
+                        style="font-size: 16px;"
+                        x-transition:enter="transition ease-out duration-150"
+                        x-transition:enter-start="opacity-0 scale-90"
+                        x-transition:enter-end="opacity-100 scale-100"></i>
                 </button>
             </div>
 
@@ -65,42 +96,63 @@
             @enderror
         </div>
 
+        {{-- パスワード確認入力フィールド（表示/非表示トグル付き） --}}
         <div class="form-group" x-data="{ showConfirmPassword: false }">
-            <div class="relative">
-                <input 
-                    id="password-confirm" 
+            <div style="position: relative;">
+                <input id="password-confirm" 
                     x-bind:type="showConfirmPassword ? 'text' : 'password'"
-                    class="form-control pr-10" 
+                    class="form-control" 
                     name="password_confirmation"
                     placeholder="confirm password" 
                     required 
-                    autocomplete="new-password">
+                    autocomplete="new-password"
+                    style="padding-right: 45px;">
 
-                <button 
-                    type="button"
+                {{-- パスワード確認表示/非表示トグルボタン --}}
+                <button type="button"
                     x-on:click="showConfirmPassword = !showConfirmPassword"
-                    class="absolute inset-y-0 right-0 flex items-center justify-center w-10 text-gray-600 hover:text-gray-800 focus:outline-none transition-colors cursor-pointer"
+                    style="position: absolute; 
+                           top: 0; 
+                           right: 0; 
+                           bottom: 0; 
+                           width: 40px; 
+                           border: none; 
+                           background: transparent; 
+                           display: flex; 
+                           align-items: center; 
+                           justify-content: center; 
+                           cursor: pointer;
+                           color: #6b7280;
+                           transition: color 0.2s ease;"
                     tabindex="-1"
-                    title="パスワード確認を表示/非表示">
+                    title="パスワード確認を表示/非表示"
+                    onmouseover="this.style.color='#374151'"
+                    onmouseout="this.style.color='#6b7280'">
+                    
+                    {{-- 目のアイコン（パスワード確認表示時） --}}
                     <i x-show="showConfirmPassword" 
-                       class="fas fa-eye text-lg"
-                       style="font-size: 16px;"
-                       x-transition:enter="transition ease-out duration-150"
-                       x-transition:enter-start="opacity-0 scale-90"
-                       x-transition:enter-end="opacity-100 scale-100"></i>
+                        class="fas fa-eye"
+                        style="font-size: 16px;"
+                        x-transition:enter="transition ease-out duration-150"
+                        x-transition:enter-start="opacity-0 scale-90"
+                        x-transition:enter-end="opacity-100 scale-100"></i>
+                    
+                    {{-- 目に斜線のアイコン（パスワード確認非表示時） --}}
                     <i x-show="!showConfirmPassword" 
-                       class="fas fa-eye-slash text-lg"
-                       style="font-size: 16px;"
-                       x-transition:enter="transition ease-out duration-150"
-                       x-transition:enter-start="opacity-0 scale-90"
-                       x-transition:enter-end="opacity-100 scale-100"></i>
+                        class="fas fa-eye-slash"
+                        style="font-size: 16px;"
+                        x-transition:enter="transition ease-out duration-150"
+                        x-transition:enter-start="opacity-0 scale-90"
+                        x-transition:enter-end="opacity-100 scale-100"></i>
                 </button>
             </div>
         </div>
 
-        <button type="submit" class="btn-primary">Registar</button>
+        {{-- 登録ボタン --}}
+        <button type="submit" class="btn-primary">Register</button>
     </form>
 
+    {{-- 認証関連のリンク --}}
     <div class="auth-links">
         <a href="{{ route('login') }}">→ I have an account</a>
     </div>
