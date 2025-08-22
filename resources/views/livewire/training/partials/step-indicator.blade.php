@@ -6,7 +6,8 @@
                     ['number' => 1, 'title' => 'Slelect Plan', 'description' => 'Choose your workout plan to begin'],
                     ['number' => 2, 'title' => 'Log Workout', 'description' => 'Enter sets, reps, and weights'],
                     ['number' => 3, 'title' => 'Confirm', 'description' => 'Check your logged details'],
-                    ['number' => 4, 'title' => 'Complete', 'description' => 'Save and finish your workout']
+                    ['number' => 4, 'title' => 'Complete', 'description' => 'Save and finish your workout'],
+                ]
             @endphp
 
             @foreach ($steps as $index => $step)
