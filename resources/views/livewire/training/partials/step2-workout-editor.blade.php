@@ -58,12 +58,12 @@
                     @if(!empty($previousRecord))
                         <div class="bg-light rounded p-3 mb-4">
                             <div class="small text-muted">
-                                <span class="fw-medium">前回の記録:</span>
+                                <span class="fw-medium">previous Record:</span>
                                 @if(isset($previousRecord['weight']))
                                     <span class="ms-2">{{ $previousRecord['weight'] }}kg</span>
                                 @endif
                                 @if(isset($previousRecord['reps']))
-                                    <span class="ms-2">{{ $previousRecord['reps'] }}回</span>
+                                    <span class="ms-2">{{ $previousRecord['reps'] }} reps</span>
                                 @endif
                                 @if(isset($previousRecord['date']))
                                     <span class="ms-2 text-muted">({{ $previousRecord['date'] }})</span>
@@ -73,9 +73,9 @@
                     @else
                         <div class="bg-light rounded p-3 mb-4">
                             <div class="small text-muted">
-                                <span class="fw-medium">前回の記録:</span>
+                                <span class="fw-medium">Previous Record:</span>
                                 <span class="ms-2">-</span>
-                                <span class="ms-2 text-muted">(初回)</span>
+                                <span class="ms-2 text-muted">(No Previous Record)</span>
                             </div>
                         </div>
                     @endif
@@ -86,14 +86,14 @@
                             <table class="table table-sm">
                                 <thead>
                                     <tr class="border-bottom">
-                                        <th class="text-muted fw-normal small">セット</th>
+                                        <th class="text-muted fw-normal small">Set</th>
                                         @if($exercise->equipment_category !== 'bodyweight')
-                                            <th class="text-muted fw-normal small">重量(kg)</th>
+                                            <th class="text-muted fw-normal small">Weight(kg)</th>
                                         @endif
-                                        <th class="text-muted fw-normal small">回数</th>
-                                        <th class="text-muted fw-normal small">休憩(秒)</th>
-                                        <th class="text-muted fw-normal small">完了</th>
-                                        <th class="text-muted fw-normal small">操作</th>
+                                        <th class="text-muted fw-normal small">Reps</th>
+                                        <th class="text-muted fw-normal small">Rest(sec)</th>
+                                        <th class="text-muted fw-normal small">Done</th>
+                                        <th class="text-muted fw-normal small">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -163,13 +163,13 @@
         <button wire:click="goToStep1"
                 type="button" 
                 class="btn btn-outline-secondary">
-            前に戻る
+            Back
         </button>
         <button wire:click="goToStep3"
                 type="button" 
                 class="btn btn-primary"
                 @if(empty($workoutSets)) disabled @endif>
-            確認画面へ
+            Confirm
         </button>
     </div>
 

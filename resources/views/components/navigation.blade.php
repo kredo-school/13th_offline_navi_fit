@@ -40,7 +40,7 @@
                            class="nav-link-custom"
                            data-nav-item="training"
                            aria-current="{{ request()->routeIs('training.*') ? 'page' : 'false' }}">
-                            <span class="link-text">Workout Log</span>
+                            <span class="link-text">Log</span>
                             <div class="link-underline"></div>
                         </a>
                         
@@ -48,7 +48,7 @@
                            class="nav-link-custom"
                            data-nav-item="menu"
                            aria-current="{{ request()->routeIs('menus.*') ? 'page' : 'false' }}">
-                            <span class="link-text">Menu</span>
+                            <span class="link-text">Plan</span>
                             <div class="link-underline"></div>
                         </a>
                         
@@ -56,7 +56,15 @@
                            class="nav-link-custom"
                            data-nav-item="stats"
                            aria-current="{{ request()->routeIs('stats.*') ? 'page' : 'false' }}">
-                            <span class="link-text">Stats</span>
+                            <span class="link-text">History</span>
+                            <div class="link-underline"></div>
+                        </a>
+
+                        <a href="#" 
+                           class="nav-link-custom"
+                           data-nav-item="stats"
+                           aria-current="{{ request()->routeIs('stats.*') ? 'page' : 'false' }}">
+                            <span class="link-text">Analytics</span>
                             <div class="link-underline"></div>
                         </a>
                     </div>

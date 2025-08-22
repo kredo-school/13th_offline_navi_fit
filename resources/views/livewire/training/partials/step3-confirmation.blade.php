@@ -2,31 +2,31 @@
     {{-- Workout Summary --}}
     <div class="card border-1 shadow-sm mb-4">
         <div class="card-body p-4">
-            <h2 class="h4 fw-semibold text-dark mb-4">ワークアウト概要</h2>
+            <h2 class="h4 fw-semibold text-dark mb-4">Workout Summary</h2>
             
             <div class="row g-3 mb-4">
                 <div class="col-6 col-md-3">
                     <div class="bg-primary bg-opacity-10 rounded-3 p-3 text-center">
                         <div class="h3 fw-bold text-primary mb-1">{{ $this->getCompletedSetsCount() }}</div>
-                        <div class="small text-muted">完了セット数</div>
+                        <div class="small text-muted">Completed Sets</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="bg-success bg-opacity-10 rounded-3 p-3 text-center">
                         <div class="h3 fw-bold text-success mb-1">{{ number_format($this->getTotalVolume()) }}</div>
-                        <div class="small text-muted">総ボリューム(kg)</div>
+                        <div class="small text-muted">Total Volume (kg)</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="bg-info bg-opacity-10 rounded-3 p-3 text-center">
                         <div class="h3 fw-bold text-info mb-1">{{ $this->getUniqueExercisesCount() }}</div>
-                        <div class="small text-muted">種目数</div>
+                        <div class="small text-muted">{{ $this->getUniqueExercisesCount() === 1 ? 'Exercise' : 'Exercises' }}</div>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="bg-warning bg-opacity-10 rounded-3 p-3 text-center">
                         <div class="h3 fw-bold text-warning mb-1">{{ $this->getEstimatedDuration() }}</div>
-                        <div class="small text-muted">推定時間(分)</div>
+                        <div class="small text-muted">Estimated Duration (min)</div>
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div>
                                 <h3 class="h5 fw-semibold text-dark mb-1">{{ $exercise->name }}</h3>
-                                <p class="small text-muted mb-0">{{ $completedSets }}/{{ $totalSets }} セット完了</p>
+                                <p class="small text-muted mb-0">{{ $completedSets }}/{{ $totalSets }} Sets Completed</p>
                             </div>
                         </div>
 
@@ -72,14 +72,14 @@
                             <table class="table table-sm">
                                 <thead>
                                     <tr class="border-bottom">
-                                        <th class="text-muted fw-normal small">セット</th>
+                                        <th class="text-muted fw-normal small">Set</th>
                                         @if($exercise->equipment_category !== 'bodyweight')
-                                            <th class="text-muted fw-normal small">重量(kg)</th>
+                                            <th class="text-muted fw-normal small">Weight (kg)</th>
                                         @endif
-                                        <th class="text-muted fw-normal small">回数</th>
-                                        <th class="text-muted fw-normal small">休憩(秒)</th>
-                                        <th class="text-muted fw-normal small">状態</th>
-                                        <th class="text-muted fw-normal small">編集</th>
+                                        <th class="text-muted fw-normal small">Reps</th>
+                                        <th class="text-muted fw-normal small">Rest (sec)</th>
+                                        <th class="text-muted fw-normal small">Status</th>
+                                        <th class="text-muted fw-normal small">Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -115,14 +115,14 @@
                                             </td>
                                             <td>
                                                 <span class="badge {{ $set['completed'] ? 'bg-success' : 'bg-secondary' }} text-white small">
-                                                    {{ $set['completed'] ? '完了' : '未完了' }}
+                                                    {{ $set['completed'] ? 'Completed' : 'Incomplete' }}
                                                 </span>
                                             </td>
                                             <td>
                                                 <button wire:click="toggleSetCompletion('{{ $set['id'] }}')"
                                                         type="button" 
                                                         class="btn btn-link text-primary p-1" 
-                                                        title="完了状態を切り替え">
+                                                        title="Toggle Completion">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                             </td>
@@ -140,11 +140,11 @@
     {{-- Notes Section --}}
     <div class="card border-1 shadow-sm mb-4">
         <div class="card-body p-4">
-            <h3 class="h5 fw-semibold text-dark mb-4">メモ</h3>
+            <h3 class="h5 fw-semibold text-dark mb-4">Memo</h3>
             <textarea wire:model="notes"
                       class="form-control" 
                       rows="4" 
-                      placeholder="今日のトレーニングについてメモを残しましょう..."></textarea>
+                      placeholder="Leave a note about today's workout..."></textarea>
         </div>
     </div>
 
@@ -153,12 +153,12 @@
         <button wire:click="goToStep2"
                 type="button" 
                 class="btn btn-outline-secondary">
-            編集に戻る
+            Back to Log
         </button>
         <button wire:click="goToStep4"
                 type="button" 
                 class="btn btn-success btn-lg">
-            記録を保存
+            Save Record
         </button>
     </div>
 

@@ -8,13 +8,13 @@
                     <i class="bi bi-arrow-left"></i>
                 </button>
                 <div>
-                    <h1 class="h4 mb-1">Create Menu</h1>
+                    <h1 class="h4 mb-1">Create Workout Plan</h1>
                     <nav class="small text-muted">
                         <a href="{{ route('dashboard') }}" class="text-muted text-decoration-none">Dashboard</a>
                         <span class="mx-2">›</span>
-                        <a href="{{ route('menus.index') }}" class="text-muted text-decoration-none">Menu List</a>
+                        <a href="{{ route('menus.index') }}" class="text-muted text-decoration-none">My Plans</a>
                         <span class="mx-2">›</span>
-                        <span class="text-primary">Create a new menu</span>
+                        <span class="text-primary">Create a new workout plan</span>
                     </nav>
                 </div>
             </div>

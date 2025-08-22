@@ -7,7 +7,7 @@
                 <input type="text" 
                        class="form-control ps-5" 
                        wire:model.live.debounce.300ms="search"
-                       placeholder="Search menus..."
+                       placeholder="Search workout plans..."
                        id="searchInput">
             </div>
         </div>

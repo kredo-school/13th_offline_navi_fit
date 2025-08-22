@@ -3,10 +3,10 @@
         <div class="d-flex align-items-center justify-content-between position-relative">
             @php
                 $steps = [
-                    ['number' => 1, 'title' => 'メニュー選択', 'description' => 'ワークアウトを選択'],
-                    ['number' => 2, 'title' => '実績編集', 'description' => 'セット数・重量を入力'],
-                    ['number' => 3, 'title' => '内容確認', 'description' => '記録内容を確認'],
-                    ['number' => 4, 'title' => '完了', 'description' => 'トレーニング記録完了']
+                    ['number' => 1, 'title' => 'Slelect Plan', 'description' => 'Choose your workout plan to begin'],
+                    ['number' => 2, 'title' => 'Log Workout', 'description' => 'Enter sets, reps, and weights'],
+                    ['number' => 3, 'title' => 'Confirm', 'description' => 'Check your logged details'],
+                    ['number' => 4, 'title' => 'Complete', 'description' => 'Save and finish your workout']
                 ];
             @endphp
             
